@@ -12,10 +12,10 @@ class GuestController extends Controller
     public function __construct()
     {
         $this->navItems = [
-            new NavItems('Home', route('guest.home')),
-            new NavItems('About', route('guest.about')),
-            new NavItems('Contact', route('guest.contact')),
-            new NavItems('Projects', route('guest.projects')),
+            new NavItems('Home', route('guest.home'), 'home'),
+            new NavItems('About', route('guest.about'), 'info'),
+            new NavItems('Contact', route('guest.contact'), 'call'),
+            new NavItems('Projects', route('guest.projects'), 'docs'),
         ];
     }
 
