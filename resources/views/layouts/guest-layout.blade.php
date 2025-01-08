@@ -11,7 +11,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body>
+<body class="relative">
     @include('components.guest.guest-nav')
     @yield('content')
 </body>

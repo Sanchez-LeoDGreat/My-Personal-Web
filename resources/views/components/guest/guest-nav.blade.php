@@ -1,4 +1,4 @@
-<nav class="text-white bg-slate-950" x-data="{ active: false }">
+<nav class="fixed top-0 left-0 w-full text-white bg-slate-950" x-data="{ active: false }">
     <div class="flex justify-between mr-1">
         <a href="{{ route('guest.home') }}" class="w-12 m-1 hover:text-green-500">
             @include('components.logo')
