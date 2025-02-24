@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Helpers\NavItems;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class GuestController extends Controller
 {
@@ -22,9 +23,7 @@ class GuestController extends Controller
     public function home()
     {
         $this->navItems[0]->active = true;
-        return view('guest.home', [
-            'navItems' => $this->navItems,
-        ]);
+        return Inertia::render('Home');
     }
 
     public function about()
