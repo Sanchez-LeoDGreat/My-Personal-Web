@@ -23,7 +23,7 @@
     <nav class="fixed top-0 left-0 w-full text-white bg-slate-950">
         <div class="flex justify-between mr-1">
             <Link :href="route('home')" class="w-12 m-1 hover:text-green-500">
-                <Logo></Logo>
+                <Logo/>
             </Link>
             <div class="hidden md:block">
                 <ul class="flex h-full gap-2 list-none">

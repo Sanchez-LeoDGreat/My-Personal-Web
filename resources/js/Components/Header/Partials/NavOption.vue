@@ -23,7 +23,9 @@
             <span class="mr-1 material-symbols-outlined">
                 {{ props.icon }}
             </span>
-            <slot/>
+            <span>
+                <slot/>
+            </span>
         </li>
     </Link>
 </template>
