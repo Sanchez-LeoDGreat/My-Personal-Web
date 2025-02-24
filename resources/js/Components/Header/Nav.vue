@@ -20,7 +20,6 @@
 </script>
 
 <template>
-    <Head title="Home"></Head>
     <nav class="fixed top-0 left-0 w-full text-white bg-slate-950">
         <div class="flex justify-between mr-1">
             <Link :href="route('home')" class="w-12 m-1 hover:text-green-500">
@@ -40,7 +39,7 @@
                 </button>
             </div>
         </div>
-        <div class="overflow-hidden transition-all duration-300 md:hidden" :class="{'h-[120px]': show, 'h-0': !show}">
+        <div class="overflow-hidden transition-all duration-300 md:hidden" :class="{'h-[115px]': show, 'h-0': !show}">
             <hr/>
             <ul class="text-center list-none">
                 <NavOption :route="route('home')" icon="home" :mobileView="true" :class="{'active' : $page.component === 'Home'}">Home</NavOption>
