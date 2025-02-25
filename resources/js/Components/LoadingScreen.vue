@@ -4,10 +4,16 @@
     import Logo from '@/Components/SVG/Logo.vue';
 
     const show = ref(false);
+    let timeout = null;
 
     const startLoading = () => (show.value = true);
-    const stopLoading = () => (show.value = false);
-    const routingFinished = () => (setTimeout(stopLoading, 200));
+    const stopLoading = () => {
+        show.value = false
+        clearTimeout(timeout);
+    };
+    const routingFinished = () => {
+        timeout = setTimeout(stopLoading, 200)
+    };
 
     onMounted(() => {
         router.on('start', startLoading);

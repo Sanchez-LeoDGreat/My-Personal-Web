@@ -6,7 +6,7 @@
     import CheckboxInput from "@/Components/Inputs/CheckboxInput.vue";
     import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
     import FieldMessage from "@/Components/Texts/FieldMessage.vue";
-    import { useForm } from "@inertiajs/vue3";
+    import { useForm, Link } from "@inertiajs/vue3";
 
     const form = useForm({
         email: '',
@@ -40,6 +40,8 @@
             </label>
 
             <PrimaryButton type="submit" class="w-full" :disabled="form.processing">Login</PrimaryButton>
+
+            <Link class="mt-1 text-blue-500 underline float-end">Forgot Password?</Link>
         </div>
     </form>
 </template>
