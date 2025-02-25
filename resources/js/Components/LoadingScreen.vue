@@ -21,7 +21,7 @@
 </script>
 
 <template>
-    <div class="absolute inset-0 z-50 flex justify-center overflow-hidden transition-all bg-blue-500 place-items-center" :class="{'w-screen': show, 'w-0': !show}">
+    <div class="absolute inset-0 z-50 flex justify-center overflow-hidden transition-all bg-blue-600 place-items-center" :class="{'w-screen': show, 'w-0': !show}">
         <div class="text-white">
             <div>
                 <Logo class="h-32 animate-spin"/>

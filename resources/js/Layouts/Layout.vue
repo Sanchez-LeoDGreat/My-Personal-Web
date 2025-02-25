@@ -4,11 +4,11 @@
     import LoadingScreen from '@/Components/LoadingScreen.vue';
 </script>
 <template>
-    <main class="relative flex flex-col w-full min-h-screen">
+    <main class="relative flex flex-col w-full min-h-screen bg-slate-900">
         <header class="p-7">
             <Nav/>
         </header>
-        <div class="flex-grow">
+        <div class="flex-grow px-4 py-2 text-white">
             <slot/>
         </div>
         <Footer/>
