@@ -8,7 +8,7 @@
         <header class="p-7">
             <Nav/>
         </header>
-        <div class="flex-grow px-4 py-2 text-white">
+        <div id="content-container" class="flex-grow px-4 py-2 text-white">
             <slot/>
         </div>
         <Footer/>

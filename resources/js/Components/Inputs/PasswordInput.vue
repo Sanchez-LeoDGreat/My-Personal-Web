@@ -1,0 +1,70 @@
+<script setup>
+    import { ref } from 'vue';
+
+    const props = defineProps({
+        status: {
+            type: String,
+            default: 'normal',
+        },
+        id: String,
+        placeholder: String,
+    });
+
+    const show = ref(false);
+    const passwordInput = ref(null);
+
+    const setColorStatusContainer = () => {
+        switch(props.status){
+            case 'success':
+                return 'ring-green-500';
+            case 'error':
+                return 'ring-red-500';
+            case 'warning':
+                return 'ring-yellow-500';
+            default:
+                return 'ring-gray-500';
+        }
+    }
+
+    const setStatusColorInput = () => {
+        switch(props.status){
+            case 'success':
+                return 'text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500';
+            case 'error':
+                return 'text-red-900 dark:text-red-400 placeholder-red-700 dark:placeholder-red-500';
+            case 'warning':
+                return 'text-yellow-900 dark:text-yellow-400 placeholder-yellow-700 dark:placeholder-yellow-500';
+            default:
+                return 'text-gray-900 dark:text-gray-400 placeholder-gray-700 dark:placeholder-gray-500';
+        }
+    }
+
+    const setStatusColorIcon = () => {
+        switch(props.status){
+            case 'success':
+                return 'text-green-500';
+            case 'error':
+                return 'text-red-500';
+            case 'warning':
+                return 'text-yellow-500';
+            default:
+                return 'text-blue-700';
+        }
+    }
+
+    const toggleShowPass = () => {
+        show.value = !show.value;
+        passwordInput.value?.focus();
+    }
+</script>
+
+<template>
+    <div class="mx-0.5">
+        <div class="flex w-full mb-1 overflow-hidden bg-white dark:bg-gray-700 rounded-[5px] ring-1 ring-offset-2 focus-within:ring-white focus-within:ring-offset-black" :class="setColorStatusContainer()">
+            <input :id="id" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="flex-grow px-2 py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
+            <button @click="toggleShowPass" class="px-2 material-symbols-outlined" :class="setStatusColorIcon()">
+                {{ show ? 'visibility_off' : 'visibility' }}
+            </button>
+        </div>
+    </div>
+</template>

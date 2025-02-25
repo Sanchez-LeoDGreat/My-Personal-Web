@@ -1,7 +1,7 @@
 <script setup>
     import Logo from '@/Components/SVG/Logo.vue';
     import NavOption from '@/Components/Header/Partials/NavOption.vue';
-    import { Head, Link, router } from '@inertiajs/vue3';
+    import { Link, router } from '@inertiajs/vue3';
     import { ref, onMounted, onUnmounted } from 'vue';
 
     const show = ref(false);
