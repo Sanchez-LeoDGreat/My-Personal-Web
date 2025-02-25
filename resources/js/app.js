@@ -4,7 +4,9 @@ import { createApp, h } from 'vue'
 import { createInertiaApp } from '@inertiajs/vue3'
 import Layout from './Layouts/Layout.vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
+import $ from 'jquery';
 
+window.$ = window.jQuery = $;
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
 createInertiaApp({

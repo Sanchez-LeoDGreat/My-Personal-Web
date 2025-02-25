@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <MyButton class="bg-black hover:border-white active:bg-gray-800">
+    <MyButton class="text-white bg-black hover:border-white active:bg-gray-800">
         <slot/>
     </MyButton>
 </template>
