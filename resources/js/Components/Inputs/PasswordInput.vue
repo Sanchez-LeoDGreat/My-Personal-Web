@@ -8,10 +8,12 @@
         },
         id: String,
         placeholder: String,
+        modelValue: String,
     });
 
     const show = ref(false);
     const passwordInput = ref(null);
+    const emit = defineEmits(["update:modelValue"]);
 
     const setColorStatusContainer = () => {
         switch(props.status){
@@ -61,8 +63,8 @@
 <template>
     <div class="mx-0.5">
         <div class="flex w-full mb-1 overflow-hidden bg-white dark:bg-gray-700 rounded-[5px] ring-1 ring-offset-2 focus-within:ring-white focus-within:ring-offset-black" :class="setColorStatusContainer()">
-            <input :id="id" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="flex-grow px-2 py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
-            <button @click="toggleShowPass" class="px-2 material-symbols-outlined" :class="setStatusColorIcon()">
+            <input :id="id" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="flex-grow px-2 py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
+            <button type="button" @click="toggleShowPass" class="px-2 material-symbols-outlined" :class="setStatusColorIcon()">
                 {{ show ? 'visibility_off' : 'visibility' }}
             </button>
         </div>

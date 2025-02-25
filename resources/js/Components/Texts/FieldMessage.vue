@@ -9,11 +9,11 @@
     const setStatusColor = () => {
         switch (props.status) {
             case "success":
-                return "text-green-700 dark:text-green-500";
+                return "text-green-600";
             case "error":
-                return "text-red-700 dark:text-red-500";
+                return "text-red-600";
             case "warning":
-                return "text-yellow-700 dark:text-yellow-500";
+                return "text-yellow-600";
             default:
                 return "";
         }
@@ -21,7 +21,7 @@
 </script>
 
 <template>
-    <div class="mb-1 text-sm font-medium" :class="setStatusColor()">
+    <div class="my-1 text-sm font-medium" :class="setStatusColor()">
         <slot/>
     </div>
 </template>

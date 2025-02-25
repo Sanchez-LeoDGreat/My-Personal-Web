@@ -4,7 +4,10 @@
             type: String,
             default: "normal",
         },
+        modelValue: String,
     });
+
+    const emit = defineEmits(["update:modelValue"]);
 
     const setStatusColor = () => {
         switch (props.status) {
@@ -21,5 +24,5 @@
 </script>
 
 <template>
-    <input type="text" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg dark:bg-gray-700" :class="setStatusColor()"/>
+    <input type="text" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg dark:bg-gray-700" :class="setStatusColor()"/>
 </template>
