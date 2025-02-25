@@ -13,7 +13,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
 
-Route::get('/login', [AuthController::class, 'index'])->middleware(['guest'])->name('login');
+Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login'])->name('login.validate');
 
 Route::middleware(['auth', 'verified'])->group(function () {

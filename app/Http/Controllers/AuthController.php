@@ -11,7 +11,11 @@ class AuthController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Auth/Login');
+        $user = Auth::user();
+        if (!$user) {
+            return Inertia::render('Auth/Login');
+        }
+        return to_route('user.dashboard');
     }
 
     public function login(Request $request)
