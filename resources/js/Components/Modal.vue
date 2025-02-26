@@ -1,5 +1,5 @@
 <script setup>
-    import { ref, watch, onMounted, onUnmounted } from 'vue';
+    import { ref, watch, onMounted, onUnmounted, Transition } from 'vue';
 
     const props = defineProps({
         show: {
@@ -87,18 +87,30 @@
 </script>
 
 <template>
-    <dialog v-show="show" ref="dialog" @click="closeOnBackdropClick" class="fixed inset-0 z-40 flex justify-center bg-transparent place-items-center">
-        <div class="min-h-[20vh] min-w-[20vw] max-h-[75vh] max-w-[80vh] flex flex-col rounded-lg overflow-hidden">
-            <div class="px-2 py-1 text-xl font-bold" :class="captionBgColor()">{{ captionText() }}</div>
-            <div class="flex flex-col flex-grow px-2 py-1 bg-white">
-                <slot/>
+    <dialog ref="dialog" @click="closeOnBackdropClick" @cancel.prevent="close" class="fixed inset-0 z-40 flex justify-center bg-transparent place-items-center">
+        <Transition>
+            <div v-if="show" class="md:min-w-[25vw] min-w-[50vw] max-h-[75vh] max-w-[80vw] flex flex-col rounded-lg overflow-hidden">
+                <div class="px-2 py-1 text-xl font-bold" :class="captionBgColor()">{{ captionText() }}</div>
+                <div class="flex flex-col flex-grow px-2 py-1 overflow-auto bg-white min-h-28">
+                    <slot/>
+                </div>
             </div>
-        </div>
+        </Transition>
     </dialog>
 </template>
 
 <style scoped>
     dialog::backdrop {
         background: rgba(50, 50, 50, 0.4);
+    }
+
+    .v-enter-active,
+    .v-leave-active {
+        transition: opacity 0.3s ease;
+    }
+
+    .v-enter-from,
+    .v-leave-to {
+        opacity: 0;
     }
 </style>

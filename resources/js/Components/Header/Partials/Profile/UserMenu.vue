@@ -3,7 +3,7 @@
     import { initials } from '@dicebear/collection';
     import Dropdown from '@/Components/Header/Partials/Dropdown/Dropdown.vue';
     import DropdownOption from '@/Components/Header/Partials/Dropdown/DropdownOption.vue';
-    import { ref, Transition } from 'vue';
+    import { ref } from 'vue';
 
     const props = defineProps({
         user: {
@@ -39,25 +39,11 @@
             <span class="material-symbols-outlined">
                 arrow_drop_down
             </span>
-            <Transition>
-                <Dropdown v-if="show" class="right-2.5 -bottom-24">
-                    <DropdownOption route="" icon="person">Profile</DropdownOption>
-                    <DropdownOption route="" icon="settings">Settings</DropdownOption>
-                    <DropdownOption :route="route('logout')" icon="logout">Logout</DropdownOption>
-                </Dropdown>
-            </Transition>
+            <Dropdown :show="show" class="right-2.5 -bottom-24">
+                <DropdownOption route="" icon="person">Profile</DropdownOption>
+                <DropdownOption route="" icon="settings">Settings</DropdownOption>
+                <DropdownOption :route="route('logout')" icon="logout">Logout</DropdownOption>
+            </Dropdown>
         </div>
     </button>
 </template>
-
-<style scoped>
-    .v-enter-active,
-    .v-leave-active {
-        transition: opacity 0.3s ease;
-    }
-
-    .v-enter-from,
-    .v-leave-to {
-        opacity: 0;
-    }
-</style>
