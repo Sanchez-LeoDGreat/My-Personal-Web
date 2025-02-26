@@ -1,8 +1,8 @@
 <script setup>
     import NavOption from '@/Components/Header/Partials/NavOption.vue';
     import { router } from '@inertiajs/vue3';
-    import { ref, onMounted, onUnmounted } from 'vue';
-    import ClickableLogo from '@/Components/Header/Partials/ClickableLogo.vue';
+    import { ref, onMounted } from 'vue';
+    import ClickableLogo from '@/Components/ClickableLogo.vue';
 
     const show = ref(false);
 
