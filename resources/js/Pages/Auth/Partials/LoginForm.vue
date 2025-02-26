@@ -26,7 +26,7 @@
     <AuthForm @submit.prevent="login">
         <HeaderText class="text-center">Login</HeaderText>
         <div class="my-2">
-            <LabelText for="email" class="block" :status="form.errors.email ? 'error' : ''">Email:</LabelText>
+            <LabelText for="email" :status="form.errors.email ? 'error' : ''">Email:</LabelText>
             <TextInput type="email" id="email" placeholder="Email" v-model="form.email" :status="form.errors.email ? 'error' : ''"/>
             <FieldMessage v-if="form.errors.email" status="error">{{ form.errors.email }}</FieldMessage>
 

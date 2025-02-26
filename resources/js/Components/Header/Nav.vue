@@ -4,7 +4,7 @@
     import { ref, onMounted } from 'vue';
     import ClickableLogo from '@/Components/ClickableLogo.vue';
 
-    const show = ref(false);
+    const show = ref(true);
 
     const closeMenu = () => {
         show.value = false;
