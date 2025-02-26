@@ -8,3 +8,11 @@
         display: none;
     }
 }
+
+.bg-custom-1 {
+    @apply relative bg-center bg-no-repeat bg-cover bg-[url('/public/static/img/bg1.jpg')];
+}
+
+.bg-custom-1::before {
+    @apply absolute inset-0 bg-black/40 content-[''];
+}

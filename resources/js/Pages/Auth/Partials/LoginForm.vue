@@ -6,6 +6,7 @@
     import CheckboxInput from "@/Components/Inputs/CheckboxInput.vue";
     import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
     import FieldMessage from "@/Components/Texts/FieldMessage.vue";
+    import AuthForm from "@/Pages/Auth/Partials/AuthForm.vue";
     import { useForm, Link } from "@inertiajs/vue3";
 
     const form = useForm({
@@ -22,7 +23,7 @@
 </script>
 
 <template>
-    <form @submit.prevent="login" class="px-6 py-2 border-2 border-white rounded-lg min-w-[30vw] mx-10 bg-slate-950">
+    <AuthForm @submit.prevent="login" class="px-6 py-2 border-2 border-white rounded-lg min-w-[30vw] mx-10 bg-slate-950/70 backdrop-blur-md">
         <HeaderText class="text-center">Login</HeaderText>
         <div class="my-2">
             <LabelText for="email" class="block" :status="form.errors.email ? 'error' : ''">Email:</LabelText>
@@ -43,5 +44,5 @@
 
             <Link href="" class="mt-1 text-blue-500 underline float-end">Forgot Password?</Link>
         </div>
-    </form>
+    </AuthForm>
 </template>

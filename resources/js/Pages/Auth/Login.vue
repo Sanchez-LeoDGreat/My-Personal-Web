@@ -1,13 +1,14 @@
 <script setup>
     import { Head } from '@inertiajs/vue3';
     import LoginForm from '@/Pages/Auth/Partials/LoginForm.vue';
+    import AuthLayout from '@/Layouts/Child/AuthLayout.vue';
 </script>
 
 <template>
     <Head title="Login"></Head>
-    <div class="flex justify-center flex-grow w-full place-items-center">
+    <AuthLayout>
         <LoginForm/>
-    </div>
+    </AuthLayout>
 </template>
 
 <style>

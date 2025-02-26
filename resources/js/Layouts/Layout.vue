@@ -8,8 +8,10 @@
         <header class="p-7">
             <Nav/>
         </header>
-        <div id="content-container" class="flex-grow px-4 py-2 text-white">
-            <slot/>
+        <div id="content-container" class="flex flex-grow text-white bg-custom-1">
+            <div class="relative flex flex-grow px-4 py-2">
+                <slot/>
+            </div>
         </div>
         <Footer/>
         <LoadingScreen/>
