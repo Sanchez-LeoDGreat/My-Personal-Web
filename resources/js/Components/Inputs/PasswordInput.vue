@@ -65,7 +65,7 @@
             <div class="flex-grow overflow-hidden">
                 <input :id="id" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="px-2 w-full py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
             </div>
-            <button type="button" @click="toggleShowPass" class="pl-2 pr-1 border-[1px] material-symbols-outlined border-l-gray-800" :class="setStatusColorIcon()">
+            <button type="button" @click="toggleShowPass" class="pl-2 pr-[5px] border-[1px] material-symbols-outlined border-l-gray-800" :class="setStatusColorIcon()">
                 {{ show ? 'visibility_off' : 'visibility' }}
             </button>
         </div>
