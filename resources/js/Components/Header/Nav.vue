@@ -1,8 +1,8 @@
 <script setup>
-    import Logo from '@/Components/SVG/Logo.vue';
     import NavOption from '@/Components/Header/Partials/NavOption.vue';
-    import { Link, router } from '@inertiajs/vue3';
+    import { router } from '@inertiajs/vue3';
     import { ref, onMounted, onUnmounted } from 'vue';
+    import ClickableLogo from '@/Components/Header/Partials/ClickableLogo.vue';
 
     const show = ref(false);
 
@@ -13,24 +13,19 @@
     onMounted(() => {
         router.on('navigate', closeMenu);
     });
-
-    onUnmounted(() => {
-        router.off('navigate', closeMenu);
-    });
 </script>
 
 <template>
     <nav class="fixed top-0 left-0 w-full text-white bg-slate-950">
         <div class="flex justify-between mr-1">
-            <Link :href="route('home')" class="w-12 m-1 hover:text-green-500">
-                <Logo/>
-            </Link>
+            <ClickableLogo/>
             <div class="hidden md:block">
                 <ul class="flex h-full gap-2 list-none">
                     <NavOption :route="route('home')" icon="home" :class="{'active' : $page.component === 'Home'}">Home</NavOption>
                     <NavOption :route="route('about')" icon="info" :class="{'active' : $page.component === 'About'}">About</NavOption>
                     <NavOption :route="route('contact')" icon="call" :class="{'active' : $page.component === 'Contact'}">Contact</NavOption>
                     <NavOption :route="route('projects')" icon="docs" :class="{'active' : $page.component === 'Projects'}">Projects</NavOption>
+                    <NavOption :route="route('login')" icon="login" :class="{'active' : $page.component === 'Auth/Login'}">Login</NavOption>
                 </ul>
             </div>
             <div class="block md:hidden">
@@ -39,13 +34,14 @@
                 </button>
             </div>
         </div>
-        <div class="overflow-hidden transition-all duration-300 md:hidden" :class="{'h-[115px]': show, 'h-0': !show}">
+        <div class="overflow-hidden transition-all duration-300 md:hidden" :class="{'h-[145px]': show, 'h-0': !show}">
             <hr/>
             <ul class="text-center list-none">
                 <NavOption :route="route('home')" icon="home" :mobileView="true" :class="{'active' : $page.component === 'Home'}">Home</NavOption>
                 <NavOption :route="route('about')" icon="info" :mobileView="true" :class="{'active' : $page.component === 'About'}">About</NavOption>
                 <NavOption :route="route('contact')" icon="call" :mobileView="true" :class="{'active' : $page.component === 'Contact'}">Contact</NavOption>
                 <NavOption :route="route('projects')" icon="docs" :mobileView="true" :class="{'active' : $page.component === 'Projects'}">Projects</NavOption>
+                <NavOption :route="route('login')" icon="login" :mobileView="true" :class="{'active' : $page.component === 'Auth/Login'}">Login</NavOption>
             </ul>
         </div>
     </nav>

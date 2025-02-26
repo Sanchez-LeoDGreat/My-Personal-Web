@@ -41,7 +41,7 @@
 
             <PrimaryButton type="submit" class="w-full" :disabled="form.processing">Login</PrimaryButton>
 
-            <Link class="mt-1 text-blue-500 underline float-end">Forgot Password?</Link>
+            <Link href="" class="mt-1 text-blue-500 underline float-end">Forgot Password?</Link>
         </div>
     </form>
 </template>

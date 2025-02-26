@@ -19,11 +19,6 @@
         router.on('start', startLoading);
         router.on('finish', routingFinished);
     });
-
-    onUnmounted(() => {
-        router.off('start', startLoading);
-        router.off('finish', routingFinished);
-    });
 </script>
 
 <template>
