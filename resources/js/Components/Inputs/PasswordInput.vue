@@ -31,13 +31,13 @@
     const setStatusColorInput = () => {
         switch(props.status){
             case 'success':
-                return 'text-green-900 dark:text-green-400 placeholder-green-700 dark:placeholder-green-500';
+                return 'text-green-900 placeholder-green-700';
             case 'error':
-                return 'text-red-900 dark:text-red-400 placeholder-red-700 dark:placeholder-red-500';
+                return 'text-red-900 placeholder-red-700';
             case 'warning':
-                return 'text-yellow-900 dark:text-yellow-400 placeholder-yellow-700 dark:placeholder-yellow-500';
+                return 'text-yellow-900 placeholder-yellow-700';
             default:
-                return 'text-gray-900 dark:text-gray-400 placeholder-gray-700 dark:placeholder-gray-500';
+                return 'text-gray-900 placeholder-gray-700';
         }
     }
 
@@ -61,7 +61,7 @@
 
 <template>
     <div class="mx-0.5">
-        <div class="flex w-full mb-1 overflow-hidden bg-white dark:bg-gray-700 rounded-[5px] ring-1 ring-offset-2 focus-within:ring-white focus-within:ring-offset-black" :class="setColorStatusContainer()">
+        <div class="flex w-full mb-1 overflow-hidden bg-white rounded-[5px] ring-1 ring-offset-2 focus-within:ring-white focus-within:ring-offset-black" :class="setColorStatusContainer()">
             <div class="flex-grow overflow-hidden">
                 <input :id="id" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="px-2 w-full py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
             </div>
