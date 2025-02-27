@@ -16,7 +16,7 @@
 </script>
 
 <template>
-    <nav class="fixed top-0 left-0 w-full text-white bg-slate-950">
+    <nav class="fixed top-0 left-0 z-10 w-full text-white bg-slate-950">
         <div class="flex justify-between mr-1">
             <ClickableLogo/>
             <div class="hidden md:block">

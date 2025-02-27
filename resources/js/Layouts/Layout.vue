@@ -1,6 +1,6 @@
 <script setup>
     import Nav from '@/Components/Header/Nav.vue';
-    import Footer from '@/Components/Footer.vue';
+    import Footer from '@/Components/Footer/Footer.vue';
     import LoadingScreen from '@/Components/LoadingScreen.vue';
     import bg1 from '@/assets/img/bg1.jpg';
 </script>

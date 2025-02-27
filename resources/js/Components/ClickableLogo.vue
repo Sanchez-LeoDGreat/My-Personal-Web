@@ -11,7 +11,12 @@
 </script>
 
 <template>
-    <Link :href="props.route" class="w-12 m-1 hover:text-green-500">
-        <Logo/>
+    <Link :href="props.route" class="flex max-h-14 hover:text-green-500">
+        <div class="flex max-w-full max-h-full place-items-center">
+            <Logo class="w-12 m-1"/>
+        </div>
+        <div class="my-auto font-bold text-nowrap">
+            Leo D' Great
+        </div>
     </Link>
 </template>

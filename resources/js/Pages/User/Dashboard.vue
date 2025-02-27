@@ -7,11 +7,18 @@
     defineOptions({
         layout: UserLayout,
     })
+
+    const props = defineProps({
+        user: {
+            type: Object,
+            required: true
+        }
+    });
 </script>
 
 <template>
     <Head title="Dashboard"></Head>
     <MarginLayout class="flex-grow">
-        <HeaderText>Logged In</HeaderText>
+        <HeaderText>Dashboard</HeaderText>
     </MarginLayout>
 </template>

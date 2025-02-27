@@ -35,10 +35,7 @@
             <FieldMessage v-if="form.errors.password" status="error">{{ form.errors.password }}</FieldMessage>
             <FieldMessage v-if="form.errors.login" status="error">{{ form.errors.login }}</FieldMessage>
 
-            <label for="remember" class="flex gap-1 my-2 text-sm select-none place-items-center">
-                <CheckboxInput id="remember" v-model="form.remember"/>
-                <span>Remember Me</span>
-            </label>
+            <CheckboxInput id="remember" v-model="form.remember">Remember Me</CheckboxInput>
 
             <PrimaryButton type="submit" class="w-full" :disabled="form.processing">Login</PrimaryButton>
 

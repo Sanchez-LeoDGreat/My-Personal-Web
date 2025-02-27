@@ -5,6 +5,11 @@ import { createInertiaApp } from '@inertiajs/vue3'
 import Layout from './Layouts/Layout.vue';
 import { ZiggyVue } from '../../vendor/tightenco/ziggy';
 import $ from 'jquery';
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fas)
 
 window.$ = window.jQuery = $;
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
@@ -19,6 +24,7 @@ createInertiaApp({
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
+            .component('FontAwesomeIcon', FontAwesomeIcon)
             .use(plugin)
             .use(ZiggyVue)
             .mount(el)
