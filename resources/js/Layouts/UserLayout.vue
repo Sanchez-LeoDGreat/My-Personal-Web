@@ -13,15 +13,17 @@
 </script>
 
 <template>
-    <main class="relative flex flex-col w-full min-h-screen bg-slate-900 ml-14">
-        <header class="p-7">
-            <UserNav :user="user"/>
-        </header>
-        <UserSidebar/>
-        <div id="content-container" class="flex-grow px-4 py-2 text-white">
-            <slot/>
+    <main class="relative">
+        <div class="flex flex-col w-full min-h-screen ml-14 bg-slate-900">
+            <header class="p-7">
+                <UserNav :user="user"/>
+            </header>
+            <UserSidebar/>
+            <div id="content-container" class="flex-grow text-white">
+                <slot/>
+            </div>
+            <Footer/>
         </div>
-        <Footer/>
         <LoadingScreen/>
     </main>
 </template>
