@@ -9,7 +9,7 @@
         <header class="p-7">
             <Nav/>
         </header>
-        <div id="content-container" :style="{ backgroundImage: `url(${bg1})` }" class="flex flex-grow px-4 py-2 text-white bg-center bg-no-repeat bg-cover">
+        <div id="content-container" :style="{ backgroundImage: `url(${bg1})` }" class="flex flex-grow text-white bg-center bg-no-repeat bg-cover">
             <slot/>
         </div>
         <Footer/>

@@ -1,0 +1,5 @@
+<template>
+    <div class="mx-4 my-2">
+        <slot/>
+    </div>
+</template>
