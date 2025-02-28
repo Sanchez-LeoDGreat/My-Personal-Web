@@ -2,7 +2,8 @@
     import ClickableLogo from '@/Components/ClickableLogo.vue';
     import SidebarOption from './Partials/SidebarOption.vue';
     import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
-    import { onMounted, onUnmounted, ref } from 'vue';
+    import { computed, onMounted, onUnmounted, ref } from 'vue';
+    import { usePage } from '@inertiajs/vue3';
 
     const sidebarRef = ref(null);
     const showSlot = ref(false);
@@ -19,6 +20,9 @@
 
         sidebar.off();
     });
+
+    const page = usePage();
+    const component = computed(() => page.component);
 </script>
 
 <template>
@@ -26,7 +30,7 @@
         <ClickableLogo :route="route('user.dashboard')"/>
         <hr>
         <ul class="flex flex-col flex-grow gap-1 py-2 overflow-y-auto">
-            <SidebarOption :route="route('user.dashboard')" :icon="faChartColumn" :isActive="$page.component == 'User/Dashboard'" :showSlot="showSlot">Dashboard</SidebarOption>
+            <SidebarOption :route="route('user.dashboard')" :icon="faChartColumn" :isActive="component == 'User/Dashboard'" :showSlot="showSlot">Dashboard</SidebarOption>
         </ul>
     </div>
 </template>
