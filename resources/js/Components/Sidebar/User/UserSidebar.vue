@@ -1,7 +1,7 @@
 <script setup>
     import ClickableLogo from '@/Components/ClickableLogo.vue';
     import SidebarOption from './Partials/SidebarOption.vue';
-    import { faChartColumn, faCableCar } from '@fortawesome/free-solid-svg-icons';
+    import { faChartColumn } from '@fortawesome/free-solid-svg-icons';
     import { onMounted, onUnmounted, ref } from 'vue';
 
     const sidebarRef = ref(null);
