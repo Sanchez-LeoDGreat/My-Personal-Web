@@ -1,5 +1,4 @@
 <script setup>
-    import { faGithub, faFacebook, faYoutube, faTiktok } from '@fortawesome/free-brands-svg-icons';
     import FooterIcon from './Partials/FooterIcon.vue';
     import { faCopyright } from '@fortawesome/free-solid-svg-icons';
 </script>
@@ -14,10 +13,10 @@
                 </p>
             </div>
             <div class="flex justify-center gap-2">
-                <FooterIcon route="" :icon="faGithub"/>
-                <FooterIcon route="" :icon="faFacebook"/>
-                <FooterIcon route="" :icon="faYoutube"/>
-                <FooterIcon route="" :icon="faTiktok"/>
+                <FooterIcon route="" :icon="['fab', 'github']"/>
+                <FooterIcon route="" :icon="['fab', 'facebook']"/>
+                <FooterIcon route="" :icon="['fab', 'youtube']"/>
+                <FooterIcon route="" :icon="['fab', 'tiktok']"/>
             </div>
         </div>
 
