@@ -7,6 +7,6 @@
 
 <template>
     <a :href="route" target="_blank" class="h-full hover:text-green-500 active:text-blue-500">
-        <FontAwesomeIcon :icon="icon" class="text-xl"/>
+        <font-awesome-icon :icon="icon" class="text-xl"/>
     </a>
 </template>

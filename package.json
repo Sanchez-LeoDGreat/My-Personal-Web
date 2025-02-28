@@ -17,6 +17,7 @@
     "dependencies": {
         "@dicebear/collection": "^9.2.2",
         "@dicebear/core": "^9.2.2",
+        "@duskmoon/vue3-typed-js": "^0.0.4",
         "@fortawesome/fontawesome-svg-core": "^6.7.2",
         "@fortawesome/free-brands-svg-icons": "^6.7.2",
         "@fortawesome/free-regular-svg-icons": "^6.7.2",

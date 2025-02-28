@@ -8,7 +8,7 @@
         <div class="justify-between mx-2 md:flex">
             <div class="text-sm text-center md:flex place-items-center">
                 <p>
-                    <FontAwesomeIcon :icon="faCopyright"/>
+                    <font-awesome-icon :icon="faCopyright"/>
                     <span><span class="font-bold"> Developed by:</span> Sanchez, Leonard Paulo G.</span>
                 </p>
             </div>

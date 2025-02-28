@@ -26,7 +26,7 @@ createInertiaApp({
     },
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
-            .component('FontAwesomeIcon', FontAwesomeIcon)
+            .component('font-awesome-icon', FontAwesomeIcon)
             .use(plugin)
             .use(ZiggyVue)
             .mount(el)

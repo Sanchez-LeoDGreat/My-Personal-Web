@@ -66,7 +66,7 @@
                 <input :id="id" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" :placeholder="placeholder" :type="show ? 'text' : 'password'" ref="passwordInput" class="px-2 w-full py-1.5 text-sm border-0 outline-none" :class="setStatusColorInput()">
             </div>
             <button type="button" @click="toggleShowPass" class="pl-2 pr-[5px] border-[1px] border-l-gray-800" :class="setStatusColorIcon()">
-                <FontAwesomeIcon :icon="show ? ['fas', 'eye-slash'] : ['fas', 'eye']" class="w-5"/>
+                <font-awesome-icon :icon="show ? ['fas', 'eye-slash'] : ['fas', 'eye']" class="w-5"/>
             </button>
         </div>
     </div>
