@@ -24,27 +24,27 @@
             <ClickableLogo/>
             <div class="hidden md:block">
                 <ul class="flex h-full gap-2 list-none">
-                    <NavOption :route="route('home')" icon="home" :class="{'active' : component === 'Home'}">Home</NavOption>
-                    <NavOption :route="route('about')" icon="info" :class="{'active' : component === 'About'}">About</NavOption>
-                    <NavOption :route="route('contact')" icon="call" :class="{'active' : component === 'Contact'}">Contact</NavOption>
-                    <NavOption :route="route('projects')" icon="docs" :class="{'active' : component === 'Projects'}">Projects</NavOption>
-                    <NavOption :route="route('login')" icon="login" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
+                    <NavOption :route="route('home')" :icon="['fas', 'house']" :class="{'active' : component === 'Home'}">Home</NavOption>
+                    <NavOption :route="route('about')" :icon="['fas', 'circle-info']" :class="{'active' : component === 'About'}">About</NavOption>
+                    <NavOption :route="route('contact')" :icon="['fas', 'phone']" :class="{'active' : component === 'Contact'}">Contact</NavOption>
+                    <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :class="{'active' : component === 'Projects'}">Projects</NavOption>
+                    <NavOption :route="route('login')" :icon="['fas', 'right-to-bracket']" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
                 </ul>
             </div>
             <div class="block md:hidden">
-                <button @click="show=!show" class="h-full text-3xl material-symbols-outlined hover:text-green-500">
-                    menu
+                <button @click="show=!show" class="h-full mx-2 text-2xl hover:text-green-500 active:text-blue-500">
+                    <font-awesome-icon :icon="['fas', 'bars']"/>
                 </button>
             </div>
         </div>
         <div class="overflow-hidden transition-all duration-300 md:hidden" :class="{'h-[145px]': show, 'h-0': !show}">
             <hr/>
             <ul class="text-center list-none">
-                <NavOption :route="route('home')" icon="home" :mobileView="true" :class="{'active' : component === 'Home'}">Home</NavOption>
-                <NavOption :route="route('about')" icon="info" :mobileView="true" :class="{'active' : component === 'About'}">About</NavOption>
-                <NavOption :route="route('contact')" icon="call" :mobileView="true" :class="{'active' : component === 'Contact'}">Contact</NavOption>
-                <NavOption :route="route('projects')" icon="docs" :mobileView="true" :class="{'active' : component === 'Projects'}">Projects</NavOption>
-                <NavOption :route="route('login')" icon="login" :mobileView="true" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
+                <NavOption :route="route('home')" :icon="['fas', 'house']" :mobileView="true" :class="{'active' : component === 'Home'}">Home</NavOption>
+                <NavOption :route="route('about')" :icon="['fas', 'circle-info']" :mobileView="true" :class="{'active' : component === 'About'}">About</NavOption>
+                <NavOption :route="route('contact')" :icon="['fas', 'phone']" :mobileView="true" :class="{'active' : component === 'Contact'}">Contact</NavOption>
+                <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :mobileView="true" :class="{'active' : component === 'Projects'}">Projects</NavOption>
+                <NavOption :route="route('login')" :icon="['fas', 'right-to-bracket']" :mobileView="true" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
             </ul>
         </div>
     </nav>

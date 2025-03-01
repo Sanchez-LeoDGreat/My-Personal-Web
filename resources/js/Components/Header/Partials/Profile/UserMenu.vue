@@ -36,13 +36,11 @@
             <span>
                 {{ name }}
             </span>
-            <span class="material-symbols-outlined">
-                arrow_drop_down
-            </span>
+            <font-awesome-icon :icon="['fas', 'caret-down']" class="mx-2"/>
             <Dropdown :show="show" class="right-2.5 -bottom-24">
-                <DropdownOption route="" icon="person">Profile</DropdownOption>
-                <DropdownOption route="" icon="settings">Settings</DropdownOption>
-                <DropdownOption :route="route('logout')" icon="logout">Logout</DropdownOption>
+                <DropdownOption route="" :icon="['fas', 'user']">Profile</DropdownOption>
+                <DropdownOption route="" :icon="['fas', 'gear']">Settings</DropdownOption>
+                <DropdownOption :route="route('logout')" :icon="['fas', 'right-from-bracket']">Logout</DropdownOption>
             </Dropdown>
         </div>
     </button>

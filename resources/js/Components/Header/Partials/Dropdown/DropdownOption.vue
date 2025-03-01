@@ -6,7 +6,7 @@
             required: true,
         },
         icon: {
-            type: String,
+            type: [String, Array],
             required: true,
         },
     });
@@ -14,10 +14,8 @@
 
 <template>
     <Link :href="props.route" class="w-full">
-        <li class="flex w-full px-2 py-1 place-items-center hover:text-white hover:bg-blue-500">
-            <span class="material-symbols-outlined">
-                {{ icon }}
-            </span>
+        <li class="flex w-full gap-1 px-2 py-1 place-items-center hover:text-white hover:bg-blue-500">
+            <font-awesome-icon :icon="icon"/>
             <span class="mr-2">
                 <slot/>
             </span>
