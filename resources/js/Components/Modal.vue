@@ -90,8 +90,8 @@
     <dialog ref="dialog" @click="closeOnBackdropClick" @cancel.prevent="close" class="fixed inset-0 z-40 flex justify-center bg-transparent place-items-center">
         <Transition>
             <div v-if="show" class="md:min-w-[25vw] min-w-[50vw] max-h-[75vh] max-w-[80vw] flex flex-col rounded-lg overflow-hidden">
-                <div class="px-2 py-1 text-xl font-bold" :class="captionBgColor()">{{ captionText() }}</div>
-                <div class="flex flex-col flex-grow px-2 py-1 overflow-auto bg-white min-h-28">
+                <div class="px-4 py-2 text-2xl font-bold" :class="captionBgColor()">{{ captionText() }}</div>
+                <div class="flex flex-col flex-grow px-4 py-2 overflow-auto text-xl bg-white min-h-28">
                     <slot/>
                 </div>
             </div>
