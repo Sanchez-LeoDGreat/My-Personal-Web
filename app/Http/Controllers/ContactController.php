@@ -19,7 +19,7 @@ class ContactController extends Controller
         $validated = $request->validate([
             'full_name' => 'required',
             'email' => 'required|email',
-            'phone_number' => 'required|numeric',
+            'phone_number' => 'required|numeric|min_digits:11|max_digits:11',
             'subject' => 'required',
             'message' => 'required|min:3'
         ]);
@@ -28,7 +28,7 @@ class ContactController extends Controller
             Mail::to(config('mail.to.address'), config('mail.to.name'))->send(new ContactMe($validated));
             return to_route('contact');
         } catch (\Exception $e) {
-            return to_route('contact')->withErrors(['failed' => 'Failed to send email.<br>Error: ' . $e->getMessage() . '<br>Please try again later.']);
+            return to_route('contact')->withErrors(['failed' => "<b>Error: </b>" . $e->getMessage() . "<br><br>Please try again later."]);
         }
     }
 }

@@ -77,8 +77,8 @@
         </DarkGlass>
     </MarginLayout>
     <Modal v-model:show="modal.show" :type="modal.type">
-        <div class="flex-grow" v-text="modal.message"></div>
-        <div class="flex justify-end gap-2">
+        <div class="flex-grow pb-2 overflow-x-auto" v-html="modal.message"></div>
+        <div class="flex justify-end gap-2 pt-2 mt-1 border-t-2 border-gray-500">
             <SecondaryButton @click="modal.show=false">OK</SecondaryButton>
         </div>
     </Modal>
