@@ -14,10 +14,7 @@
             type: String,
             default: 'info'
         },
-        caption: {
-            type: String,
-            default: ''
-        },
+        caption: String,
     });
 
     const emit = defineEmits(['update:show']);
@@ -89,7 +86,7 @@
 <template>
     <dialog ref="dialog" @click="closeOnBackdropClick" @cancel.prevent="close" class="fixed inset-0 z-40 flex justify-center bg-transparent place-items-center">
         <Transition>
-            <div v-if="show" class="md:min-w-[25vw] min-w-[50vw] max-h-[75vh] max-w-[80vw] flex flex-col rounded-lg overflow-hidden">
+            <div v-if="show" class="md:min-w-[25vw] md:max-w-[70vw] min-w-[50vw] max-h-[75vh] max-w-[80vw] flex flex-col rounded-lg overflow-hidden">
                 <div class="px-4 py-2 text-2xl font-bold" :class="captionBgColor()">{{ captionText() }}</div>
                 <div class="flex flex-col flex-grow max-w-full px-4 py-2 overflow-y-auto text-xl bg-white min-h-28">
                     <slot/>

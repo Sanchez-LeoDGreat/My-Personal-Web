@@ -1,5 +1,5 @@
 <script setup>
-    import { Head, useForm, usePage } from '@inertiajs/vue3';
+    import { Head, useForm } from '@inertiajs/vue3';
     import HeaderText from '@/Components/Texts/HeaderText.vue';
     import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
@@ -8,7 +8,9 @@
     import FieldMessage from '@/Components/Texts/FieldMessage.vue';
     import TextArea from '@/Components/Inputs/TextArea.vue';
     import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
-    import Modal from '@/Components/Modal.vue';
+    import Modal from '@/Components/Modal/Modal.vue';
+    import ModalMessage from '@/Components/Modal/Partials/ModalMessage.vue';
+    import ModalButtons from '@/Components/Modal/Partials/ModalButtons.vue';
     import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
     import { ref } from 'vue';
 
@@ -77,9 +79,9 @@
         </DarkGlass>
     </MarginLayout>
     <Modal v-model:show="modal.show" :type="modal.type">
-        <div class="flex-grow pb-2 overflow-x-auto" v-html="modal.message"></div>
-        <div class="flex justify-end gap-2 pt-2 mt-1 border-t-2 border-gray-500">
-            <SecondaryButton @click="modal.show=false">OK</SecondaryButton>
-        </div>
+        <ModalMessage :message="modal.message"/>
+        <ModalButtons>
+            <SecondaryButton @click="modal.show=false" focus-on-show>OK</SecondaryButton>
+        </ModalButtons>
     </Modal>
 </template>
