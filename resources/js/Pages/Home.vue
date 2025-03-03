@@ -28,17 +28,19 @@
                     <HeaderText>
                         <span>I'm </span><TypeWriter class="inline" :strings="mySkills"/>
                     </HeaderText>
-                    <div class="flex flex-col gap-2 text-justify">
-                        <p>"Sharpen first, cut fast."</p>
+                    <div class="flex text-justify">
                         <p>
+                            "Sharpen first, cut fast."
+                            <br><br>
                             Success isn't just about hard work—it's about working smart.
                             Whether it's crafting efficient solutions, refining ideas,
                             or building innovative projects, I believe preparation
                             is the key to excellence. Here, you'll find my journey,
                             skills, and insights, all shaped by a commitment to sharpening
                             my craft before taking action.
+                            <br><br>
+                            Let's create something great together.
                         </p>
-                        <p>Let's create something great together.</p>
                     </div>
                     <button class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
                 </div>
