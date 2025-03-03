@@ -4,7 +4,7 @@
     import UserSidebar from '@/Components/Sidebar/User/UserSidebar.vue';
     import Footer from '@/Components/Footer/Footer.vue';
     import LoadingScreen from '@/Components/LoadingScreen.vue';
-    import asset from '@/utils/asset';
+    import StaticAsset from '@/Utils/StaticAsset';
     import { usePage } from '@inertiajs/vue3';
     import { computed } from 'vue';
 
@@ -26,7 +26,7 @@
             <div v-if="isUserPage" id="content-container" class="flex-grow text-white">
                 <slot/>
             </div>
-            <div v-else id="content-container" :style="{ backgroundImage: `url(${asset.img.bg1})` }" class="flex flex-grow text-white bg-center bg-no-repeat bg-cover">
+            <div v-else id="content-container" :style="{ backgroundImage: `url(${StaticAsset.img.bg1})` }" class="flex flex-grow text-white bg-center bg-no-repeat bg-cover">
                 <slot/>
             </div>
             <Footer/>
