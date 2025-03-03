@@ -3,7 +3,7 @@
     import HeaderText from '@/Components/Texts/HeaderText.vue';
     import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import hero from '@/assets/img/hero.png';
+    import asset from '@/utils/asset';
     import TypeWriter from '@/Components/Effects/TextEffect/TypeWriter.vue';
 
     const greenText = (txt) => `<span class="text-green-500">${txt}</span>`;
@@ -45,7 +45,7 @@
                     <button class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
                 </div>
                 <div class="md:w-[45%]">
-                    <img :src="hero" alt="hero.png">
+                    <img :src="asset.img.hero" alt="hero.png">
                 </div>
             </div>
         </DarkGlass>

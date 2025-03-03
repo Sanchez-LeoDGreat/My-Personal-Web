@@ -3,14 +3,10 @@
     import HeaderText from '@/Components/Texts/HeaderText.vue';
     import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import OdooLogo from '@/Components/SVG/OdooLogo.vue';
-    import PythonLogo from '@/Components/SVG/PythonLogo.vue';
-    import DotNetLogo from '@/Components/SVG/DotNetLogo.vue';
-    import CLogo from '@/Components/SVG/CLogo.vue';
-    import CSharpLogo from '@/Components/SVG/CSharpLogo.vue';
-    import GodotLogo from '@/Components/SVG/GodotLogo.vue';
-    import TailwindLogo from '@/Components/SVG/TailwindLogo.vue';
     import Timeline from '@/Components/Timeline/Timeline.vue';
+    import IconCard from '@/Components/IconCard.vue';
+    import asset from '@/utils/asset.js';
+    import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
 </script>
 <template>
     <Head title="About"/>
@@ -32,78 +28,22 @@
                 <HeaderText class="mb-2">My <span class="text-green-500">Skills</span></HeaderText>
                 <div class="flex flex-wrap justify-start gap-2">
                     <!-- Languges and Stylesheets -->
-                    <div class="flex gap-2 px-4 py-2 text-blue-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-blue-300">
-                        <div class="w-5">
-                            <CLogo/>
-                        </div>
-                        <div class="text-white">C Language</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-purple-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-purple-300">
-                        <div class="w-5">
-                            <CSharpLogo/>
-                        </div>
-                        <div class="text-white">C# Language</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-orange-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-orange-300">
-                        <font-awesome-icon :icon="['fab', 'html5']" class="text-xl"/>
-                        <div class="text-white">HTML5</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-blue-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-blue-300">
-                        <font-awesome-icon :icon="['fab', 'css3-alt']" class="text-xl"/>
-                        <div class="text-white">CSS</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 rounded-md shadow-sm text-cyan-500 backdrop-blur-sm bg-slate-950/5 place-items-center shadow-cyan-300">
-                        <div class="w-7">
-                            <TailwindLogo/>
-                        </div>
-                        <div class="text-white">Tailwind CSS</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-yellow-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-yellow-300">
-                        <font-awesome-icon :icon="['fab', 'js']" class="text-xl"/>
-                        <div class="text-white">JavaScript</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-blue-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-blue-300">
-                        <font-awesome-icon :icon="['fab', 'php']" class="text-xl"/>
-                        <div class="text-white">PHP</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-yellow-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-yellow-300">
-                        <div class="w-7">
-                            <PythonLogo/>
-                        </div>
-                        <div class="text-white">Python</div>
-                    </div>
+                    <IconCard :icon="asset.svg.c" class="text-blue-500 shadow-blue-300">C Language</IconCard>
+                    <IconCard :icon="asset.svg.cSharp" class="text-purple-500 shadow-purple-300">C# Language</IconCard>
+                    <IconCard :icon="faHtml5" class="text-orange-500 shadow-orange-300">HTML5</IconCard>
+                    <IconCard :icon="faCss3Alt" class="text-blue-500 shadow-blue-300">CSS</IconCard>
+                    <IconCard :icon="asset.svg.tailwindCss" class="shadow-cyan-300">Tailwind CSS</IconCard>
+                    <IconCard :icon="faJs" class="text-yellow-500 shadow-yellow-300">JavaScript</IconCard>
+                    <IconCard :icon="faPhp" class="text-blue-500 shadow-blue-300">PHP</IconCard>
+                    <IconCard :icon="asset.svg.python" class="shadow-yellow-300" iconClass="w-6">Python</IconCard>
 
                     <!-- Frameworks/Enginges etc. -->
-                    <div class="flex gap-2 px-4 py-2 text-purple-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-purple-300">
-                        <div class="w-6">
-                            <DotNetLogo/>
-                        </div>
-                        <div class="text-white">.NET Framework</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 rounded-md shadow-sm text-cyan-500 backdrop-blur-sm bg-slate-950/5 place-items-center shadow-cyan-300">
-                        <font-awesome-icon :icon="['fab', 'wordpress']" class="text-xl"/>
-                        <div class="text-white">WordPress</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-blue-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-blue-300">
-                        <div class="w-6">
-                            <GodotLogo/>
-                        </div>
-                        <div class="text-white">Godot</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-purple-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-purple-300">
-                        <div class="w-12">
-                            <OdooLogo/>
-                        </div>
-                        <div class="text-white">Odoo</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-orange-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-orange-300">
-                        <font-awesome-icon :icon="['fab', 'laravel']" class="text-xl"/>
-                        <div class="text-white">Laravel</div>
-                    </div>
-                    <div class="flex gap-2 px-4 py-2 text-green-500 rounded-md shadow-sm backdrop-blur-sm bg-slate-950/5 place-items-center shadow-green-300">
-                        <font-awesome-icon :icon="['fab', 'vuejs']" class="text-xl"/>
-                        <div class="text-white">VueJS</div>
-                    </div>
+                    <IconCard :icon="asset.svg.dotNet" class="shadow-purple-300">.NET Framework</IconCard>
+                    <IconCard :icon="faWordpress" class="text-cyan-500 shadow-cyan-300">WordPress</IconCard>
+                    <IconCard :icon="asset.svg.godot" class="shadow-blue-300">Godot</IconCard>
+                    <IconCard :icon="asset.svg.odoo" class="shadow-purple-300" iconClass="w-10">Odoo</IconCard>
+                    <IconCard :icon="faLaravel" class="text-orange-500 shadow-orange-300">Laravel</IconCard>
+                    <IconCard :icon="faVuejs" class="text-green-500 shadow-green-300">VueJS</IconCard>
                 </div>
             </div>
             <div>

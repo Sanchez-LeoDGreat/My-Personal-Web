@@ -1,0 +1,25 @@
+const appUrl = import.meta.env.VITE_APP_URL || 'http://localhost';
+const svgPath = appUrl + '/static/assets/svg/';
+const imgPath = appUrl +'/static/assets/img/';
+
+const getUrl = (url) => {
+    return new URL(url, import.meta.url).href || '';
+}
+
+const svg = {
+    c: getUrl(svgPath + 'c-icon.svg'),
+    cSharp: getUrl(svgPath + 'c-sharp-icon.svg'),
+    dotNet: getUrl(svgPath + 'dot-net-icon.svg'),
+    godot: getUrl(svgPath + 'godot-icon.svg'),
+    myLogo: getUrl(svgPath + 'my-logo.svg'),
+    odoo: getUrl(svgPath + 'odoo-icon.svg'),
+    python: getUrl(svgPath + 'python-icon.svg'),
+    tailwindCss: getUrl(svgPath + 'tailwind-css-icon.svg'),
+};
+
+const img = {
+    bg1: getUrl(imgPath + 'bg1.jpg'),
+    hero: getUrl(imgPath + 'hero.png'),
+};
+
+export default { svg, img }
