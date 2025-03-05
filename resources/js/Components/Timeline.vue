@@ -13,12 +13,12 @@
             <div class="container" :class="index % 2 ? 'right-container' : 'left-container'">
                 <div class="timeline-box">
                     <div class="timeline-content">
-                        <p class="text-xl font-bold text-green-500 md:text-center">{{ row.title }}</p>
-                        <p class="flex gap-2 font-medium text-green-500 md:justify-center place-items-center">
+                        <p v-if="row.title" class="text-xl font-bold text-green-500 md:text-center">{{ row.title }}</p>
+                        <p v-if="row.timespan" class="flex gap-2 font-medium text-green-500 md:justify-center place-items-center">
                             <font-awesome-icon :icon="['fas', 'calendar']"/>
                             <span>{{ row.timespan }}</span>
                         </p>
-                        <p class="text-justify" v-html="row.content"></p>
+                        <p v-if="row.content" class="text-justify" v-html="row.content"></p>
                     </div>
                 </div>
             </div>
