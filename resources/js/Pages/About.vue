@@ -3,10 +3,33 @@
     import HeaderText from '@/Components/Texts/HeaderText.vue';
     import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import Timeline from '@/Components/Timeline/Timeline.vue';
+    import Timeline from '@/Components/Timeline.vue';
     import IconCard from '@/Components/IconCard.vue';
     import StaticAsset from '@/Utils/StaticAsset.js';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
+
+    const timeLineRows = [
+        {
+            timespan: "2021-2022",
+            title: "1st Year College",
+            content: "When I started college, I had no idea what programming actually was since I came from a STEM background in senior high school. Our professors expected us to already know how to write code, but I didn't. However, that didn't stop me. Instead, I used my lack of knowledge as motivation to start learning. This mindset helped me tackle our activities, such as building console applications using C and C#.",
+        },
+        {
+            timespan: "2022-2023",
+            title: "2nd Year College",
+            content: "In my 2nd year, we were required to develop a Windows application using the .NET Framework as part of our capstone project. My group members chose me as the system's developer while they focused on the research papers. This was the moment when my programming skills, which I had honed through self-learning, were finally recognized. During this time, I also helped many of my classmates with their systems, further making my skills known to others.",
+        },
+        {
+            timespan: "2023-2024",
+            title: "3rd Year College",
+            content: "In my 3rd year, we started learning web development, and since my programming skills were well-known, I began taking on fellow students as clients. After completing my own web project, I helped others by debugging their code, adding features, and even developing entire projects for them. Around this time, I also started learning the Godot Game Engine for game development.",
+        },
+        {
+            timespan: "2024-2025",
+            title: "4th Year College",
+            content: "During 4th year... TO BE CONTINUED",
+        },
+    ];
 </script>
 <template>
     <Head title="About"/>
@@ -22,6 +45,7 @@
                     in a small pond—I know there’s so much more to learn, and working with others is the best
                     way to grow. I believe that every developer has something valuable to share, and I’m excited
                     to be part of a team where we can learn from each other and build amazing things together.
+
                 </p>
             </div>
             <div>
@@ -47,8 +71,8 @@
                 </div>
             </div>
             <div>
-                <HeaderText>My <span class="text-green-500">Experience</span></HeaderText>
-                <Timeline/>
+                <HeaderText class="mb-2">My <span class="text-green-500">Experience</span></HeaderText>
+                <Timeline :rows="timeLineRows"/>
             </div>
         </DarkGlass>
     </MarginLayout>
