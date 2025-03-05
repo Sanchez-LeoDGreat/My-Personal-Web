@@ -9,6 +9,7 @@
     import Modal from '@/Components/Modal/Modal.vue';
     import ModalMessage from '@/Components/Modal/Partials/ModalMessage.vue';
     import ModalButtons from '@/Components/Modal/Partials/ModalButtons.vue';
+    import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
     import { onMounted, ref } from 'vue';
 
@@ -28,9 +29,9 @@
     const getExperienceTimeline = async () => {
         try{
             const response = await axios.get(route('api.get-timeline'), {
-            params: {
-                name: 'experience_timeline',
-            },
+                params: {
+                    name: 'experience_timeline',
+                },
             });
             const data = response.data;
             if (data.success){
@@ -96,7 +97,7 @@
     <Modal v-model:show="modal.show" :type="modal.type">
         <ModalMessage :message="modal.message"/>
         <ModalButtons>
-
+            <SecondaryButton @click="modal.show=false" focus-on-show>OK</SecondaryButton>
         </ModalButtons>
     </Modal>
 </template>
