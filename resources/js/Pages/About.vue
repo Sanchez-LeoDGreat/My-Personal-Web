@@ -1,17 +1,10 @@
 <script setup>
-    import { Head, useForm } from '@inertiajs/vue3';
-    import HeaderText from '@/Components/Texts/HeaderText.vue';
-    import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
+    import { Head } from '@inertiajs/vue3';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import Timeline from '@/Components/Timeline.vue';
-    import IconCard from '@/Components/IconCard.vue';
     import StaticAsset from '@/Utils/StaticAsset.js';
-    import Modal from '@/Components/Modal/Modal.vue';
-    import ModalMessage from '@/Components/Modal/Partials/ModalMessage.vue';
-    import ModalButtons from '@/Components/Modal/Partials/ModalButtons.vue';
-    import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
-    import { onMounted, ref } from 'vue';
+    import { nextTick, onMounted, ref } from 'vue';
+    import { HeaderText, DarkGlass, Timeline, IconCard, Modal, ModalMessage, ModalButtons, SecondaryButton } from '@/Utils/MyComponents';
 
     const expTimeline = ref({
         loading: {
@@ -58,6 +51,7 @@
     }
 
     onMounted(async () => {
+        await nextTick();
         getExperienceTimeline();
     });
 </script>

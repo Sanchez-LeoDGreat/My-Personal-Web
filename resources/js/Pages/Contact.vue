@@ -1,17 +1,7 @@
 <script setup>
     import { Head, useForm } from '@inertiajs/vue3';
-    import HeaderText from '@/Components/Texts/HeaderText.vue';
-    import DarkGlass from '@/Components/Effects/GlassMorphism/DarkGlass.vue';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import TextInput from '@/Components/Inputs/TextInput.vue';
-    import LabelText from '@/Components/Texts/LabelText.vue';
-    import FieldMessage from '@/Components/Texts/FieldMessage.vue';
-    import TextArea from '@/Components/Inputs/TextArea.vue';
-    import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
-    import Modal from '@/Components/Modal/Modal.vue';
-    import ModalMessage from '@/Components/Modal/Partials/ModalMessage.vue';
-    import ModalButtons from '@/Components/Modal/Partials/ModalButtons.vue';
-    import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
+    import { ModalButtons, ModalMessage, Modal, FieldMessage, LabelText, TextInput, SecondaryButton, PrimaryButton, TextAreaInput, HeaderText, DarkGlass } from '@/Utils/MyComponents';
     import { nextTick, ref } from 'vue';
 
     const modal = ref({
@@ -73,7 +63,7 @@
                 <FieldMessage v-if="form.errors.subject" status="error">{{ form.errors.subject }}</FieldMessage>
 
                 <LabelText for="message" :status="form.errors.message ? 'error' : ''">Message</LabelText>
-                <TextArea id="message" placeholder="Message" v-model="form.message" :status="form.errors.message ? 'error' : ''"/>
+                <TextAreaInput id="message" placeholder="Message" v-model="form.message" :status="form.errors.message ? 'error' : ''"/>
                 <FieldMessage v-if="form.errors.message" status="error">{{ form.errors.message }}</FieldMessage>
 
                 <PrimaryButton type="submit" :disabled="form.processing" class="block mx-auto mt-4">Send Message</PrimaryButton>

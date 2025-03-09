@@ -1,13 +1,7 @@
 <script setup>
-    import HeaderText from "@/Components/Texts/HeaderText.vue";
-    import LabelText from "@/Components/Texts/LabelText.vue";
-    import TextInput from "@/Components/Inputs/TextInput.vue";
-    import PasswordInput from "@/Components/Inputs/PasswordInput.vue";
-    import CheckboxInput from "@/Components/Inputs/CheckboxInput.vue";
-    import PrimaryButton from '@/Components/Buttons/PrimaryButton.vue';
-    import FieldMessage from "@/Components/Texts/FieldMessage.vue";
     import AuthForm from "@/Pages/Auth/Partials/AuthForm.vue";
     import { useForm, Link } from "@inertiajs/vue3";
+    import { HeaderText, LabelText, TextInput, PasswordInput, CheckboxInput, PrimaryButton, FieldMessage } from "@/Utils/MyComponents";
 
     const form = useForm({
         email: null,

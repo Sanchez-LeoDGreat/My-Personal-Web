@@ -1,5 +1,5 @@
 <script setup>
-    import HeaderText from '@/Components/Texts/Headertext.vue';
+    import { HeaderText } from '@/Utils/MyComponents';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import { Head } from '@inertiajs/vue3';
 
