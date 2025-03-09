@@ -3,7 +3,7 @@
     import UserNav from '@/Components/Header/UserNav.vue';
     import UserSidebar from '@/Components/Sidebar/User/UserSidebar.vue';
     import Footer from '@/Components/Footer/Footer.vue';
-    import LoadingScreen from '@/Components/LoadingScreen.vue';
+    import LoadingScreen from '@/Components/Loading/LoadingScreen.vue';
     import StaticAsset from '@/Utils/StaticAsset';
     import { usePage } from '@inertiajs/vue3';
     import { computed } from 'vue';

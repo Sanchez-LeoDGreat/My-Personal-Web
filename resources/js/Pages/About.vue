@@ -13,7 +13,15 @@
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
     import { onMounted, ref } from 'vue';
 
-    const timelineRows = ref([]);
+    const expTimeline = ref({
+        loading: {
+            finished: false,
+            status: 'loading',
+            error: null,
+        },
+        rows: [],
+    });
+
     const modal = ref({
         show: false,
         type: null,
@@ -35,14 +43,17 @@
             });
             const data = response.data;
             if (data.success){
-                timelineRows.value = data.timeline;
+                expTimeline.value.rows = data.timeline;
+                expTimeline.value.loading.finished = true;
             }
             else{
                 showModal('error', "<b>Error: </b>" + data.message);
+                expTimeline.value.loading.status = 'error';
             }
         }
         catch (err){
             showModal("error", "<b>Error: </b>" + err.message);
+            expTimeline.value.loading.status = 'error';
         }
     }
 
@@ -90,7 +101,7 @@
             </div>
             <div>
                 <HeaderText class="mb-2">My <span class="text-green-500">Experience</span></HeaderText>
-                <Timeline :rows="timelineRows"/>
+                <Timeline :rows="expTimeline.rows" :loading="expTimeline.loading"/>
             </div>
         </DarkGlass>
     </MarginLayout>
