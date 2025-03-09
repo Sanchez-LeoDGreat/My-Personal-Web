@@ -12,7 +12,7 @@
     import ModalMessage from '@/Components/Modal/Partials/ModalMessage.vue';
     import ModalButtons from '@/Components/Modal/Partials/ModalButtons.vue';
     import SecondaryButton from '@/Components/Buttons/SecondaryButton.vue';
-    import { ref } from 'vue';
+    import { nextTick, ref } from 'vue';
 
     const modal = ref({
         show: false,
@@ -30,14 +30,16 @@
 
     const send = () => {
         form.post(route('contact.send-email'),  {
-            onSuccess: () => {
+            onSuccess: async () => {
+                await nextTick();
                 modal.value.show = true;
                 modal.value.type = 'success';
                 modal.value.message = 'Email has been sent successfuly!';
                 form.reset();
             },
-            onError: () => {
+            onError: async () => {
                 if (form.errors.failed){
+                    await nextTick();
                     modal.value.show = true;
                     modal.value.type = 'error';
                     modal.value.message = form.errors.failed;
