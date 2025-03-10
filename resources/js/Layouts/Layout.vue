@@ -23,10 +23,7 @@
                 <Nav v-else/>
             </header>
             <UserSidebar v-if="isUserPage"/>
-            <div v-if="isUserPage" id="content-container" class="flex-grow text-white">
-                <slot/>
-            </div>
-            <div v-else id="content-container" :style="{ backgroundImage: `url(${StaticAsset.img.bg1})` }" class="flex flex-grow text-white bg-center bg-no-repeat bg-cover">
+            <div id="content-container" :style="{ backgroundImage: `url(${StaticAsset.img.bg1})` }" class="flex flex-grow text-white bg-center bg-no-repeat bg-cover">
                 <slot/>
             </div>
             <Footer/>
