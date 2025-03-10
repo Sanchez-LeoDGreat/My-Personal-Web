@@ -1,21 +1,14 @@
 <script setup>
-    import ComponentLoading from '@/Components/Loading/ComponentLoading.vue';
-
     defineProps({
         rows: {
             type: Array,
-            required: true,
-        },
-        loading: {
-            type: Object,
             required: true,
         }
     });
 </script>
 
 <template>
-    <ComponentLoading v-if="!loading.finished" :finished="loading.finished" :status="loading.status"/>
-    <div v-else class="timeline">
+    <div class="timeline">
         <div v-for="(row, index) in rows" class="timeline-row">
             <div class="container" :class="index % 2 ? 'right-container' : 'left-container'">
                 <div class="timeline-box">

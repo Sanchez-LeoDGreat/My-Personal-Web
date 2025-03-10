@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timelines', function (Blueprint $table) {
+        Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
-            $table->json('timeline');
+            $table->foreignId('project_id');
+            $table->string('first_name');
+            $table->string('last_name');
+            $table->integer('rating')->default(0);
+            $table->text('review')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timelines');
+        Schema::dropIfExists('reviews');
     }
 };

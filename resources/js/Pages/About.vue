@@ -3,17 +3,19 @@
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import StaticAsset from '@/Utils/StaticAsset.js';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
-    import { nextTick, onMounted, ref } from 'vue';
-    import { HeaderText, DarkGlass, Timeline, IconCard, Modal, ModalMessage, ModalButtons, SecondaryButton } from '@/Utils/MyComponents';
+    import { computed, nextTick, onMounted, ref } from 'vue';
+    import { HeaderText, DarkGlass, Timeline, IconCard, Modal, ModalMessage, ModalButtons, SecondaryButton, Loading } from '@/Utils/MyComponents';
 
-    const expTimeline = ref({
+    const pageContent = ref({
         loading: {
             finished: false,
             status: 'loading',
-            error: null,
         },
-        rows: [],
-    });
+        aboutMe: null,
+        expTimeline: {
+            rows: []
+        },
+    })
 
     const modal = ref({
         show: false,
@@ -27,53 +29,62 @@
         modal.value.message = msg;
     }
 
-    const getExperienceTimeline = async () => {
+    const getPageContent = async () => {
         try{
-            const response = await axios.get(route('api.get-timeline'), {
+            const response = await axios.get(route('api.get-page-content'), {
                 params: {
-                    name: 'experience_timeline',
+                    name: 'about',
                 },
             });
             const data = response.data;
             if (data.success){
-                expTimeline.value.rows = data.timeline;
-                expTimeline.value.loading.finished = true;
+                const content = data.content;
+                pageContent.value.aboutMe = content.about_me;
+                pageContent.value.expTimeline.rows = content.exp_timeline;
             }
             else{
                 showModal('error', "<b>Error: </b>" + data.message);
-                expTimeline.value.loading.status = 'error';
+                pageContent.value.loading.status = 'error';
             }
         }
         catch (err){
             showModal("error", "<b>Error: </b>" + err.message);
-            expTimeline.value.loading.status = 'error';
+            pageContent.value.loading.status = 'error';
+        }
+        finally{
+            pageContent.value.loading.finished = true;
         }
     }
 
+    const isLoading = computed(() => {
+        const loadingVal = pageContent.value.loading;
+        if (loadingVal.finished){
+            if (loadingVal.status =='error'){
+                return true;
+            }
+            return false;
+        }
+        return true;
+    });
+
     onMounted(async () => {
         await nextTick();
-        getExperienceTimeline();
+        getPageContent();
     });
 </script>
 <template>
     <Head title="About"/>
     <MarginLayout class="flex flex-grow">
-        <DarkGlass class="border-white py-6 my-2 px-10 border-[1px] flex-col flex gap-6">
+        <DarkGlass class="border-white py-6 my-2 px-10 border-[1px] flex-col flex gap-6 flex-grow">
             <div>
                 <HeaderText class="mb-1">About <span class="text-green-500 ">Me</span></HeaderText>
-                <p class="text-justify">
-                    I'm a hobbyist programmer with a passion for building things and solving problems.
-                    I love working on software projects, constantly exploring new ideas, and learning something new.
-                    Most of the time, I work solo on my projects as a student, but lately, I’ve been eager
-                    to collaborate with a team of fellow developers. Sometimes, it feels like I’m just a big fish
-                    in a small pond—I know there’s so much more to learn, and working with others is the best
-                    way to grow. I believe that every developer has something valuable to share, and I’m excited
-                    to be part of a team where we can learn from each other and build amazing things together.
-                </p>
+                <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
+                <p v-else class="text-justify" v-html="pageContent.aboutMe"></p>
             </div>
             <div>
                 <HeaderText class="mb-2">My <span class="text-green-500">Skills</span></HeaderText>
-                <div class="flex flex-wrap justify-start gap-2">
+                <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
+                <div v-else class="flex flex-wrap justify-start gap-2">
                     <!-- Languges and Stylesheets -->
                     <IconCard :icon="StaticAsset.svg.c" class="text-blue-500 shadow-blue-300">C Language</IconCard>
                     <IconCard :icon="StaticAsset.svg.cSharp" class="text-purple-500 shadow-purple-300">C# Language</IconCard>
@@ -95,7 +106,8 @@
             </div>
             <div>
                 <HeaderText class="mb-2">My <span class="text-green-500">Experience</span></HeaderText>
-                <Timeline :rows="expTimeline.rows" :loading="expTimeline.loading"/>
+                <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
+                <Timeline v-else :rows="pageContent.expTimeline.rows"/>
             </div>
         </DarkGlass>
     </MarginLayout>

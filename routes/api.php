@@ -8,4 +8,4 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-Route::get('/get-timeline', [ApiController::class, 'get_timeline'])->name('api.get-timeline');
+Route::get('/get-page-content', [ApiController::class, 'get_page_content'])->name('api.get-page-content');

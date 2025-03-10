@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Timeline;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -22,8 +21,8 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $this->call(
-            TimelineSeeder::class,
-        );
+        $this->call([
+            PageSeeder::class,
+        ]);
     }
 }

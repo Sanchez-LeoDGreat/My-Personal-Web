@@ -34,7 +34,7 @@ import TextAreaInput from "@/Components/Inputs/TextAreaInput.vue";
 import TextInput from "@/Components/Inputs/TextInput.vue";
 
 //loading
-import ComponentLoading from "@/Components/Loading/ComponentLoading.vue";
+import Loading from "@/Components/Loading/Loading.vue";
 import LoadingScreen from "@/Components/Loading/LoadingScreen.vue";
 
 //modal
@@ -97,7 +97,7 @@ export {
     TextInput,
 
     //loading
-    ComponentLoading,
+    Loading,
     LoadingScreen,
 
     //modal

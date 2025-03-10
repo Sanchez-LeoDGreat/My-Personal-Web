@@ -2,28 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Timeline;
+use App\Models\Page;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller
 {
-    public function get_timeline(Request $request)
+    public function get_page_content(Request $request)
     {
         $validated = $request->validate([
             'name' => 'required',
         ]);
 
-        $timeline = Timeline::where($validated)->first();
-        if (!$timeline) {
+        $page = Page::where($validated)->first();
+        if (!$page) {
             return response()->json([
                 'success' => false,
-                'message' => "Failed! Unable to find timeline's name.",
+                'message' => "Failed! Unable to find page's name.",
             ]);
         }
         return response()->json([
             'success' => true,
-            'message' => 'Successfully retrieved requested timeline!',
-            'timeline' => json_decode($timeline->timeline),
+            'message' => 'Successfully retrieved requested page!',
+            'content' => json_decode($page->content),
         ]);
     }
 }
