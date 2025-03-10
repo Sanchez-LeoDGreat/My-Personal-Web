@@ -25,7 +25,7 @@ class PageSeeder extends Seeder
                 'my_skills' => [
                     'a ' . $this->green_text('Hobbyist Programmer.'),
                     'a ' . $this->green_text('Software Developer.'),
-                    'a ' . $this->green_text('Software Developer.'),
+                    'a ' . $this->green_text('Web Developer.'),
                     'a ' . $this->green_text('Digital Artist.'),
                     'a ' . $this->green_text('UI/UX Designer.'),
                 ],
