@@ -1,5 +1,5 @@
 <script setup>
-    import { onMounted, onUnmounted, ref } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { router } from '@inertiajs/vue3';
     import Logo from '@/Components/SVG/Logo.vue';
 
