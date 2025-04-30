@@ -5,15 +5,22 @@
     import Footer from '@/Components/Footer/Footer.vue';
     import LoadingScreen from '@/Components/Loading/LoadingScreen.vue';
     import StaticAsset from '@/Utils/StaticAsset';
+    import MessageModal from '@/Layouts/Partials/MessageModal.vue';
     import { usePage } from '@inertiajs/vue3';
-    import { computed } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
 
     defineProps({
         user: Object
     });
 
+    const msgModalRef = ref(null);
+
     const page = usePage();
     const isUserPage = computed(() => page.component.startsWith('User/'));
+
+    onMounted(() => {
+        window.showModalMessage = msgModalRef.value.showModalMessage;
+    });
 </script>
 <template>
     <main class="relative">
@@ -28,6 +35,7 @@
             </div>
             <Footer/>
         </div>
+        <MessageModal ref="msgModalRef"/>
         <LoadingScreen/>
     </main>
 </template>

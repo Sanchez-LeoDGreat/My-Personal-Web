@@ -4,7 +4,7 @@
     import StaticAsset from '@/Utils/StaticAsset.js';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
     import { computed, nextTick, onMounted, ref } from 'vue';
-    import { HeaderText, DarkGlass, Timeline, IconCard, Modal, ModalMessage, ModalButtons, SecondaryButton, Loading } from '@/Utils/MyComponents';
+    import { HeaderText, DarkGlass, Timeline, IconCard, Loading } from '@/Utils/MyComponents';
 
     const pageContent = ref({
         loading: {
@@ -23,12 +23,6 @@
         message: null,
     });
 
-    const showModal = (type, msg) => {
-        modal.value.show = true;
-        modal.value.type = type;
-        modal.value.message = msg;
-    }
-
     const getPageContent = async () => {
         try{
             const response = await axios.get(route('api.get-page-content'), {
@@ -43,12 +37,12 @@
                 pageContent.value.expTimeline.rows = content.exp_timeline;
             }
             else{
-                showModal('error', "<b>Error: </b>" + data.message);
+                showModalMessage("<b>Error: </b>" + err.message, 'error');
                 pageContent.value.loading.status = 'error';
             }
         }
         catch (err){
-            showModal("error", "<b>Error: </b>" + err.message);
+            showModalMessage("<b>Error: </b>" + err.message, 'error');
             pageContent.value.loading.status = 'error';
         }
         finally{
@@ -111,10 +105,4 @@
             </div>
         </DarkGlass>
     </MarginLayout>
-    <Modal v-model:show="modal.show" :type="modal.type">
-        <ModalMessage :message="modal.message"/>
-        <ModalButtons>
-            <SecondaryButton @click="modal.show=false" focus-on-show>OK</SecondaryButton>
-        </ModalButtons>
-    </Modal>
 </template>

@@ -4,12 +4,6 @@
     import { ModalButtons, ModalMessage, Modal, FieldMessage, LabelText, TextInput, SecondaryButton, PrimaryButton, TextAreaInput, HeaderText, DarkGlass } from '@/Utils/MyComponents';
     import { nextTick, ref } from 'vue';
 
-    const modal = ref({
-        show: false,
-        type: null,
-        message: null,
-    });
-
     const form = useForm({
         full_name: null,
         email: null,
@@ -22,17 +16,13 @@
         form.post(route('contact.send-email'),  {
             onSuccess: async () => {
                 await nextTick();
-                modal.value.show = true;
-                modal.value.type = 'success';
-                modal.value.message = 'Email has been sent successfuly!';
+                showModalMessage("Email has been sent successfully");
                 form.reset();
             },
             onError: async () => {
                 if (form.errors.failed){
                     await nextTick();
-                    modal.value.show = true;
-                    modal.value.type = 'error';
-                    modal.value.message = form.errors.failed;
+                    showModalMessage(form.errors.failed, 'error');
                 }
             }
         });
@@ -70,10 +60,4 @@
             </form>
         </DarkGlass>
     </MarginLayout>
-    <Modal v-model:show="modal.show" :type="modal.type">
-        <ModalMessage :message="modal.message"/>
-        <ModalButtons>
-            <SecondaryButton @click="modal.show=false" focus-on-show>OK</SecondaryButton>
-        </ModalButtons>
-    </Modal>
 </template>
