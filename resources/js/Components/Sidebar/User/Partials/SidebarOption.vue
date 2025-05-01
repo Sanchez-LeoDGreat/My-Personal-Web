@@ -1,6 +1,6 @@
 <script setup>
     import { Link } from '@inertiajs/vue3';
-import { ref } from 'vue';
+    import { ref } from 'vue';
 
     const props = defineProps({
         route: String,
@@ -24,7 +24,7 @@ import { ref } from 'vue';
         isDropDownOption: {
             type: Boolean,
             default: false,
-        }
+        },
     });
 
     const dropDown = ref({
@@ -42,7 +42,7 @@ import { ref } from 'vue';
                 <div v-show="showSlot" class="flex-grow font-medium" :class="{'underline' : isActive}" v-text="title"></div>
             </div>
         </div>
-        <ul v-if="showSlot" class="font-medium flex my-1 gap-1 flex-col w-full overflow-hidden transition-all" :class="{'max-h-0': !dropDown.show, 'max-h-screen': dropDown.show}">
+        <ul v-if="showSlot && dropDown.show" class="font-medium flex my-1 gap-1 flex-col w-full overflow-hidden transition-all" :class="{'max-h-0': !dropDown.show, 'max-h-screen': dropDown.show}">
             <slot/>
         </ul>
     </li>

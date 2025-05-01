@@ -77,8 +77,7 @@
             </div>
             <div>
                 <HeaderText class="mb-2">My <span class="text-green-500">Skills</span></HeaderText>
-                <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
-                <div v-else class="flex flex-wrap justify-start gap-2">
+                <div class="flex flex-wrap justify-start gap-2">
                     <!-- Languges and Stylesheets -->
                     <IconCard :icon="StaticAsset.svg.c" class="text-blue-500 shadow-blue-300">C Language</IconCard>
                     <IconCard :icon="StaticAsset.svg.cSharp" class="text-purple-500 shadow-purple-300">C# Language</IconCard>

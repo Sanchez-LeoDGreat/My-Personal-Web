@@ -19,7 +19,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/pages/home', [UserController::class, 'home_content_edit'])->name('user.home-content');
-    Route::get('/user/pages/about', [UserController::class, 'about_content_edit'])->name('user.about-content');
+    Route::get('/user/pages/home', [HomeController::class, 'edit'])->name('home.edit');
+    Route::get('/user/pages/about', [AboutController::class, 'edit'])->name('about.edit');
+    Route::get('/user/projects', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

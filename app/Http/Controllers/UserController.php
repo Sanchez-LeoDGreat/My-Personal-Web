@@ -15,20 +15,4 @@ class UserController extends Controller
             'user' => $user
         ]);
     }
-
-    public function home_content_edit()
-    {
-        $user = Auth::user();
-        return Inertia::render('User/Pages/Home', [
-            'user' => $user
-        ]);
-    }
-
-    public function about_content_edit()
-    {
-        $user = Auth::user();
-        return Inertia::render('User/Pages/About', [
-            'user' => $user
-        ]);
-    }
 }
