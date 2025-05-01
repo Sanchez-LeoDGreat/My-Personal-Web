@@ -2,6 +2,7 @@
     import { HeaderText, Loading } from '@/Utils/MyComponents';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import { useForm } from '@inertiajs/vue3';
+    import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
 
     const form = useForm({
         introduction: '',
@@ -15,7 +16,7 @@
             <form @submit.prevent>
                 <HeaderText class="mb-1">Skills</HeaderText>
                 <HeaderText class="mb-1">Introduction</HeaderText>
-                <tiptap v-model="form.introduction"/>
+                <RichTextEditorInput v-model="form.introduction"/>
             </form>
         </div>
     </MarginLayout>

@@ -4,6 +4,9 @@
     import StarterKit from '@tiptap/starter-kit';
     import Underline from '@tiptap/extension-underline';
     import Heading from '@tiptap/extension-heading';
+    import Text from '@tiptap/extension-text';
+    import TextStyle from '@tiptap/extension-text-style';
+    import { Color } from '@tiptap/extension-color';
 
     const props = defineProps({
         modelValue: String,
@@ -24,6 +27,9 @@
         extensions: [
             StarterKit,
             Underline,
+            Color,
+            Text,
+            TextStyle,
             Heading.configure({
                 levels: [1, 2]
             }),
@@ -32,7 +38,7 @@
 </script>
 
 <template>
-    <Prose class="m-2 text-white">
+    <Prose class="m-2">
         <section v-if="editor" class="bg-slate-950 flex gap-2 flex-wrap border-white border-t-2 border-l-2 border-r-2 p-2">
             <button @click="editor.chain().focus().toggleBold().run()" title="Bold" :class="{ 'is-active': editor.isActive('bold') }">
                 <font-awesome-icon :icon="['fas', 'bold']"/>
@@ -64,6 +70,7 @@
             <button @click="editor.chain().focus().toggleStrike().run()" title="Strikethrough" :class="{ 'is-active': editor.isActive('strike') }">
                 <font-awesome-icon :icon="['fas', 'strikethrough']"/>
             </button>
+            <input type="color" class="w-8 bg-transparent" @input="editor.chain().focus().setColor($event.target.value).run()" title="Text Color" :value="editor.getAttributes('textStyle').color || '#FFFFFF'">
             <button @click="editor.chain().focus().undo().run()" title="Undo" :disabled="!editor.can().undo()">
                 <font-awesome-icon :icon="['fas', 'rotate-left']"/>
             </button>
