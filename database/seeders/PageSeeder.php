@@ -13,7 +13,7 @@ class PageSeeder extends Seeder
      */
     public function green_text($txt)
     {
-        return "<span class=\"text-green-500\">$txt</span>";
+        return "<span style=\"color: #22c55e\">$txt</span>";
     }
 
     public function run(): void
