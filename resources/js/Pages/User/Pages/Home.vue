@@ -1,6 +1,6 @@
 <script setup>
-    import { HeaderText, Loading, RichTextEditorInput, PrimaryButton, SkillInput, DangerButton, DarkGlass } from '@/Utils/MyComponents';
-    import { useForm, Head } from '@inertiajs/vue3';
+    import { HeaderText, Loading, RichTextEditorInput, PrimaryButton, SkillInput, FieldMessage, DangerButton, DarkGlass } from '@/Utils/MyComponents';
+    import { useForm, Head, usePage } from '@inertiajs/vue3';
     import { nextTick, onMounted, ref, computed } from 'vue';
 
     const pageContent = ref({
@@ -20,7 +20,7 @@
             const data = response.data;
             if (data.success){
                 const content = data.content;
-                form.my_skills = content.my_skills;
+                form.skills = content.my_skills;
                 form.introduction = content.introduction;
             }
             else{
@@ -48,12 +48,21 @@
     });
 
     const form = useForm({
-        my_skills: [''],
+        skills: [''],
         introduction: '',
     });
 
     const updateHomeContent = () => {
-        form.put(route('home.update'));
+        form.put(route('home.update'), {
+            onSuccess: () => {
+                showModalMessage(usePage().props.flash.success);
+            },
+            onError: () => {
+                if (form.errors.page){
+                    showModalMessage(form.errors.page, 'error');
+                }
+            }
+        });
     }
 
     onMounted(async () => {
@@ -71,18 +80,20 @@
                 <HeaderText class="mb-1">Skills</HeaderText>
                 <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
                 <div class="mb-4" v-else>
-                    <div v-for="(skill, index) in form.my_skills" :key="index" class="mb-2 flex gap-2 text-black">
-                        <SkillInput v-model="form.my_skills[index]" class="flex-grow"/>
-                        <DangerButton type="button" @click="form.my_skills.splice(index, 1)">
+                    <FieldMessage v-if="form.errors.skills" status="error">{{ form.errors.skills }}</FieldMessage>
+                    <div v-for="(skill, index) in form.skills" :key="index" class="mb-2 flex gap-2 text-black">
+                        <SkillInput v-model="form.skills[index]" class="flex-grow"/>
+                        <DangerButton type="button" @click="form.skills.splice(index, 1)">
                             <font-awesome-icon :icon="['fas', 'trash']"/>
                         </DangerButton>
                     </div>
-                    <PrimaryButton type="button" @click="form.my_skills.push('')" class="flex gap-2 place-items-center">
+                    <PrimaryButton type="button" @click="form.skills.push('')" class="flex gap-2 place-items-center">
                         <font-awesome-icon :icon="['fas', 'add']"/>
                         <span>Add Skill</span>
                     </PrimaryButton>
                 </div>
                 <HeaderText class="mb-1">Introduction</HeaderText>
+                <FieldMessage v-if="form.errors.introduction" status="error">{{ form.errors.introduction }}</FieldMessage>
                 <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
                 <RichTextEditorInput v-else v-model="form.introduction" class="mb-4"/>
                 <PrimaryButton type="submit" :disabled="form.processing">Save</PrimaryButton>

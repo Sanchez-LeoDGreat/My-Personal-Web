@@ -25,12 +25,12 @@ class HomeController extends Controller
     public function update(Request $request)
     {
         $request->validate([
-            'my_skills' => 'required|array',
+            'skills' => 'required|array',
             'introduction' => 'required|string',
         ]);
 
         $content = json_encode([
-            'my_skills' => $request->my_skills,
+            'my_skills' => $request->skills,
             'introduction' => $request->introduction,
         ]);
 
@@ -41,6 +41,6 @@ class HomeController extends Controller
         $page->update([
             'content' => $content,
         ]);
-        return back()->with('success', 'Page updated successfully.');
+        return back()->with('success', "Home Page's content updated successfully.");
     }
 }
