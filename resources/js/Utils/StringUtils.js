@@ -4,4 +4,14 @@ const startsWithVowel = (string) => {
     return vowels.includes(string[0]);
 };
 
-export { startsWithVowel }
+const ucwords = (string) => {
+    return string.replace(/\b\w/g, function(char) {
+        return char.toUpperCase();
+    });
+}
+
+const ucfirst = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+export { startsWithVowel, ucwords, ucfirst }

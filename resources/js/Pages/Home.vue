@@ -2,7 +2,7 @@
     import { Head } from '@inertiajs/vue3';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import StaticAsset from '@/Utils/StaticAsset';
-    import { HeaderText, DarkGlass, TypeWriter, Loading } from '@/Utils/MyComponents';
+    import { HeaderText, DarkGlass, TypeWriter, Loading, Prose } from '@/Utils/MyComponents';
     import { nextTick, onMounted, ref, computed } from 'vue';
 
     const pageContent = ref({
@@ -69,7 +69,7 @@
                         <HeaderText>
                             <span>I'm </span><TypeWriter class="inline" :strings="pageContent.mySkills"/>
                         </HeaderText>
-                        <div class="flex text-justify text-white" v-html="pageContent.introduction"></div>
+                        <Prose v-html="pageContent.introduction"></Prose>
                     </div>
                     <button class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
                 </div>

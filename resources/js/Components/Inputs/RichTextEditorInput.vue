@@ -19,7 +19,7 @@
         },
         editorProps: {
             attributes: {
-                class: 'border-white w-full focus:outline-none backdrop-blur-md bg-slate-950/70 border-2 px-4 min-h-[10rem] max-h-[14rem] overflow-auto'
+                class: 'border-slate-950 w-full focus:outline-none bg-white border-2 px-4 min-h-[10rem] max-h-[14rem] overflow-auto'
             },
         },
         content: props.modelValue,
@@ -39,43 +39,46 @@
 </script>
 
 <template>
-    <Prose class="m-2">
-        <section v-if="editor" class="bg-slate-950 flex gap-2 flex-wrap border-white border-t-2 border-l-2 border-r-2 p-2">
-            <button @click="editor.chain().focus().toggleBold().run()" title="Bold" :class="{ 'is-active': editor.isActive('bold') }">
+    <Prose class="text-black">
+        <section v-if="editor" class="bg-white flex gap-2 flex-wrap border-slate-950 border-t-2 border-l-2 border-r-2 p-2">
+            <button type="button" @click="editor.chain().focus().toggleBold().run()" title="Bold" :class="{ 'is-active': editor.isActive('bold') }">
                 <font-awesome-icon :icon="['fas', 'bold']"/>
             </button>
-            <button @click="editor.chain().focus().toggleItalic().run()" title="Italic" :class="{ 'is-active': editor.isActive('italic') }">
+            <button type="button" @click="editor.chain().focus().toggleItalic().run()" title="Italic" :class="{ 'is-active': editor.isActive('italic') }">
                 <font-awesome-icon :icon="['fas', 'italic']"/>
             </button>
-            <button @click="editor.chain().focus().toggleUnderline().run()" title="Underline" :class="{ 'is-active': editor.isActive('underline') }">
+            <button type="button" @click="editor.chain().focus().toggleUnderline().run()" title="Underline" :class="{ 'is-active': editor.isActive('underline') }">
                 <font-awesome-icon :icon="['fas', 'underline']"/>
             </button>
-            <button @click="editor.chain().focus().toggleHeading({level: 1}).run()" title="H1" :class="{ 'is-active': editor.isActive('heading', {level: 1}) }">
+            <button type="button" @click="editor.chain().focus().toggleHeading({level: 1}).run()" title="H1" :class="{ 'is-active': editor.isActive('heading', {level: 1}) }">
                 <div class="font-bold">H1</div>
             </button>
-            <button @click="editor.chain().focus().toggleHeading({level: 2}).run()" title="H2" :class="{ 'is-active': editor.isActive('heading', {level: 2}) }">
+            <button type="button" @click="editor.chain().focus().toggleHeading({level: 2}).run()" title="H2" :class="{ 'is-active': editor.isActive('heading', {level: 2}) }">
                 <div class="font-bold">H2</div>
             </button>
-            <button @click="editor.chain().focus().toggleBulletList().run();" title="Bullet List" :class="{ 'is-active': editor.isActive('bulletList') }">
+            <button type="button" @click="editor.chain().focus().toggleBulletList().run();" title="Bullet List" :class="{ 'is-active': editor.isActive('bulletList') }">
                 <font-awesome-icon :icon="['fas', 'list-ul']"/>
             </button>
-            <button @click="editor.chain().focus().toggleOrderedList().run();" title="Ordered List" :class="{ 'is-active': editor.isActive('orderedList') }">
+            <button type="button" @click="editor.chain().focus().toggleOrderedList().run();" title="Ordered List" :class="{ 'is-active': editor.isActive('orderedList') }">
                 <font-awesome-icon :icon="['fas', 'list']"/>
             </button>
-            <button @click="editor.chain().focus().toggleBlockquote().run()" title="Blockquote" :class="{ 'is-active': editor.isActive('blockquote') }">
+            <button type="button" @click="editor.chain().focus().toggleBlockquote().run()" title="Blockquote" :class="{ 'is-active': editor.isActive('blockquote') }">
                 <font-awesome-icon :icon="['fas', 'quote-left']"/>
             </button>
-            <button @click="editor.chain().focus().toggleCode().run()" title="Code" :class="{ 'is-active': editor.isActive('code') }">
+            <button type="button" @click="editor.chain().focus().toggleCode().run()" title="Code" :class="{ 'is-active': editor.isActive('code') }">
                 <font-awesome-icon :icon="['fas', 'code']"/>
             </button>
-            <button @click="editor.chain().focus().toggleStrike().run()" title="Strikethrough" :class="{ 'is-active': editor.isActive('strike') }">
+            <button type="button" @click="editor.chain().focus().toggleStrike().run()" title="Strikethrough" :class="{ 'is-active': editor.isActive('strike') }">
                 <font-awesome-icon :icon="['fas', 'strikethrough']"/>
             </button>
-            <input type="color" class="w-8 bg-transparent" @input="editor.chain().focus().setColor($event.target.value).run()" title="Text Color" :value="editor.getAttributes('textStyle').color || '#FFFFFF'">
-            <button @click="editor.chain().focus().undo().run()" title="Undo" :disabled="!editor.can().undo()">
+            <input type="color" class="w-8 bg-transparent" @input="editor.chain().focus().setColor($event.target.value).run()" title="Text Color" :value="editor.getAttributes('textStyle').color || '#000000'">
+            <button type="button" @click="editor.chain().focus().unsetColor().run()" title="Unset Text Color">
+                <font-awesome-icon :icon="['fas', 'droplet-slash']"/>
+            </button>
+            <button type="button" @click="editor.chain().focus().undo().run()" title="Undo" :disabled="!editor.can().undo()">
                 <font-awesome-icon :icon="['fas', 'rotate-left']"/>
             </button>
-            <button @click="editor.chain().focus().redo().run()" title="Redo" :disabled="!editor.can().redo()">
+            <button type="button" @click="editor.chain().focus().redo().run()" title="Redo" :disabled="!editor.can().redo()">
                 <font-awesome-icon :icon="['fas', 'rotate-right']"/>
             </button>
         </section>
@@ -89,6 +92,6 @@
     }
 
     button.is-active{
-        @apply bg-white text-black
+        @apply bg-slate-950 text-white
     }
 </style>

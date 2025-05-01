@@ -35,6 +35,6 @@
 
 <template>
     <Typed :options="options">
-        <span class="typing"></span>
+        <span class="typing inline-block"></span>
     </Typed>
 </template>

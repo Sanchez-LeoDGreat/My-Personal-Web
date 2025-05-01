@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -19,5 +20,27 @@ class HomeController extends Controller
         return Inertia::render('User/Pages/Home', [
             'user' => $user
         ]);
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'my_skills' => 'required|array',
+            'introduction' => 'required|string',
+        ]);
+
+        $content = json_encode([
+            'my_skills' => $request->my_skills,
+            'introduction' => $request->introduction,
+        ]);
+
+        $page = Page::firstWhere('name', 'home');
+        if (!$page) {
+            return back()->withErrors(['page' => 'Page not found.']);
+        }
+        $page->update([
+            'content' => $content,
+        ]);
+        return back()->with('success', 'Page updated successfully.');
     }
 }

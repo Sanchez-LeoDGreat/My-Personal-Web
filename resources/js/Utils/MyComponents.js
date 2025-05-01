@@ -33,6 +33,7 @@ import PasswordInput from "@/Components/Inputs/PasswordInput.vue";
 import TextAreaInput from "@/Components/Inputs/TextAreaInput.vue";
 import TextInput from "@/Components/Inputs/TextInput.vue";
 import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
+import SkillInput from "@/Components/Inputs/SkillInput.vue";
 
 //loading
 import Loading from "@/Components/Loading/Loading.vue";
@@ -60,6 +61,7 @@ import LabelText from "@/Components/Texts/LabelText.vue";
 import ClickableLogo from "@/Components/ClickableLogo.vue";
 import IconCard from "@/Components/IconCard.vue";
 import Timeline from "@/Components/Timeline.vue";
+import Prose from "@/Components/Prose.vue";
 
 export {
     //buttons
@@ -97,6 +99,7 @@ export {
     TextAreaInput,
     TextInput,
     RichTextEditorInput,
+    SkillInput,
 
     //loading
     Loading,
@@ -123,5 +126,6 @@ export {
     //root
     ClickableLogo,
     IconCard,
-    Timeline
+    Timeline,
+    Prose
 }
