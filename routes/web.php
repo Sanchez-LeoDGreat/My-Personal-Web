@@ -19,5 +19,7 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
+    Route::get('/user/pages/home', [UserController::class, 'home_content_edit'])->name('user.home-content');
+    Route::get('/user/pages/about', [UserController::class, 'about_content_edit'])->name('user.about-content');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

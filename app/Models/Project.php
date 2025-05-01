@@ -19,4 +19,9 @@ class Project extends Model
     {
         return $this->hasMany(Review::class);
     }
+
+    public function downloadables()
+    {
+        return $this->hasMany(Downloadable::class)->latest();
+    }
 }

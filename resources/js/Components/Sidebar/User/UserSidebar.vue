@@ -28,8 +28,12 @@
     <div ref="sidebarRef" class="fixed flex flex-col top-0 left-0 z-20 h-screen text-white overflow-hidden transition-all min-w-14 w-14 hover:w-[75vw] md:hover:w-80 bg-slate-950">
         <ClickableLogo :route="route('user.dashboard')"/>
         <hr>
-        <ul class="flex flex-col flex-grow gap-1 py-2 overflow-y-auto">
-            <SidebarOption :route="route('user.dashboard')" :icon="['fas', 'chart-column']" :isActive="component == 'User/Dashboard'" :showSlot="showSlot">Dashboard</SidebarOption>
+        <ul class="flex flex-col flex-grow gap-2 py-2 overflow-y-auto">
+            <SidebarOption :route="route('user.dashboard')" :icon="['fas', 'chart-column']" :isActive="component == 'User/Dashboard'" :showSlot="showSlot" title="Dashboard"/>
+            <SidebarOption :isDropDown="true" :icon="['fas', 'pager']" :showSlot="showSlot" :isActive="component.startsWith('User/Pages')" title="Pages">
+                <SidebarOption :route="route('user.home-content')" :icon="['fas', 'house']" :isActive="component == 'User/Pages/Home'" :showSlot="showSlot" :isDropDownOption="true" title="Home"/>
+                <SidebarOption :route="route('user.about-content')" :icon="['fas', 'info']" :isActive="component == 'User/Pages/About'" :showSlot="showSlot" :isDropDownOption="true" title="About"/>
+            </SidebarOption>
         </ul>
     </div>
 </template>
