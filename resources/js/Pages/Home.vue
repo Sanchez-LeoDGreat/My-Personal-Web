@@ -20,12 +20,6 @@
         message: null,
     });
 
-    const showModal = (type, msg) => {
-        modal.value.show = true;
-        modal.value.type = type;
-        modal.value.message = msg;
-    }
-
     const getPageContent = async () => {
         try{
             const response = await axios.get(route('api.get-page-content'), {
@@ -40,12 +34,12 @@
                 pageContent.value.introduction = content.introduction;
             }
             else{
-                showModal('error', "<b>Error: </b>" + data.message);
+                showModalMessage("<b>Error: </b>" + data.message, 'error');
                 pageContent.value.loading.status = 'error';
             }
         }
         catch{
-            showModal('error', "<b>Error: </b>" + data.message);
+            showModalMessage("<b>Error: </b>" + data.message, 'error');
             pageContent.value.loading.status = 'error';
         }
         finally{
@@ -82,9 +76,7 @@
                         <HeaderText>
                             <span>I'm </span><TypeWriter class="inline" :strings="pageContent.mySkills"/>
                         </HeaderText>
-                        <div class="flex text-justify">
-                            <p v-html="pageContent.introduction"></p>
-                        </div>
+                        <div class="flex text-justify text-white" v-html="pageContent.introduction"></div>
                     </div>
                     <button class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
                 </div>
@@ -94,10 +86,4 @@
             </div>
         </DarkGlass>
     </MarginLayout>
-    <Modal v-model:show="modal.show" :type="modal.type">
-        <ModalMessage :message="modal.message"/>
-        <ModalButtons>
-            <SecondaryButton @click="modal.show=false" focus-on-show>OK</SecondaryButton>
-        </ModalButtons>
-    </Modal>
 </template>

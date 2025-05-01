@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import TipTap from '@/Components/Inputs/TipTap.vue';
 
 library.add(fas, far, fab)
 
@@ -27,6 +28,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .component('font-awesome-icon', FontAwesomeIcon)
+            .component('tiptap', TipTap)
             .use(plugin)
             .use(ZiggyVue)
             .mount(el)
