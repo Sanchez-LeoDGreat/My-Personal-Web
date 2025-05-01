@@ -29,7 +29,7 @@ class AuthController extends Controller
             return to_route('user.dashboard');
         }
         throw ValidationException::withMessages([
-            'login' => 'The provided credentials do not match our records.',
+            'login' => 'Invalid Login!',
         ]);
     }
 

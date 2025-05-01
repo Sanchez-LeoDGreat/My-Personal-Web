@@ -8,9 +8,13 @@ class Review extends Model
 {
     protected $fillable = [
         'project_id',
-        'first_name',
-        'last_name',
+        'name',
         'rating',
-        'review',
+        'comment',
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

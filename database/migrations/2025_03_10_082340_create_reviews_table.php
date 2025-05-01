@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->foreignId('project_id');
-            $table->string('first_name');
-            $table->string('last_name');
+            $table->string('name');
             $table->integer('rating')->default(0);
-            $table->text('review')->nullable();
+            $table->text('comment')->nullable();
             $table->timestamps();
         });
     }

@@ -15,7 +15,7 @@ Route::post('/contact/send-email', [ContactController::class, 'send_email'])->na
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.validate');
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
