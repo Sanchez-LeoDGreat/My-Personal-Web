@@ -32,6 +32,7 @@ import CheckboxInput from "@/Components/Inputs/CheckboxInput.vue";
 import PasswordInput from "@/Components/Inputs/PasswordInput.vue";
 import TextAreaInput from "@/Components/Inputs/TextAreaInput.vue";
 import TextInput from "@/Components/Inputs/TextInput.vue";
+import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
 
 //loading
 import Loading from "@/Components/Loading/Loading.vue";
@@ -95,6 +96,7 @@ export {
     PasswordInput,
     TextAreaInput,
     TextInput,
+    RichTextEditorInput,
 
     //loading
     Loading,

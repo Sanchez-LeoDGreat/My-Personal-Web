@@ -21,7 +21,7 @@ class PageSeeder extends Seeder
         Page::create([
             'name' => 'home',
             'content' => json_encode([
-                'introduction' => "\"Sharpen first, cut fast.\"<br><br>Success isn't just about hard work—it's about working smart. Whether it's crafting efficient solutions, refining ideas, or building innovative projects, I believe preparation is the key to excellence. Here, you'll find my journey, skills, and insights, all shaped by a commitment to sharpening my craft before taking action.<br><br>Let's create something great together.",
+                'introduction' => "<p>\"Sharpen first, cut fast.\"</p><p>Success isn't just about hard work—it's about working smart. Whether it's crafting efficient solutions, refining ideas, or building innovative projects, I believe preparation is the key to excellence. Here, you'll find my journey, skills, and insights, all shaped by a commitment to sharpening my craft before taking action.</p><p>Let's create something great together.</p>",
                 'my_skills' => [
                     'a ' . $this->green_text('Hobbyist Programmer.'),
                     'a ' . $this->green_text('Software Developer.'),

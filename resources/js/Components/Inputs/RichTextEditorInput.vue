@@ -3,10 +3,9 @@
     import Prose from '../Prose.vue';
     import StarterKit from '@tiptap/starter-kit';
     import Underline from '@tiptap/extension-underline';
-    import Heading from '@tiptap/extension-heading';
-    import Text from '@tiptap/extension-text';
     import TextStyle from '@tiptap/extension-text-style';
     import { Color } from '@tiptap/extension-color';
+    import { watch } from 'vue';
 
     const props = defineProps({
         modelValue: String,
@@ -15,7 +14,7 @@
     const emit = defineEmits(['update:modelValue']);
 
     const editor = useEditor({
-        onUpdate: ({editor}) => {
+        onUpdate: ({ editor }) => {
             emit('update:modelValue', editor.getHTML())
         },
         editorProps: {
@@ -28,13 +27,15 @@
             StarterKit,
             Underline,
             Color,
-            Text,
             TextStyle,
-            Heading.configure({
-                levels: [1, 2]
-            }),
         ],
     })
+
+    watch(() => props.modelValue, (newValue) => {
+        if (editor.value && editor.value.getHTML() !== newValue) {
+            editor.value.commands.setContent(newValue, false);
+        }
+    });
 </script>
 
 <template>

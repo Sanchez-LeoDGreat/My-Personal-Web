@@ -1,7 +1,7 @@
 <script setup>
     import { Head, useForm } from '@inertiajs/vue3';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
-    import { ModalButtons, ModalMessage, Modal, FieldMessage, LabelText, TextInput, SecondaryButton, PrimaryButton, TextAreaInput, HeaderText, DarkGlass } from '@/Utils/MyComponents';
+    import { FieldMessage, LabelText, TextInput, PrimaryButton, TextAreaInput, HeaderText, DarkGlass } from '@/Utils/MyComponents';
     import { nextTick, ref } from 'vue';
 
     const form = useForm({

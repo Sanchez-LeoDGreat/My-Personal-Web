@@ -2,7 +2,7 @@
     import { Head } from '@inertiajs/vue3';
     import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import StaticAsset from '@/Utils/StaticAsset';
-    import { HeaderText, DarkGlass, TypeWriter, Loading, Modal, ModalMessage, ModalButtons } from '@/Utils/MyComponents';
+    import { HeaderText, DarkGlass, TypeWriter, Loading } from '@/Utils/MyComponents';
     import { nextTick, onMounted, ref, computed } from 'vue';
 
     const pageContent = ref({
@@ -12,12 +12,6 @@
         },
         mySkills: [],
         introduction: null,
-    });
-
-    const modal = ref({
-        show: false,
-        type: null,
-        message: null,
     });
 
     const getPageContent = async () => {
@@ -34,12 +28,11 @@
                 pageContent.value.introduction = content.introduction;
             }
             else{
-                showModalMessage("<b>Error: </b>" + data.message, 'error');
-                pageContent.value.loading.status = 'error';
+                throw new Error(data.message || 'Unknown error from API');
             }
         }
-        catch{
-            showModalMessage("<b>Error: </b>" + data.message, 'error');
+        catch (err){
+            showModalMessage("<b>Error: </b>" + err?.message, 'error');
             pageContent.value.loading.status = 'error';
         }
         finally{

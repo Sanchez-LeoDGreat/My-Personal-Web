@@ -15,12 +15,6 @@
         expTimeline: {
             rows: []
         },
-    })
-
-    const modal = ref({
-        show: false,
-        type: null,
-        message: null,
     });
 
     const getPageContent = async () => {
@@ -37,12 +31,11 @@
                 pageContent.value.expTimeline.rows = content.exp_timeline;
             }
             else{
-                showModalMessage("<b>Error: </b>" + err.message, 'error');
-                pageContent.value.loading.status = 'error';
+                throw new Error(data.message || 'Unknown error from API');
             }
         }
         catch (err){
-            showModalMessage("<b>Error: </b>" + err.message, 'error');
+            showModalMessage("<b>Error: </b>" + err?.message, 'error');
             pageContent.value.loading.status = 'error';
         }
         finally{
