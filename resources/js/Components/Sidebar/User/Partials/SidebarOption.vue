@@ -13,7 +13,7 @@
             type: Boolean,
             default: false
         },
-        showSlot: {
+        showTitle: {
             type: Boolean,
             default: false,
         },
@@ -33,16 +33,16 @@
 </script>
 
 <template>
-    <li v-if="isDropDown" @click="dropDown.show=!dropDown.show" class="flex flex-col w-full cursor-pointer">
-        <div class="flex flex-grow place-items-center">
+    <li v-if="isDropDown" class="flex flex-col w-full cursor-pointer">
+        <div @click="dropDown.show=!dropDown.show" class="flex flex-grow place-items-center">
             <div class="flex flex-grow gap-2 hover:text-black hover:bg-white place-items-center">
                 <div class="flex justify-center w-11">
                     <font-awesome-icon :icon="icon" class="p-1 ml-3 w-full text-2xl rounded-md" :class="{'active': isActive}"/>
                 </div>
-                <div v-show="showSlot" class="flex-grow font-medium" :class="{'underline' : isActive}" v-text="title"></div>
+                <div v-show="showTitle" class="flex-grow font-medium" :class="{'underline' : isActive}" v-text="title"></div>
             </div>
         </div>
-        <ul v-if="showSlot && dropDown.show" class="font-medium flex my-1 gap-1 flex-col w-full overflow-hidden transition-all" :class="{'max-h-0': !dropDown.show, 'max-h-screen': dropDown.show}">
+        <ul class="font-medium flex gap-1 flex-col w-full overflow-hidden transition-all" :class="{ 'max-h-0': !dropDown.show, 'max-h-[9999px] my-1': dropDown.show, 'hidden': !showTitle }">
             <slot/>
         </ul>
     </li>
@@ -56,7 +56,7 @@
                     <div class="flex justify-center w-11">
                         <font-awesome-icon :icon="icon" class="p-1 ml-3 w-full text-xl rounded-md" :class="{'active': isActive}"/>
                     </div>
-                    <div v-show="showSlot" class="flex-grow font-medium" :class="{'underline' : isActive}" v-text="title"></div>
+                    <div v-show="showTitle" class="flex-grow font-medium" :class="{'underline' : isActive}" v-text="title"></div>
                 </div>
             </div>
         </li>

@@ -5,13 +5,13 @@
     import { usePage } from '@inertiajs/vue3';
 
     const sidebarRef = ref(null);
-    const showSlot = ref(false);
+    const showTitle = ref(false);
 
     onMounted(() => {
         const sidebar = $(sidebarRef.value);
 
-        sidebar.on('mouseenter', () => (showSlot.value = true));
-        sidebar.on('mouseleave', () => (showSlot.value = false));
+        sidebar.on('mouseenter', () => (showTitle.value = true));
+        sidebar.on('mouseleave', () => (showTitle.value = false));
     });
 
     onUnmounted(() => {
@@ -29,12 +29,12 @@
         <ClickableLogo :route="route('user.dashboard')"/>
         <hr>
         <ul class="flex flex-col flex-grow gap-2 py-2 overflow-y-auto select-none">
-            <SidebarOption :route="route('user.dashboard')" :icon="['fas', 'chart-column']" :isActive="component == 'User/Dashboard'" :showSlot="showSlot" title="Dashboard"/>
-            <SidebarOption :isDropDown="true" :icon="['fas', 'pager']" :showSlot="showSlot" :isActive="component.startsWith('User/Pages')" title="Page Contents">
-                <SidebarOption :route="route('home.edit')" :icon="['fas', 'house']" :isActive="component == 'User/Pages/Home'" :showSlot="showSlot" :isDropDownOption="true" title="Home"/>
-                <SidebarOption :route="route('about.edit')" :icon="['fas', 'info']" :isActive="component == 'User/Pages/About'" :showSlot="showSlot" :isDropDownOption="true" title="About"/>
+            <SidebarOption :route="route('user.dashboard')" :icon="['fas', 'chart-column']" :isActive="component == 'User/Dashboard'" :showTitle="showTitle" title="Dashboard"/>
+            <SidebarOption :isDropDown="true" :icon="['fas', 'pager']" :showTitle="showTitle" :isActive="component.startsWith('User/Pages')" title="Page Contents">
+                <SidebarOption :route="route('home.edit')" :icon="['fas', 'house']" :isActive="component == 'User/Pages/Home'" :showTitle="showTitle" :isDropDownOption="true" title="Home"/>
+                <SidebarOption :route="route('about.edit')" :icon="['fas', 'info']" :isActive="component == 'User/Pages/About'" :showTitle="showTitle" :isDropDownOption="true" title="About"/>
             </SidebarOption>
-            <SidebarOption :route="route('projects.edit')" :icon="['fas', 'folder-open']" :isActive="component == 'User/Projects'" :showSlot="showSlot" title="Projects"/>
+            <SidebarOption :route="route('projects.edit')" :icon="['fas', 'folder-open']" :isActive="component == 'User/Projects/Edit'" :showTitle="showTitle" title="Projects"/>
         </ul>
     </div>
 </template>

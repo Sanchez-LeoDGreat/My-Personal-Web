@@ -16,7 +16,7 @@ class AboutController extends Controller
     public function edit()
     {
         $user = Auth::user();
-        return Inertia::render('User/Pages/Home', [
+        return Inertia::render('User/Pages/About', [
             'user' => $user
         ]);
     }

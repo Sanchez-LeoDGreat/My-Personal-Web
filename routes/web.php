@@ -19,8 +19,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.dashboard');
-    Route::get('/user/pages/home', [HomeController::class, 'edit'])->name('home.edit');
-    Route::get('/user/pages/about', [AboutController::class, 'edit'])->name('about.edit');
+    Route::get('/user/pages/home/edit', [HomeController::class, 'edit'])->name('home.edit');
+    Route::get('/user/pages/about/edit', [AboutController::class, 'edit'])->name('about.edit');
     Route::get('/user/projects', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });
