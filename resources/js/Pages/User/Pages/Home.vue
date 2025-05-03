@@ -10,6 +10,10 @@
         },
     });
 
+    const reset = {
+        skills: [''],
+    };
+
     const getPageContent = async () => {
         try{
             const response = await axios.get(route('api.get-page-content'), {
@@ -20,7 +24,8 @@
             const data = response.data;
             if (data.success){
                 const content = data.content;
-                form.skills = content.my_skills;
+                reset.skills = [...content.my_skills];
+                form.skills = [...content.my_skills];
                 form.introduction = content.introduction;
             }
             else{
@@ -46,6 +51,10 @@
         }
         return true;
     });
+
+    const resetSkills = () => {
+        form.skills = [...reset.skills];
+    }
 
     const form = useForm({
         skills: [''],
@@ -73,7 +82,7 @@
 
 <template>
     <Head title="Home (Edit)"/>
-    <DarkGlass class="p-2 min-h-screen">
+    <DarkGlass class="min-h-screen p-2">
         <HeaderText class="mb-1">Home <span class="text-green-500 ">Page</span></HeaderText>
         <div class="px-4">
             <form @submit.prevent="updateHomeContent">
@@ -81,16 +90,22 @@
                 <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
                 <div class="mb-4" v-else>
                     <FieldMessage v-if="form.errors.skills" status="error">{{ form.errors.skills }}</FieldMessage>
-                    <div v-for="(skill, index) in form.skills" :key="index" class="mb-2 flex gap-2 text-black">
+                    <div v-for="(skill, index) in form.skills" :key="index" class="flex gap-2 mb-2 text-black">
                         <SkillInput v-model="form.skills[index]" class="flex-grow"/>
                         <DangerButton type="button" @click="form.skills.splice(index, 1)">
                             <font-awesome-icon :icon="['fas', 'trash']"/>
                         </DangerButton>
                     </div>
-                    <PrimaryButton type="button" @click="form.skills.push('')" class="flex gap-2 place-items-center">
-                        <font-awesome-icon :icon="['fas', 'add']"/>
-                        <span>Add Skill</span>
-                    </PrimaryButton>
+                    <div class="flex gap-2">
+                        <PrimaryButton type="button" @click="form.skills.push('')" class="flex gap-2 place-items-center">
+                            <font-awesome-icon :icon="['fas', 'add']"/>
+                            <span>Add Skill</span>
+                        </PrimaryButton>
+                        <PrimaryButton type="button" @click="resetSkills" class="flex gap-2 place-items-center">
+                            <font-awesome-icon :icon="['fas', 'rotate-left']"/>
+                            <span>Reset</span>
+                        </PrimaryButton>
+                    </div>
                 </div>
                 <HeaderText class="mb-1">Introduction</HeaderText>
                 <FieldMessage v-if="form.errors.introduction" status="error">{{ form.errors.introduction }}</FieldMessage>
