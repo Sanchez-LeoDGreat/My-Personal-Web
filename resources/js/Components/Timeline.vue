@@ -113,7 +113,7 @@
             </div>
         </div>
     </div>
-    <div v-if="editable" class="flex gap-2 my-4">
+    <div v-if="editable" class="flex justify-between gap-2 my-4">
         <PrimaryButton @click="addNew" type="button">
             <font-awesome-icon :icon="['fas', 'add']"/>
             <span>Add New</span>

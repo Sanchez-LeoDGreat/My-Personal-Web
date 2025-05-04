@@ -119,7 +119,10 @@
                 <FieldMessage v-if="form.errors.introduction" status="error">{{ form.errors.introduction }}</FieldMessage>
                 <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
                 <RichTextEditorInput v-else v-model="form.introduction" class="mb-4"/>
-                <PrimaryButton type="submit" :disabled="form.processing">Save</PrimaryButton>
+                <hr>
+                <div class="my-4">
+                    <PrimaryButton type="submit" :disabled="form.processing">Save</PrimaryButton>
+                </div>
             </form>
         </div>
     </DarkGlass>

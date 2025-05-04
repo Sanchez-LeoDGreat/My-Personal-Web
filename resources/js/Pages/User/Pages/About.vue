@@ -89,7 +89,8 @@
                     <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
                     <Timeline v-else :editable="true" v-model:rows="form.experience"/>
                 </div>
-                <div>
+                <hr>
+                <div class="my-4">
                     <PrimaryButton type="submit" :disabled="form.processing">
                         Save
                     </PrimaryButton>
