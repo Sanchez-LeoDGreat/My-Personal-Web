@@ -41,6 +41,14 @@
         }
     };
 
+    const removeFromList = (index) => {
+        if (form.skills.length <= 1){
+            showModalMessage('Skill list must have at least one value!', 'error');
+        } else {
+            form.skills.splice(index, 1);
+        }
+    }
+
     const isLoading = computed(() => {
         const loadingVal = pageContent.value.loading;
         if (loadingVal.finished){
@@ -92,7 +100,7 @@
                     <FieldMessage v-if="form.errors.skills" status="error">{{ form.errors.skills }}</FieldMessage>
                     <div v-for="(skill, index) in form.skills" :key="index" class="flex gap-2 mb-2 text-black">
                         <SkillInput v-model="form.skills[index]" class="flex-grow"/>
-                        <DangerButton type="button" @click="form.skills.splice(index, 1)">
+                        <DangerButton type="button" @click="removeFromList(index)">
                             <font-awesome-icon :icon="['fas', 'trash']"/>
                         </DangerButton>
                     </div>

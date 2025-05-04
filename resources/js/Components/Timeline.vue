@@ -1,28 +1,127 @@
 <script setup>
-    defineProps({
+    import { PrimaryButton } from '@/Utils/MyComponents';
+    import { ref, onMounted } from 'vue';
+
+    const props = defineProps({
         rows: {
             type: Array,
             required: true,
+        },
+        editable: {
+            type: Boolean,
+            default: false,
         }
     });
+
+    const initialRows = ref([]);
+
+    onMounted(() => {
+        initialRows.value = JSON.parse(JSON.stringify(props.rows));
+    });
+
+    const addNew = () => {
+        props.rows.push({
+            timespan: 'Timespan',
+            title: 'Title',
+            content: 'Content here',
+        });
+    }
+
+    const removeFromRow = (index) => {
+        if (props.rows.length <= 1){
+            showModalMessage('Timeline must at least contain one row!', 'error');
+        } else {
+            props.rows.splice(index, 1);
+        }
+    }
+
+    const resetRows = () => {
+        props.rows.splice(0, props.rows.length, ...JSON.parse(JSON.stringify(initialRows.value)));
+    }
+
+    const allowDrop = (e) => {
+        if (props.editable){
+            e.preventDefault();
+        }
+    }
+
+    const dragStart = (e) => {
+        if (props.editable){
+            const timelineContent = $(e.target).find('.timeline-content');
+            const title = timelineContent.find('.title');
+            const timespan = timelineContent.find('.timespan');
+            const content = timelineContent.find('.content');
+            const draggedIndex = timelineContent.attr('data-id');
+
+            e.dataTransfer.setData('dragged-index', parseInt(draggedIndex));
+            e.dataTransfer.setData('dragged-title', title.html());
+            e.dataTransfer.setData('dragged-timespan', timespan.html());
+            e.dataTransfer.setData('dragged-content', content.html());
+        }
+    }
+
+    const switchData = (e) => {
+        e.preventDefault();
+        const timelineContent = $(e.target).closest('.timeline-content');
+        if (timelineContent.length) {
+            const dropedIndex = timelineContent.attr('data-id');
+            const droppedTitle = timelineContent.find('.title');
+            const droppedTimespan = timelineContent.find('.timespan');
+            const droppedContent = timelineContent.find('.content');
+
+            const draggedIndex = e.dataTransfer.getData('dragged-index');
+            const draggedTitle = e.dataTransfer.getData('dragged-title');
+            const draggedTimespan = e.dataTransfer.getData('dragged-timespan');
+            const draggedContent = e.dataTransfer.getData('dragged-content');
+
+            props.rows[dropedIndex].title = draggedTitle;
+            props.rows[dropedIndex].timespan = draggedTimespan;
+            props.rows[dropedIndex].content = draggedContent;
+
+            props.rows[draggedIndex].title = droppedTitle.html();
+            props.rows[draggedIndex].timespan = droppedTimespan.html();
+            props.rows[draggedIndex].content = droppedContent.html();
+        }
+    }
+
+    const updateRowField = (index, field, event) => {
+        if (props.editable){
+            props.rows[index][field] = event.target.innerText;
+        }
+    }
 </script>
 
 <template>
     <div class="timeline">
         <div v-for="(row, index) in rows" class="timeline-row">
-            <div class="container" :class="index % 2 ? 'right-container' : 'left-container'">
+            <div class="container" :draggable="editable" :ondragstart="dragStart" :ondragover="allowDrop" :ondrop="switchData" :class="index % 2 ? 'right-container' : 'left-container'">
                 <div class="timeline-box">
-                    <div class="timeline-content">
-                        <p v-if="row.title" class="text-xl font-bold text-green-500 md:text-center">{{ row.title }}</p>
+                    <div class="timeline-content" :data-id="index">
+                        <p v-if="row.title" :contenteditable="editable" class="text-xl font-bold text-green-500 title md:text-center" @blur="updateRowField(index, 'title', $event)" v-html="row.title"></p>
                         <p v-if="row.timespan" class="flex gap-2 font-medium text-green-500 md:justify-center place-items-center">
                             <font-awesome-icon :icon="['fas', 'calendar']"/>
-                            <span>{{ row.timespan }}</span>
+                            <span class="timespan" :contenteditable="editable" @blur="updateRowField(index, 'timespan', $event)" v-html="row.timespan"></span>
                         </p>
-                        <p v-if="row.content" class="text-justify" v-html="row.content"></p>
+                        <p v-if="row.content" class="text-justify content" :contenteditable="editable" @blur="updateRowField(index, 'content', $event)" v-html="row.content"></p>
+                        <div v-if="editable" class="absolute top-0 right-0">
+                            <button type="button" @click="removeFromRow(index)" title="Remove" class="px-4 py-2 text-red-500 hover:text-red-900">
+                                <font-awesome-icon :icon="['fas', 'trash']"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <div v-if="editable" class="flex gap-2 my-4">
+        <PrimaryButton @click="addNew" type="button">
+            <font-awesome-icon :icon="['fas', 'add']"/>
+            <span>Add New</span>
+        </PrimaryButton>
+        <PrimaryButton @click="resetRows" type="button">
+            <font-awesome-icon :icon="['fas', 'rotate-left']"/>
+            <span>Reset</span>
+        </PrimaryButton>
     </div>
 </template>
 
