@@ -20,6 +20,7 @@ const svg = {
 const img = {
     bg1: getUrl(imgPath + 'bg1.jpg'),
     hero: getUrl(imgPath + 'hero.png'),
+    projectDefaultIcon: getUrl(imgPath + 'project-default-icon.png'),
 };
 
 export default { svg, img }
