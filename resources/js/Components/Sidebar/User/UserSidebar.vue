@@ -35,6 +35,7 @@
                 <SidebarOption :route="route('about.edit')" :icon="['fas', 'info']" :isActive="component == 'User/Pages/About'" :showTitle="showTitle" :isDropDownOption="true" title="About"/>
             </SidebarOption>
             <SidebarOption :route="route('projects.edit')" :icon="['fas', 'folder-open']" :isActive="component == 'User/Projects/Edit'" :showTitle="showTitle" title="Projects"/>
+            <SidebarOption :route="route('user.reports')" :icon="['fas', 'file']" :isActive="component == 'User/Reports/Index'" :showTitle="showTitle" title="Reports"/>
         </ul>
     </div>
 </template>

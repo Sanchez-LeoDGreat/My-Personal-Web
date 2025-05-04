@@ -4,7 +4,7 @@
     import StaticAsset from '@/Utils/StaticAsset.js';
     import { faHtml5, faCss3Alt, faJs, faPhp, faWordpress, faLaravel, faVuejs } from '@fortawesome/free-brands-svg-icons';
     import { computed, nextTick, onMounted, ref } from 'vue';
-    import { HeaderText, DarkGlass, Timeline, IconCard, Loading } from '@/Utils/MyComponents';
+    import { HeaderText, DarkGlass, Timeline, IconCard, Loading, Prose } from '@/Utils/MyComponents';
 
     const pageContent = ref({
         loading: {
@@ -66,7 +66,7 @@
             <div>
                 <HeaderText class="mb-1">About <span class="text-green-500 ">Me</span></HeaderText>
                 <Loading v-if="isLoading" :finished="pageContent.loading.finished" :status="pageContent.loading.status"/>
-                <p v-else class="text-justify" v-html="pageContent.aboutMe"></p>
+                <Prose v-else class="text-justify" v-html="pageContent.aboutMe"></Prose>
             </div>
             <div>
                 <HeaderText class="mb-2">My <span class="text-green-500">Skills</span></HeaderText>
