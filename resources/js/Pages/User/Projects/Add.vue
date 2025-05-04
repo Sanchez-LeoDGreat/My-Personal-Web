@@ -1,11 +1,12 @@
 <script setup>
     import { Head, Link, useForm } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput } from '@/Utils/MyComponents';
+    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews } from '@/Utils/MyComponents';
     import StaticAsset from '@/Utils/StaticAsset';
 
     const form = useForm({
         icon: null,
         title: null,
+        previews: [],
         about: null,
         summary: null,
         description: null,
@@ -34,7 +35,7 @@
                     <div class="flex-grow">
                         <LabelText for="project-title">Project Title</LabelText>
                         <TextInput id="project-title" placeholder="Please enter project's title here..."/>
-                        <CheckboxInput id="downloadable" v-model="form.downloadable">Downloadable</CheckboxInput>
+                        <CheckboxInput id="downloadable" class="float-end" v-model="form.downloadable">Downloadable</CheckboxInput>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 my-2">
@@ -51,6 +52,10 @@
                                 </PrimaryButton>
                             </div>
                         </div>
+                    </div>
+                    <div>
+                        <LabelText for="previews">Previews</LabelText>
+                        <ProjectPreviews :previews="form.previews" :editable="true"/>
                     </div>
                     <div>
                         <LabelText for="about">About this project</LabelText>

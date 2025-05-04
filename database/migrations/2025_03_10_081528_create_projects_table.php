@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->text('icon_path')->unique();
+            $table->json('previews')->nullable();
             $table->text('about')->nullable();
             $table->string('summary')->nullable();
             $table->text('description')->nullable();

@@ -44,6 +44,9 @@ import Modal from "@/Components/Modal/Modal.vue";
 import ModalMessage from "@/Components/Modal/Partials/ModalMessage.vue";
 import ModalButtons from "@/Components/Modal/Partials/ModalButtons.vue";
 
+//preview
+import ProjectPreviews from "@/Components/Preview/ProjectPreviews.vue";
+
 //sidebar
 import UserSidebar from "@/Components/Sidebar/User/UserSidebar.vue";
 import SidebarOption from "@/Components/Sidebar/User/Partials/SidebarOption.vue";
@@ -109,6 +112,9 @@ export {
     Modal,
     ModalButtons,
     ModalMessage,
+
+    //preview
+    ProjectPreviews,
 
     //sidebar
     UserSidebar,
