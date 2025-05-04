@@ -1,19 +1,14 @@
 <script setup>
-    import { HeaderText } from '@/Utils/MyComponents';
-    import MarginLayout from '@/Layouts/Child/MarginLayout.vue';
     import { Head } from '@inertiajs/vue3';
-
-    const props = defineProps({
-        user: {
-            type: Object,
-            required: true
-        }
-    });
+    import { DarkGlass, HeaderText } from '@/Utils/MyComponents';
 </script>
 
 <template>
-    <Head title="Dashboard"></Head>
-    <MarginLayout class="flex-grow">
-        <HeaderText>Dashboard</HeaderText>
-    </MarginLayout>
+    <Head title="Projects"/>
+    <DarkGlass class="min-h-screen p-2">
+        <HeaderText class="mb-1">Dashboard</HeaderText>
+        <div class="px-4">
+
+        </div>
+    </DarkGlass>
 </template>

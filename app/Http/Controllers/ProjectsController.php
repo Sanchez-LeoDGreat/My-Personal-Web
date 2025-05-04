@@ -13,10 +13,18 @@ class ProjectsController extends Controller
         return Inertia::render('Projects');
     }
 
-    public function edit()
+    public function manage()
     {
         $user = Auth::user();
-        return Inertia::render('User/Projects/Edit', [
+        return Inertia::render('User/Projects/Manage', [
+            'user' => $user
+        ]);
+    }
+
+    public function add()
+    {
+        $user = Auth::user();
+        return Inertia::render('User/Projects/Add', [
             'user' => $user
         ]);
     }

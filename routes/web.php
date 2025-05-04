@@ -27,7 +27,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/pages/about/edit', [AboutController::class, 'edit'])->name('about.edit');
     Route::put('/user/pages/about/update', [AboutController::class, 'update'])->name('about.update');
 
-    Route::get('/user/projects', [ProjectsController::class, 'edit'])->name('projects.edit');
+    Route::get('/user/projects', [ProjectsController::class, 'manage'])->name('projects.manage');
+    Route::get('user/projects/add', [ProjectsController::class, 'add'])->name('projects.add');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 
