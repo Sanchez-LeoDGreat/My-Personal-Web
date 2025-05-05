@@ -94,7 +94,7 @@
 <template>
     <div class="timeline">
         <div v-for="(row, index) in rows" class="timeline-row">
-            <div class="container" :draggable="editable" :ondragstart="dragStart" :ondragover="allowDrop" :ondrop="switchData" :class="index % 2 ? 'right-container' : 'left-container'">
+            <div class="container" :draggable="editable" @dragstart="dragStart" @dragover="allowDrop" @drop="switchData" :class="index % 2 ? 'right-container' : 'left-container'">
                 <div class="timeline-box">
                     <div class="timeline-content" :data-id="index">
                         <p v-if="row.title" :contenteditable="editable" class="text-xl font-bold text-green-500 title md:text-center" @blur="updateRowField(index, 'title', $event)" v-html="row.title"></p>

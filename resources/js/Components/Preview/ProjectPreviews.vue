@@ -24,12 +24,14 @@
             if (!props.previews.includes(file)){
                 props.previews.push(file);
             }
-            console.log(props.previews);
         });
     });
 
     const displayFile = (file) => {
-        return URL.createObjectURL(file);
+        if (typeof file == "object"){
+            return URL.createObjectURL(file);
+        }
+        return file;
     }
 
     const removePreview = (index) => {
@@ -39,19 +41,45 @@
     const addPreviews = () => {
         fileInput.click();
     }
+
+    const dragStart = (e, index) => {
+        if (props.editable){
+            e.dataTransfer.setData('dragged-preview-index', index);
+        }
+    }
+
+    const allowDrop = (e) => {
+        if (props.editable){
+            e.preventDefault();
+        }
+    }
+
+    const switchData = (e, index) => {
+        if (props.editable){
+            const draggedIndex = e.dataTransfer.getData('dragged-preview-index');
+            const droppedIndex = index;
+
+            const temp = [...props.previews];
+
+            props.previews[draggedIndex] = temp[droppedIndex];
+            props.previews[droppedIndex] = temp[draggedIndex];
+        }
+    }
 </script>
 
 <template>
     <div>
-        <div class="flex flex-col min-h-48 max-h-48">
+        <div class="flex flex-col min-h-48">
             <div v-if="previews.length > 0">
-                <div class="flex gap-2 overflow-x-auto">
-                    <div v-for="(preview, index) in previews" :key="index" class="relative">
-                        <img v-if="preview.type.startsWith('image/')" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 object-contain max-w-[30vw] rounded-md">
-                        <video v-else-if="preview.type.startsWith('video/')" :src="displayFile(preview)" controls class="max-h-48 max-w-[30vw] rounded-md"></video>
-                        <button @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 hover:text-red-800 bg-black/20">
-                            <font-awesome-icon :icon="['fas', 'trash']"/>
-                        </button>
+                <div class="flex gap-2 py-2 overflow-x-auto">
+                    <div v-for="(preview, index) in previews" :key="index">
+                        <div class="relative" :draggable="editable" @dragstart="dragStart($event, index)" @drop="switchData($event, index)" @dragover="allowDrop">
+                            <img v-if="preview.type.startsWith('image/')" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 h-48 object-contain max-w-[30vw] rounded-md">
+                            <video v-else-if="preview.type.startsWith('video/')" :src="displayFile(preview)" controls class="max-h-48 max-w-[30vw] rounded-md"></video>
+                            <button type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 hover:text-red-800 bg-black/20">
+                                <font-awesome-icon :icon="['fas', 'trash']"/>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -59,10 +87,10 @@
                 <p>No previews available.</p>
             </div>
         </div>
-        <div class="my-4">
+        <div class="py-2">
             <PrimaryButton type="button" @click="addPreviews" class="flex gap-2 place-items-center">
                 <font-awesome-icon :icon="['fas', 'add']"/>
-                <span>Add Preview</span>
+                <span>Add Preview/s</span>
             </PrimaryButton>
         </div>
     </div>

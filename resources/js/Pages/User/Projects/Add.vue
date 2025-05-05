@@ -12,6 +12,10 @@
         description: null,
         downloadable: false,
     });
+
+    const addProject = () => {
+
+    }
 </script>
 
 <template>
@@ -27,7 +31,7 @@
                     </PrimaryButton>
                 </Link>
             </div>
-            <form @submit.prevent>
+            <form @submit.prevent="addProject">
                 <div class="flex gap-2">
                     <div>
                         <img :src="StaticAsset.img.projectDefaultIcon" alt="Project Icon" class="object-cover bg-white border-2 rounded-md border-slate-800 w-28 h-28 max-w-28 max-h-28">
@@ -55,7 +59,7 @@
                     </div>
                     <div>
                         <LabelText for="previews">Previews</LabelText>
-                        <ProjectPreviews :previews="form.previews" :editable="true"/>
+                        <ProjectPreviews v-model:previews="form.previews" :editable="true"/>
                     </div>
                     <div>
                         <LabelText for="about">About this project</LabelText>
