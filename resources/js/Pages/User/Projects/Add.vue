@@ -1,6 +1,7 @@
 <script setup>
     import { Head, Link, useForm } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews } from '@/Utils/MyComponents';
+    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews, IconInput } from '@/Utils/MyComponents';
+    import { ref } from 'vue';
     import StaticAsset from '@/Utils/StaticAsset';
 
     const form = useForm({
@@ -11,10 +12,26 @@
         summary: null,
         description: null,
         downloadable: false,
+        downloadable_file: null,
     });
 
-    const addProject = () => {
+    const fileInputRef = ref(null);
+    const uploadedFilenameRef = ref(null);
 
+    const openFileDialog = () => {
+        fileInputRef.value.click();
+    }
+
+    const downloadableFileUpload = () => {
+        const file = fileInputRef.value.files[0];
+        if (file) {
+            form.downloadable_file = file;
+            uploadedFilenameRef.value = file.name;
+        }
+    }
+
+    const addProject = () => {
+        console.log(form.icon);
     }
 </script>
 
@@ -33,9 +50,7 @@
             </div>
             <form @submit.prevent="addProject">
                 <div class="flex gap-2">
-                    <div>
-                        <img :src="StaticAsset.img.projectDefaultIcon" alt="Project Icon" class="object-cover bg-white border-2 rounded-md border-slate-800 w-28 h-28 max-w-28 max-h-28">
-                    </div>
+                    <IconInput v-model="form.icon" :editable="true"/>
                     <div class="flex-grow">
                         <LabelText for="project-title">Project Title</LabelText>
                         <TextInput id="project-title" placeholder="Please enter project's title here..."/>
@@ -50,10 +65,17 @@
                                 <TextInput id="version" placeholder="v1.0.0"/>
                             </div>
                             <div>
-                                <PrimaryButton class="flex gap-2 mb-1 place-items-center">
+                                <PrimaryButton @click="openFileDialog" class="flex gap-2 mb-1 place-items-center">
                                     <font-awesome-icon :icon="['fas', 'upload']"/>
                                     <span>Upload File</span>
                                 </PrimaryButton>
+                                <input type="file" class="hidden" @change="downloadableFileUpload" ref="fileInputRef">
+                            </div>
+                        </div>
+                        <div class="text-center" v-if="form.downloadable_file">
+                            <div>
+                                <span class="font-medium">File Name: </span>
+                                <span v-text="uploadedFilenameRef"></span>
                             </div>
                         </div>
                     </div>

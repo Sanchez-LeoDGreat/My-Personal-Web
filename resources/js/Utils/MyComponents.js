@@ -34,6 +34,7 @@ import TextAreaInput from "@/Components/Inputs/TextAreaInput.vue";
 import TextInput from "@/Components/Inputs/TextInput.vue";
 import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
 import SkillInput from "@/Components/Inputs/SkillInput.vue";
+import IconInput from "@/Components/Inputs/IconInput.vue";
 
 //loading
 import Loading from "@/Components/Loading/Loading.vue";
@@ -103,6 +104,7 @@ export {
     TextInput,
     RichTextEditorInput,
     SkillInput,
+    IconInput,
 
     //loading
     Loading,
