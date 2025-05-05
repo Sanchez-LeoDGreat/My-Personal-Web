@@ -9,10 +9,11 @@ class Project extends Model
     protected $fillable = [
         'name',
         'icon_path',
+        'previews',
         'about',
         'summary',
         'description',
-        'downloadable'
+        'downloadable',
     ];
 
     public function reviews()

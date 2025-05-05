@@ -1,8 +1,7 @@
 <script setup>
-    import { Head, Link, useForm } from '@inertiajs/vue3';
+    import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
     import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews, IconInput } from '@/Utils/MyComponents';
     import { ref } from 'vue';
-    import StaticAsset from '@/Utils/StaticAsset';
 
     const form = useForm({
         icon: null,
@@ -12,6 +11,7 @@
         summary: null,
         description: null,
         downloadable: false,
+        downloadable_version: '',
         downloadable_file: null,
     });
 
@@ -31,12 +31,17 @@
     }
 
     const addProject = () => {
-        console.log(form.icon);
+        form.post(route('projects.store'), {
+            forceFormData: true,
+            onSuccess: () => {
+                showModalMessage(usePage().props.flash.success);
+            },
+        });
     }
 </script>
 
 <template>
-    <Head title="Projects"/>
+    <Head title="Add Project"/>
     <DarkGlass class="min-h-screen p-2">
         <HeaderText class="mb-1">Add <span class="text-green-500 ">Project</span></HeaderText>
         <div class="px-4">
@@ -53,19 +58,22 @@
                     <IconInput v-model="form.icon" :editable="true"/>
                     <div class="flex-grow">
                         <LabelText for="project-title">Project Title</LabelText>
-                        <TextInput id="project-title" placeholder="Please enter project's title here..."/>
+                        <FieldMessage v-if="form.errors.title" status="error">{{ form.errors.title }}</FieldMessage>
+                        <TextInput id="project-title" v-model="form.title" placeholder="Please enter project's title here..."/>
                         <CheckboxInput id="downloadable" class="float-end" v-model="form.downloadable">Downloadable</CheckboxInput>
                     </div>
                 </div>
+                <FieldMessage v-if="form.errors.icon" status="error">{{ form.errors.icon }}</FieldMessage>
                 <div class="flex flex-col gap-2 my-2">
                     <div v-if="form.downloadable">
                         <LabelText for="version">Version</LabelText>
+                        <FieldMessage v-if="form.errors.downloadable_version" status="error">{{ form.errors.downloadable_version }}</FieldMessage>
                         <div class="flex gap-2 place-items-center">
                             <div class="flex-grow">
-                                <TextInput id="version" placeholder="v1.0.0"/>
+                                <TextInput id="version" v-model="form.downloadable_version" placeholder="v1.0.0"/>
                             </div>
                             <div>
-                                <PrimaryButton @click="openFileDialog" class="flex gap-2 mb-1 place-items-center">
+                                <PrimaryButton type="button" @click="openFileDialog" class="flex gap-2 mb-1 place-items-center">
                                     <font-awesome-icon :icon="['fas', 'upload']"/>
                                     <span>Upload File</span>
                                 </PrimaryButton>
@@ -78,6 +86,7 @@
                                 <span v-text="uploadedFilenameRef"></span>
                             </div>
                         </div>
+                        <FieldMessage v-if="form.errors.downloadable_file" class="text-center" status="error">{{ form.errors.downloadable_file }}</FieldMessage>
                     </div>
                     <div>
                         <LabelText for="previews">Previews</LabelText>

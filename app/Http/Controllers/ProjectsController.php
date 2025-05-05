@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Downloadable;
+use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
@@ -27,5 +29,55 @@ class ProjectsController extends Controller
         return Inertia::render('User/Projects/Add', [
             'user' => $user
         ]);
+    }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'icon' => 'required|image|max:2048',
+            'title' => 'required|string',
+            'about' => 'nullable|string',
+            'summary' => 'nullable|string',
+            'description' => 'nullable|string',
+            'downloadable' => 'boolean',
+            'previews' => 'nullable|array',
+            'previews.*' => 'file',
+        ]);
+
+        if ($request->downloadable) {
+            $request->validate([
+                'downloadable_version' => 'required|string',
+                'downloadable_file' => 'required|file',
+            ]);
+        }
+
+        $previews = [];
+        $iconPath = $request->file('icon')->store('projects/icons', 'public');
+        if ($request->has('previews')) {
+            foreach ($request->file('previews') as $preview) {
+                $previews[] = $preview->store('projects/previews', 'public');
+            }
+        }
+
+        $project = Project::create([
+            'name' => $request->title,
+            'icon_path' => $iconPath,
+            'previews' => json_encode($previews),
+            'about' => $request->about,
+            'summary' => $request->summary,
+            'description' => $request->description,
+            'downloadable' => $request->downloadable
+        ]);
+
+        if ($request->downloadable) {
+            $download_path = $request->file('downloadable_file')->store('projects/downloadables', 'public');
+            Downloadable::create([
+                'project_id' => $project->id,
+                'version' => $request->downloadable_version,
+                'download_path' => $download_path,
+            ]);
+        }
+
+        return to_route('projects.manage')->with('success', 'Successfully added the new project!');
     }
 }

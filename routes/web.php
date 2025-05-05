@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/user/projects/manage', [ProjectsController::class, 'manage'])->name('projects.manage');
     Route::get('user/projects/add', [ProjectsController::class, 'add'])->name('projects.add');
+    Route::post('/user/projects/store', [ProjectsController::class, 'store'])->name('projects.store');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 
