@@ -19,7 +19,7 @@ class ProjectsController extends Controller
     {
         $user = Auth::user();
         return Inertia::render('User/Projects/Manage', [
-            'user' => $user
+            'user' => $user,
         ]);
     }
 
@@ -35,7 +35,7 @@ class ProjectsController extends Controller
     {
         $request->validate([
             'icon' => 'required|image|max:2048',
-            'title' => 'required|string',
+            'title' => 'required|string|unique:projects,name',
             'about' => 'nullable|string',
             'summary' => 'nullable|string',
             'description' => 'nullable|string',
@@ -79,5 +79,23 @@ class ProjectsController extends Controller
         }
 
         return to_route('projects.manage')->with('success', 'Successfully added the new project!');
+    }
+
+    public function fetch(Request $request)
+    {
+        $request->validate([
+            'search' => 'nullable|string',
+            'downloadable' => 'boolean',
+            'sort_by' => 'nullable|string',
+        ]);
+        $projects = Project::where('name', 'like', "%$request->search%")
+            // ->where('downloadable', $request->downloadable)
+            ->with(['reviews', 'downloadables'])
+            ->paginate(15);
+        return response()->json([
+            'success' => true,
+            'message' => 'Successfully fetched projects!',
+            'projects' => $projects
+        ]);
     }
 }

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('summary')->nullable();
             $table->text('description')->nullable();
             $table->boolean('downloadable')->default(false);
+            $table->integer('view_count')->default(0);
             $table->timestamps();
         });
     }

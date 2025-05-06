@@ -14,6 +14,7 @@ class Project extends Model
         'summary',
         'description',
         'downloadable',
+        'view_count',
     ];
 
     public function reviews()

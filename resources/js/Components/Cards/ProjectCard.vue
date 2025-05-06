@@ -1,0 +1,63 @@
+<script setup>
+    import { PrimaryButton } from '@/Utils/MyComponents';
+    import { getFileType } from '@/Utils/StringUtils';
+    import { onMounted, ref } from 'vue';
+
+    const props = defineProps({
+        project: {
+            type: Object,
+            required: true
+        },
+        editable: {
+            type: Boolean,
+            default: false,
+        }
+    });
+    const APP_URL = import.meta.env.VITE_APP_URL;
+    const STORAGE_PATH = `${APP_URL}/storage/`
+    const iconPath = STORAGE_PATH + props.project.icon_path;
+    const previews = JSON.parse(props.project.previews);
+    const firstPreview = STORAGE_PATH + previews[0];
+    const latestVersion = props.project.downloadables[0]?.version;
+    const ratings = ref(0);
+
+    const calculateRatings = () => {
+        const reviews = props.project.reviews;
+        if (!reviews.length) ratings.value = 0;
+        ratings.value = reviews.reduce((acc, review) => acc + review.rating, 0);
+    }
+
+    onMounted(() => {
+        calculateRatings();
+    });
+</script>
+
+<template>
+    <div class="overflow-hidden border-2 border-transparent rounded-md cursor-pointer hover:border-green-500">
+        <div>
+            <img v-if="getFileType(firstPreview) == 'image'" :src="firstPreview" alt="Project Preview" class="object-cover w-full h-48">
+            <video v-else-if="getFileType(firstPreview) == 'video'" :src="firstPreview" controls class="w-full h-48 bg-slate-950/40 backdrop-blur-md"></video>
+        </div>
+        <div class="flex gap-4 p-2 bg-slate-950" :class="{'justify-between': project.downloadable, 'justify-start': !project.downloadable}">
+            <div class="flex">
+                <img :src="iconPath" alt="Project Icon" class="object-cover w-16 h-16 rounded-md min-w-16 min-h-16">
+            </div>
+            <div class="flex min-w-0 gap-2">
+                <div class="flex flex-col min-w-0">
+                    <div v-text="project.name" class="text-lg font-medium truncate"></div>
+                    <div class="flex gap-1 text-xs place-items-center">
+                        <span v-text="ratings.toFixed(1)"></span>
+                        <font-awesome-icon :icon="['fas', 'star']"/>
+                    </div>
+                </div>
+            </div>
+            <div v-if="project.downloadable" class="flex flex-col shrink-0">
+                <PrimaryButton class="flex items-center gap-2">
+                <font-awesome-icon :icon="['fas', 'download']"/>
+                <span>Download</span>
+                </PrimaryButton>
+                <div class="my-1 text-xs text-center" v-text="latestVersion"></div>
+            </div>
+        </div>
+    </div>
+</template>

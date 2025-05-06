@@ -95,17 +95,17 @@
                     <div>
                         <LabelText for="about">About this project</LabelText>
                         <FieldMessage v-if="form.errors.about" status="error">{{ form.errors.about }}</FieldMessage>
-                        <RichTextEditorInput id="about"/>
+                        <RichTextEditorInput id="about" v-model="form.about"/>
                     </div>
                     <div>
                         <LabelText for="summary">Summary</LabelText>
                         <FieldMessage v-if="form.errors.summary" status="error">{{ form.errors.summary }}</FieldMessage>
-                        <RichTextEditorInput id="summary"/>
+                        <RichTextEditorInput id="summary" v-model="form.summary"/>
                     </div>
                     <div>
                         <LabelText for="description">Description</LabelText>
                         <FieldMessage v-if="form.errors.description" status="error">{{ form.errors.description }}</FieldMessage>
-                        <RichTextEditorInput id="description"/>
+                        <RichTextEditorInput id="description" v-model="form.description"/>
                     </div>
                 </div>
                 <hr>

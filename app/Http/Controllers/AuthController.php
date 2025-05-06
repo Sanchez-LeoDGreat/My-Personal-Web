@@ -25,7 +25,7 @@ class AuthController extends Controller
             'password' => 'required|min:8'
         ]);
 
-        if (Auth::attempt($credentials, $request->has('remember'))) {
+        if (Auth::attempt($credentials, $request->remember)) {
             return to_route('user.dashboard');
         }
         throw ValidationException::withMessages([

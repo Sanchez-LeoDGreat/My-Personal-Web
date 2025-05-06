@@ -1,13 +1,88 @@
 <script setup>
     import { Head, Link } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton } from '@/Utils/MyComponents';
+    import { DarkGlass, HeaderText, PrimaryButton, ProjectCard, Loading, LabelText, TextInput, CheckboxInput, PaginationControls } from '@/Utils/MyComponents';
+    import { nextTick, onMounted, computed, watch, reactive } from 'vue';
+    import { debounce } from 'lodash';
+
+    const projects = reactive({
+        loading: {
+            finished: false,
+            status: 'loading',
+        },
+        data: [],
+        links: [],
+    });
+
+    const options = reactive({
+        search: '',
+        downloadable: false,
+        sort_by: '',
+        page: 1,
+    });
+
+    const fetchProjects = async () => {
+        try{
+            projects.loading.finished = false;
+            projects.loading.status = 'loading';
+            const response = await axios.post(route('api.fetch-projects'), options)
+            const data = response.data;
+            if (data.success) {
+                projects.data = data.projects.data;
+                projects.links = data.projects.links;
+            } else {
+                throw new Error(data.message || 'Failed to fetch projects');
+            }
+        } catch (err) {
+            showModalMessage("Error: " + err.message, 'error');
+            projects.loading.status = 'error';
+        } finally {
+            projects.loading.finished = true;
+        }
+    }
+
+    const isLoading = computed(() => {
+        const loadingVal = projects.loading;
+        if (loadingVal.finished){
+            if (loadingVal.status =='error'){
+                return true;
+            }
+            return false;
+        }
+        return true;
+    });
+
+    const search = debounce((e) => {
+        options.search = e.target.value;
+    }, 1000);
+
+    const isDownloadable = (e) => {
+        options.downloadable = e.target.checked;
+    };
+
+    onMounted(async () => {
+        await nextTick();
+        await fetchProjects();
+    });
+
+    watch(options, async () => {
+        await fetchProjects();
+    });
 </script>
 
 <template>
     <Head title="Projects"/>
     <DarkGlass class="min-h-screen p-2">
-        <HeaderText class="mb-1">Manage <span class="text-green-500 ">Projects</span></HeaderText>
+        <HeaderText class="mb-2">Manage <span class="text-green-500 ">Projects</span></HeaderText>
         <div class="px-4">
+            <div class="flex justify-between p-2 my-2 border-2 border-white rounded-md bg-slate-950">
+                <div class="flex gap-2 place-items-center">
+                    <LabelText for="search">Search:</LabelText>
+                    <TextInput id="search" @input="search" :value="options.search" placeholder="Search..."/>
+                </div>
+                <div class="flex place-items-center">
+                    <CheckboxInput id="downloadable" @change="isDownloadable">Downloadable</CheckboxInput>
+                </div>
+            </div>
             <div class="my-4">
                 <Link :href="route('projects.add')">
                     <PrimaryButton class="flex gap-2 place-items-center">
@@ -16,6 +91,18 @@
                     </PrimaryButton>
                 </Link>
             </div>
+            <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status"/>
+            <div v-else>
+                <div v-if="projects.data.length > 0" class="flex flex-wrap justify-start w-full">
+                    <div v-for="project in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
+                        <ProjectCard :project="project"/>
+                    </div>
+                </div>
+                <div v-else class="m-10 text-center">
+                    No result
+                </div>
+            </div>
+            <PaginationControls v-model="options.page" :links="projects.links" class="my-2"/>
         </div>
     </DarkGlass>
 </template>

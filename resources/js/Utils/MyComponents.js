@@ -10,6 +10,9 @@ import SecondaryButton from "@/Components/Buttons/SecondaryButton.vue";
 import SuccessButton from "@/Components/Buttons/SuccessButton.vue";
 import WarningButton from "@/Components/Buttons/WarningButton.vue";
 
+//cards
+import ProjectCard from "@/Components/Cards/ProjectCard.vue";
+
 //effects
 import Glass from "@/Components/Effects/GlassMorphism/Glass.vue";
 import DarkGlass from "@/Components/Effects/GlassMorphism/DarkGlass.vue";
@@ -44,6 +47,9 @@ import LoadingScreen from "@/Components/Loading/LoadingScreen.vue";
 import Modal from "@/Components/Modal/Modal.vue";
 import ModalMessage from "@/Components/Modal/Partials/ModalMessage.vue";
 import ModalButtons from "@/Components/Modal/Partials/ModalButtons.vue";
+
+//pagination
+import PaginationControls from "@/Components/Pagination/PaginationControls.vue";
 
 //preview
 import ProjectPreviews from "@/Components/Preview/ProjectPreviews.vue";
@@ -80,6 +86,9 @@ export {
     SuccessButton,
     WarningButton,
 
+    //cards
+    ProjectCard,
+
     //effects
     Glass,
     DarkGlass,
@@ -114,6 +123,9 @@ export {
     Modal,
     ModalButtons,
     ModalMessage,
+
+    //pagination
+    PaginationControls,
 
     //preview
     ProjectPreviews,
