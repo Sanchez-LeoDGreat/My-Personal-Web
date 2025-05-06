@@ -85,13 +85,28 @@ class ProjectsController extends Controller
     {
         $request->validate([
             'search' => 'nullable|string',
-            'downloadable' => 'boolean',
             'sort_by' => 'nullable|string',
         ]);
-        $projects = Project::where('name', 'like', "%$request->search%")
-            // ->where('downloadable', $request->downloadable)
-            ->with(['reviews', 'downloadables'])
-            ->paginate(15);
+
+        $query = Project::with(['reviews', 'downloadables'])
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
+
+        switch ($request->sort_by) {
+            case 'alphabetical':
+                $query->orderBy('name');
+                break;
+            case 'views':
+                $query->orderBy('view_count', 'desc');
+                break;
+            case 'newest':
+                $query->latest();
+                break;
+        }
+
+        $projects = $query->paginate(3);
+
         return response()->json([
             'success' => true,
             'message' => 'Successfully fetched projects!',

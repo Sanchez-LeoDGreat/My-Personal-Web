@@ -1,6 +1,6 @@
 <script setup>
     import { Head, Link } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton, ProjectCard, Loading, LabelText, TextInput, CheckboxInput, PaginationControls } from '@/Utils/MyComponents';
+    import { DarkGlass, HeaderText, PrimaryButton, ProjectCard, Loading, LabelText, TextInput, SearchInput, CheckboxInput, PaginationControls } from '@/Utils/MyComponents';
     import { nextTick, onMounted, computed, watch, reactive } from 'vue';
     import { debounce } from 'lodash';
 
@@ -15,8 +15,7 @@
 
     const options = reactive({
         search: '',
-        downloadable: false,
-        sort_by: '',
+        sort_by: 'alphabetical',
         page: 1,
     });
 
@@ -55,9 +54,9 @@
         options.search = e.target.value;
     }, 1000);
 
-    const isDownloadable = (e) => {
-        options.downloadable = e.target.checked;
-    };
+    const isActiveSortBy = (sort_by) => {
+        return options.sort_by == sort_by ? true : false;
+    }
 
     onMounted(async () => {
         await nextTick();
@@ -65,44 +64,53 @@
     });
 
     watch(options, async () => {
+        await nextTick();
         await fetchProjects();
     });
 </script>
 
 <template>
     <Head title="Projects"/>
-    <DarkGlass class="min-h-screen p-2">
+    <DarkGlass class="min-h-[90vh] p-2 flex flex-col">
         <HeaderText class="mb-2">Manage <span class="text-green-500 ">Projects</span></HeaderText>
-        <div class="px-4">
-            <div class="flex justify-between p-2 my-2 border-2 border-white rounded-md bg-slate-950">
-                <div class="flex gap-2 place-items-center">
-                    <LabelText for="search">Search:</LabelText>
-                    <TextInput id="search" @input="search" :value="options.search" placeholder="Search..."/>
+        <div class="px-4 flex flex-col justify-between flex-grow">
+            <div class="flex-grow flex flex-col">
+                <div class="flex gap-2 mt-2 place-items-center">
+                    <SearchInput @input="search" placeholder="Search..." class="w-full"/>
                 </div>
-                <div class="flex place-items-center">
-                    <CheckboxInput id="downloadable" @change="isDownloadable">Downloadable</CheckboxInput>
-                </div>
-            </div>
-            <div class="my-4">
-                <Link :href="route('projects.add')">
-                    <PrimaryButton class="flex gap-2 place-items-center">
-                        <font-awesome-icon :icon="['fas', 'add']"/>
-                        <span>Add New</span>
-                    </PrimaryButton>
-                </Link>
-            </div>
-            <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status"/>
-            <div v-else>
-                <div v-if="projects.data.length > 0" class="flex flex-wrap justify-start w-full">
-                    <div v-for="project in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
-                        <ProjectCard :project="project"/>
+                <div class="md:flex justify-between p-2 my-2 border-2 border-white rounded-md bg-slate-950">
+                    <div>
+                        <div class="text-xs">Sort by:</div>
+                        <div class="flex gap-2 sort-buttons">
+                            <button @click="options.sort_by = 'alphabetical'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('alphabetical')}">A-Z</button>
+                            <button @click="options.sort_by = 'newest'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('newest')}">Newest</button>
+                            <button @click="options.sort_by = 'views'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('views')}">Views</button>
+                        </div>
+                    </div>
+                    <div class="flex place-items-center">
+                        <Link :href="route('projects.add')">
+                            <PrimaryButton class="flex gap-2 place-items-center">
+                                <font-awesome-icon :icon="['fas', 'add']"/>
+                                <span>Add New</span>
+                            </PrimaryButton>
+                        </Link>
                     </div>
                 </div>
-                <div v-else class="m-10 text-center">
-                    No result
+                <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status" class="flex-grow flex place-items-center"/>
+                <div v-else>
+                    <div v-if="projects.data.length" class="flex flex-wrap justify-start w-full">
+                        <div v-for="project in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
+                            <ProjectCard :project="project"/>
+                        </div>
+                    </div>
+                    <div v-else class="m-10 text-center">
+                        No result
+                    </div>
                 </div>
             </div>
-            <PaginationControls v-model="options.page" :links="projects.links" class="my-2"/>
+            <div>
+                <PaginationControls v-model="options.page" :links="projects.links" class="my-2"/>
+            </div>
         </div>
     </DarkGlass>
 </template>

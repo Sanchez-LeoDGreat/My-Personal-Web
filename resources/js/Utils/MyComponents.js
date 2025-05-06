@@ -38,6 +38,7 @@ import TextInput from "@/Components/Inputs/TextInput.vue";
 import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
 import SkillInput from "@/Components/Inputs/SkillInput.vue";
 import IconInput from "@/Components/Inputs/IconInput.vue";
+import SearchInput from "@/Components/Inputs/SearchInput.vue";
 
 //loading
 import Loading from "@/Components/Loading/Loading.vue";
@@ -114,6 +115,7 @@ export {
     RichTextEditorInput,
     SkillInput,
     IconInput,
+    SearchInput,
 
     //loading
     Loading,
