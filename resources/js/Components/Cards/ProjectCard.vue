@@ -2,6 +2,7 @@
     import { PrimaryButton } from '@/Utils/MyComponents';
     import { getFileType } from '@/Utils/StringUtils';
     import { onMounted, ref } from 'vue';
+    import StaticAsset from '@/Utils/StaticAsset';
 
     const props = defineProps({
         project: {
@@ -17,7 +18,7 @@
     const STORAGE_PATH = `${APP_URL}/storage/`
     const iconPath = STORAGE_PATH + props.project.icon_path;
     const previews = JSON.parse(props.project.previews);
-    const firstPreview = STORAGE_PATH + previews[0];
+    const firstPreview = previews.length ? STORAGE_PATH + previews[0] : StaticAsset.img.bg1;
     const latestVersion = props.project.downloadables[0]?.version;
     const ratings = ref(0);
 
