@@ -33,7 +33,7 @@
             }
         }
         catch (err){
-            showModalMessage("<b>Error: </b>" + err?.message, 'error');
+            showModalMessage("<b>Error: </b>" + err?.message, { type: 'error' });
             pageContent.value.loading.status = 'error';
         }
         finally{
@@ -43,7 +43,7 @@
 
     const removeFromList = (index) => {
         if (form.skills.length <= 1){
-            showModalMessage('Skill list must have at least one value!', 'error');
+            showModalMessage('Skill list must have at least one value!', { type: 'error' });
         } else {
             form.skills.splice(index, 1);
         }
@@ -76,7 +76,7 @@
             },
             onError: () => {
                 if (form.errors.page){
-                    showModalMessage(form.errors.page, 'error');
+                    showModalMessage(form.errors.page, { type: 'error' });
                 }
             }
         });

@@ -22,7 +22,7 @@
             onError: async () => {
                 if (form.errors.failed){
                     await nextTick();
-                    showModalMessage(form.errors.failed, 'error');
+                    showModalMessage(form.errors.failed, { type: 'error' });
                 }
             }
         });

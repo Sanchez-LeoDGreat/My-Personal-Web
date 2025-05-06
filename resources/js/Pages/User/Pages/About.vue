@@ -39,7 +39,7 @@
             }
         }
         catch (err){
-            showModalMessage("<b>Error: </b>" + err?.message, 'error');
+            showModalMessage("<b>Error: </b>" + err?.message, { type: 'error' });
             pageContent.value.loading.status = 'error';
         }
         finally{
@@ -59,7 +59,7 @@
             },
             onError: () => {
                 if (form.errors.page){
-                    showModalMessage(form.errors.page, 'error');
+                    showModalMessage(form.errors.page, { type: 'error' });
                 }
             }
         })

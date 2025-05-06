@@ -1,6 +1,6 @@
 <script setup>
     import { Head, Link } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton, ProjectCard, Loading, LabelText, TextInput, SearchInput, CheckboxInput, PaginationControls } from '@/Utils/MyComponents';
+    import { DarkGlass, HeaderText, PrimaryButton, ProjectCard, Loading, SearchInput, PaginationControls } from '@/Utils/MyComponents';
     import { nextTick, onMounted, computed, watch, reactive } from 'vue';
     import { debounce } from 'lodash';
 
@@ -32,7 +32,7 @@
                 throw new Error(data.message || 'Failed to fetch projects');
             }
         } catch (err) {
-            showModalMessage("Error: " + err.message, 'error');
+            showModalMessage("Error: " + err.message, { type: 'error' });
             projects.loading.status = 'error';
         } finally {
             projects.loading.finished = true;
@@ -78,7 +78,7 @@
                 <div class="flex gap-2 mt-2 place-items-center">
                     <SearchInput @input="search" placeholder="Search..." class="w-full"/>
                 </div>
-                <div class="md:flex justify-between p-2 my-2 border-2 border-white rounded-md bg-slate-950">
+                <div class="flex justify-between p-2 my-2 border-2 border-white rounded-md bg-slate-950">
                     <div>
                         <div class="text-xs">Sort by:</div>
                         <div class="flex gap-2 sort-buttons">
@@ -96,11 +96,11 @@
                         </Link>
                     </div>
                 </div>
-                <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status" class="flex-grow flex place-items-center"/>
+                <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status" class="flex-grow flex place-items-center justify-center"/>
                 <div v-else>
                     <div v-if="projects.data.length" class="flex flex-wrap justify-start w-full">
                         <div v-for="project in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
-                            <ProjectCard :project="project"/>
+                            <ProjectCard :project="project" :editable="true"/>
                         </div>
                     </div>
                     <div v-else class="m-10 text-center">

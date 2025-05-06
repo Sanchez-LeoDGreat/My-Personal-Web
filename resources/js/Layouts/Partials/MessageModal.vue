@@ -9,7 +9,7 @@
         message: null,
     });
 
-    const showModalMessage = (message, type = '', caption = '') => {
+    const showModalMessage = (message, { type = '', caption = ''} = {}) => {
         modal.value.message = message;
         modal.value.type = type,
         modal.value.caption = caption;

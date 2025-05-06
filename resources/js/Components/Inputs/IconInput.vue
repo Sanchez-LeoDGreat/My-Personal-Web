@@ -29,7 +29,7 @@
         const file = fileInputRef.value.files[0];
         if (file) {
             if (!file.type.startsWith('image/')){
-                showModalMessage('File type must be an image!', 'error');
+                showModalMessage('File type must be an image!', { type: 'error' });
                 return;
             }
             icon.value = URL.createObjectURL(file);

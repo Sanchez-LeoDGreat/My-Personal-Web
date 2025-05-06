@@ -81,6 +81,16 @@ class ProjectsController extends Controller
         return to_route('projects.manage')->with('success', 'Successfully added the new project!');
     }
 
+    public function edit(Request $request)
+    {
+        //
+    }
+
+    public function view()
+    {
+        //
+    }
+
     public function fetch(Request $request)
     {
         $request->validate([
@@ -105,7 +115,7 @@ class ProjectsController extends Controller
                 break;
         }
 
-        $projects = $query->paginate(3);
+        $projects = $query->paginate(15);
 
         return response()->json([
             'success' => true,

@@ -14,6 +14,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/send-email', [ContactController::class, 'send_email'])->name('contact.send-email');
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
+Route::get('/projects/view/{id}', [ProjectsController::class, 'view'])->name('projects.view');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
@@ -30,6 +31,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/projects/manage', [ProjectsController::class, 'manage'])->name('projects.manage');
     Route::get('user/projects/add', [ProjectsController::class, 'add'])->name('projects.add');
     Route::post('/user/projects/store', [ProjectsController::class, 'store'])->name('projects.store');
+    Route::get('user/projects/edit/{id}', [ProjectsController::class, 'edit'])->name('projects.edit');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 

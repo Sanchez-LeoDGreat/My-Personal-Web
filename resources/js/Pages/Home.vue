@@ -32,7 +32,7 @@
             }
         }
         catch (err){
-            showModalMessage("<b>Error: </b>" + err?.message, 'error');
+            showModalMessage("<b>Error: </b>" + err?.message, { type: 'error' });
             pageContent.value.loading.status = 'error';
         }
         finally{

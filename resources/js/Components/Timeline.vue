@@ -29,7 +29,7 @@
 
     const removeFromRow = (index) => {
         if (props.rows.length <= 1){
-            showModalMessage('Timeline must at least contain one row!', 'error');
+            showModalMessage('Timeline must at least contain one row!', { type: 'error' });
         } else {
             props.rows.splice(index, 1);
         }
