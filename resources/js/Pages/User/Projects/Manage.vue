@@ -58,6 +58,26 @@
         return options.sort_by == sort_by ? true : false;
     }
 
+    const deleteProject = (id, index) => {
+        showConfirmationModal("Are you sure you want to delete this project?",{
+            onYes: async () => {
+                try{
+                    projects.data[index].isDeleting = true;
+                    const response = await axios.delete(route('projects.delete', id));
+                    const data = response.data;
+                    if (data.success) {
+                        projects.data.splice(index, 1);
+                        showModalMessage(data.message);
+                    } else {
+                        throw new Error(data.message || 'Failed to delete project');
+                    }
+                } catch (err) {
+                    showModalMessage("Error: " + err.message, { type: 'error' });
+                }
+            }
+        });
+    }
+
     onMounted(async () => {
         await nextTick();
         await fetchProjects();
@@ -73,8 +93,8 @@
     <Head title="Projects"/>
     <DarkGlass class="min-h-[90vh] p-2 flex flex-col">
         <HeaderText class="mb-2">Manage <span class="text-green-500 ">Projects</span></HeaderText>
-        <div class="px-4 flex flex-col justify-between flex-grow">
-            <div class="flex-grow flex flex-col">
+        <div class="flex flex-col justify-between flex-grow px-4">
+            <div class="flex flex-col flex-grow">
                 <div class="flex gap-2 mt-2 place-items-center">
                     <SearchInput @input="search" placeholder="Search..." class="w-full"/>
                 </div>
@@ -96,11 +116,11 @@
                         </Link>
                     </div>
                 </div>
-                <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status" class="flex-grow flex place-items-center justify-center"/>
+                <Loading v-if="isLoading" :finished="projects.loading.finished" :status="projects.loading.status" class="flex justify-center flex-grow place-items-center"/>
                 <div v-else>
                     <div v-if="projects.data.length" class="flex flex-wrap justify-start w-full">
-                        <div v-for="project in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
-                            <ProjectCard :project="project" :editable="true"/>
+                        <div v-for="(project, index) in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
+                            <ProjectCard :project="project" :editable="true" :onDelete="() => { deleteProject(project.id, index) }" :isDeleting="project.isDeleting"/>
                         </div>
                     </div>
                     <div v-else class="m-10 text-center">

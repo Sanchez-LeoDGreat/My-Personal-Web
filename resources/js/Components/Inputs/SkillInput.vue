@@ -38,7 +38,7 @@
 
 <template>
     <Prose class="text-black prose-p:my-1">
-        <section v-if="editor" class="bg-white flex gap-2 flex-wrap border-slate-950 border-t-2 border-l-2 border-r-2 p-1">
+        <section v-if="editor" class="flex flex-wrap gap-2 p-1 text-white border-t-2 border-l-2 border-r-2 bg-slate-950 border-slate-950">
             <button type="button" @click="editor.chain().focus().setColor('#22c55e').run()" title="Text Color" :class="{ 'is-active': editor.isActive('textStyle', { color: '#22c55e' })}">
                 <font-awesome-icon :icon="['fas', 'brush']"/>
             </button>

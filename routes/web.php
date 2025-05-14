@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/projects/add', [ProjectsController::class, 'add'])->name('projects.add');
     Route::post('/user/projects/store', [ProjectsController::class, 'store'])->name('projects.store');
     Route::get('user/projects/edit/{id}', [ProjectsController::class, 'edit'])->name('projects.edit');
+    Route::delete('/user/projects/delete/{id}', [ProjectsController::class, 'delete'])->name('projects.delete');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 

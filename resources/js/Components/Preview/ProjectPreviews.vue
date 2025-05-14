@@ -44,8 +44,19 @@
 
     const dragStart = (e, index) => {
         if (props.editable){
+            // Find the closest parent div with class 'cursor-grab' to toggle classes correctly
+            const target = $(e.target).closest('div.cursor-grab');
+            target.toggleClass('cursor-grab', false);
+            target.toggleClass('cursor-grabbing', true);
             e.dataTransfer.setData('dragged-preview-index', index);
         }
+    }
+
+    const dragEnd = (e) => {
+        // Find the closest parent div with class 'cursor-grabbing' to toggle classes correctly
+        const target = $(e.target).closest('div.cursor-grabbing');
+        target.toggleClass('cursor-grab', true);
+        target.toggleClass('cursor-grabbing', false);
     }
 
     const allowDrop = (e) => {
@@ -73,10 +84,10 @@
             <div v-if="previews.length > 0">
                 <div class="flex gap-2 py-2 overflow-x-auto">
                     <div v-for="(preview, index) in previews" :key="index">
-                        <div class="relative" :draggable="editable" @dragstart="dragStart($event, index)" @drop="switchData($event, index)" @dragover="allowDrop">
+                        <div class="relative cursor-grab" :draggable="editable" @dragstart="dragStart($event, index)" @dragend="dragEnd" @drop="switchData($event, index)" @dragover="allowDrop">
                             <img v-if="preview.type.startsWith('image/')" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 h-48 object-contain max-w-[30vw] rounded-md">
                             <video v-else-if="preview.type.startsWith('video/')" :src="displayFile(preview)" controls class="max-h-48 max-w-[30vw] rounded-md"></video>
-                            <button type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 hover:text-red-800 bg-black/20">
+                            <button type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 cursor-pointer hover:text-red-800 bg-black/20">
                                 <font-awesome-icon :icon="['fas', 'trash']"/>
                             </button>
                         </div>

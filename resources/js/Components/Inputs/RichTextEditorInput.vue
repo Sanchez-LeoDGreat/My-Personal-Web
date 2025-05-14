@@ -40,7 +40,7 @@
 
 <template>
     <Prose class="text-black">
-        <section v-if="editor" class="bg-white flex gap-2 flex-wrap border-slate-950 border-t-2 border-l-2 border-r-2 p-2">
+        <section v-if="editor" class="flex flex-wrap gap-2 p-2 text-white border-t-2 border-l-2 border-r-2 bg-slate-950 border-slate-950">
             <button type="button" @click="editor.chain().focus().toggleBold().run()" title="Bold" :class="{ 'is-active': editor.isActive('bold') }">
                 <font-awesome-icon :icon="['fas', 'bold']"/>
             </button>
@@ -71,7 +71,7 @@
             <button type="button" @click="editor.chain().focus().toggleStrike().run()" title="Strikethrough" :class="{ 'is-active': editor.isActive('strike') }">
                 <font-awesome-icon :icon="['fas', 'strikethrough']"/>
             </button>
-            <input type="color" class="w-8 bg-transparent" @input="editor.chain().focus().setColor($event.target.value).run()" title="Text Color" :value="editor.getAttributes('textStyle').color || '#000000'">
+            <input type="color" class="w-8 bg-transparent" @input="editor.chain().focus().setColor($event.target.value).run()" title="Text Color" :value="editor.getAttributes('textStyle').color || '#FFFFFF'">
             <button type="button" @click="editor.chain().focus().unsetColor().run()" title="Unset Text Color">
                 <font-awesome-icon :icon="['fas', 'droplet-slash']"/>
             </button>

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Downloadable;
 use App\Models\Project;
+use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 
 class ProjectsController extends Controller
@@ -89,6 +91,43 @@ class ProjectsController extends Controller
     public function view()
     {
         //
+    }
+
+    public function delete($id)
+    {
+        try {
+            $project = Project::find($id);
+            if (!$project) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Project not found!',
+                ]);
+            }
+            $storage = Storage::disk('public');
+            Review::where('project_id', $id)->delete();
+            $downloadables = Downloadable::where('project_id', $id)->get();
+            if ($downloadables) {
+                foreach ($downloadables as $downloadable) {
+                    $storage->delete($downloadable->download_path);
+                    $downloadable->delete();
+                }
+            }
+            $storage->delete($project->icon_path);
+            $previews = json_decode($project->previews) ?: [];
+            foreach ($previews as $preview) {
+                $storage->delete($preview);
+            }
+            $project->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Project deleted successfully!',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage()
+            ]);
+        }
     }
 
     public function fetch(Request $request)
