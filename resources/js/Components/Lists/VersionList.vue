@@ -24,16 +24,12 @@
                     <th v-if="editable" class="p-2 text-center">Action</th>
                 </tr>
             </thead>
-            <tbody class="text-black bg-white">
+            <tbody class="overflow-x-auto overflow-y-auto text-black bg-white max-h-40">
                 <tr v-for="(version, index) in versions" :key="version.id" class="text-sm border-2" :class="{'border-slate-950': index !== versions.length - 1}">
                     <td v-text="version.version" class="px-2 cursor-pointer hover:underline"></td>
                     <td v-text="formattedDate(version.created_at)" class="px-2"></td>
-                    <td v-if="editable" class="flex justify-center gap-2">
-                        <WarningButton class="flex gap-1 place-items-center">
-                            <font-awesome-icon :icon="['fas', 'pen']"/>
-                            <span>Edit</span>
-                        </WarningButton>
-                        <DangerButton class="flex gap-1 place-items-center">
+                    <td v-if="editable" class="flex justify-center">
+                        <DangerButton type="button" class="flex gap-1 place-items-center">
                             <font-awesome-icon :icon="['fas', 'trash']"/>
                             <span>Delete</span>
                         </DangerButton>

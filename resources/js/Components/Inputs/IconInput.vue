@@ -40,7 +40,7 @@
 
 <template>
     <div class="relative" @mouseenter="if (editable) { uploadButton.show = true; }" @mouseleave="if (editable) { uploadButton.show = false; }">
-        <img :src="icon" alt="Project Icon" class="object-cover bg-white border-2 rounded-md border-slate-800 w-28 h-28 max-w-28 max-h-28">
+        <img :src="icon" alt="Project Icon" class="object-cover bg-white border-2 rounded-md border-slate-800 w-36 h-3w-36 max-w-36 max-h-3w-36">
         <button v-show="uploadButton.show" @click="openFileDialog" type="button" class="absolute backdrop-blur-[1px] inset-0 flex flex-col justify-center p-2 cursor-pointer bg-slate-950/70 place-items-center">
             <font-awesome-icon :icon="['fas', 'image']" class="text-4xl"/>
             <span class="text-xs font-bold">Upload Image</span>
