@@ -40,6 +40,9 @@ import SkillInput from "@/Components/Inputs/SkillInput.vue";
 import IconInput from "@/Components/Inputs/IconInput.vue";
 import SearchInput from "@/Components/Inputs/SearchInput.vue";
 
+//lists
+import VersionList from "@/Components/Lists/VersionList.vue";
+
 //loading
 import Loading from "@/Components/Loading/Loading.vue";
 import LoadingScreen from "@/Components/Loading/LoadingScreen.vue";
@@ -116,6 +119,9 @@ export {
     SkillInput,
     IconInput,
     SearchInput,
+
+    //lists
+    VersionList,
 
     //loading
     Loading,

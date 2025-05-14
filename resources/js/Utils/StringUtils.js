@@ -19,4 +19,17 @@ const getFileType = (filename) => {
     return 'unknown';
 }
 
-export { ucwords, ucfirst, getFileType }
+const formattedDate = (dateString) => {
+    const date = new Date(dateString);
+
+    const shortMonth = date.toLocaleDateString('en-US', { month: 'short' });
+
+    const day = date.getDate();
+    const year = date.getFullYear();
+
+    const formatted = `${shortMonth} ${day}, ${year}`;
+
+    return formatted;
+}
+
+export { ucwords, ucfirst, getFileType, formattedDate }

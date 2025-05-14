@@ -60,6 +60,7 @@
 
     const deleteProject = (id, index) => {
         showConfirmationModal("Are you sure you want to delete this project?",{
+            type: 'warning',
             onYes: async () => {
                 try{
                     projects.data[index].isDeleting = true;
@@ -90,7 +91,7 @@
 </script>
 
 <template>
-    <Head title="Projects"/>
+    <Head title="Manage Projects"/>
     <DarkGlass class="min-h-[90vh] p-2 flex flex-col">
         <HeaderText class="mb-2">Manage <span class="text-green-500 ">Projects</span></HeaderText>
         <div class="flex flex-col justify-between flex-grow px-4">
@@ -120,7 +121,7 @@
                 <div v-else>
                     <div v-if="projects.data.length" class="flex flex-wrap justify-start w-full">
                         <div v-for="(project, index) in projects.data" :key="project.id" class="w-full p-1 md:w-1/3">
-                            <ProjectCard :project="project" :editable="true" :onDelete="() => { deleteProject(project.id, index) }" :isDeleting="project.isDeleting"/>
+                            <ProjectCard :project="project" :editable="true" :onDelete="() => deleteProject(project.id, index)" :isDeleting="project.isDeleting"/>
                         </div>
                     </div>
                     <div v-else class="m-10 text-center">

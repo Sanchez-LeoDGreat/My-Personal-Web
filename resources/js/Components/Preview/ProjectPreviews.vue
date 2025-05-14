@@ -1,5 +1,6 @@
 <script setup>
     import { PrimaryButton } from '@/Utils/MyComponents';
+    import { getFileType } from '@/Utils/StringUtils';
 
     const props = defineProps({
         previews: {
@@ -44,24 +45,27 @@
 
     const dragStart = (e, index) => {
         if (props.editable){
-            // Find the closest parent div with class 'cursor-grab' to toggle classes correctly
-            const target = $(e.target).closest('div.cursor-grab');
-            target.toggleClass('cursor-grab', false);
-            target.toggleClass('cursor-grabbing', true);
             e.dataTransfer.setData('dragged-preview-index', index);
         }
-    }
-
-    const dragEnd = (e) => {
-        // Find the closest parent div with class 'cursor-grabbing' to toggle classes correctly
-        const target = $(e.target).closest('div.cursor-grabbing');
-        target.toggleClass('cursor-grab', true);
-        target.toggleClass('cursor-grabbing', false);
     }
 
     const allowDrop = (e) => {
         if (props.editable){
             e.preventDefault();
+        }
+    }
+
+    const getPreviewFileType = (file) => {
+        if (typeof file == "object"){
+            if (file.type.startsWith('image/')){
+                return 'image';
+            } else if (file.type.startsWith('video/')) {
+                return 'video';
+            }
+        } else if (typeof file == "string"){
+            return getFileType(file);
+        } else {
+            throw new Error("Invalid file type");
         }
     }
 
@@ -81,12 +85,12 @@
 <template>
     <div>
         <div class="flex flex-col min-h-48">
-            <div v-if="previews.length > 0">
-                <div class="flex gap-2 py-2 overflow-x-auto">
+            <div v-if="previews.length">
+                <div class="flex gap-2 py-2 overflow-x-auto scrollbar-hide">
                     <div v-for="(preview, index) in previews" :key="index">
-                        <div class="relative cursor-grab" :draggable="editable" @dragstart="dragStart($event, index)" @dragend="dragEnd" @drop="switchData($event, index)" @dragover="allowDrop">
-                            <img v-if="preview.type.startsWith('image/')" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 h-48 object-contain max-w-[30vw] rounded-md">
-                            <video v-else-if="preview.type.startsWith('video/')" :src="displayFile(preview)" controls class="max-h-48 max-w-[30vw] rounded-md"></video>
+                        <div class="relative cursor-grab" :draggable="editable" @dragstart="dragStart($event, index)" @drop="switchData($event, index)" @dragover="allowDrop">
+                            <img v-if="getPreviewFileType(preview) === 'image'" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 h-48 min-w-72 object-cover md:max-w-[30vw] rounded-md">
+                            <video v-else-if="getPreviewFileType(preview) === 'video'" :src="displayFile(preview)" controls class="max-h-48 h-48 min-w-72 md:max-w-[30vw] bg-slate-950/50 rounded-md"></video>
                             <button type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 cursor-pointer hover:text-red-800 bg-black/20">
                                 <font-awesome-icon :icon="['fas', 'trash']"/>
                             </button>

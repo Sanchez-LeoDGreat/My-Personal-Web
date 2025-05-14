@@ -83,9 +83,14 @@ class ProjectsController extends Controller
         return to_route('projects.manage')->with('success', 'Successfully added the new project!');
     }
 
-    public function edit(Request $request)
+    public function edit(Request $request, $id)
     {
-        //
+        $user = Auth::user();
+        $project = Project::where('id', $id)->with(['downloadables'])->first();
+        return Inertia::render('User/Projects/Edit', [
+            'user' => $user,
+            'project' => $project,
+        ]);
     }
 
     public function view()
