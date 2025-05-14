@@ -6,8 +6,10 @@ use App\Models\Downloadable;
 use App\Models\Project;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class ProjectsController extends Controller
@@ -104,6 +106,68 @@ class ProjectsController extends Controller
             'downloadable' => 'boolean',
             'previews' => 'nullable|array',
         ]);
+
+        $previews = [];
+        $storage = Storage::disk('public');
+        $storagePath = config('app.url') . "/storage/";
+        $project = Project::where('id', $request->id)
+            ->withCount(['downloadables'])
+            ->first();
+        if (!$project) {
+            return back()->withErrors(['project' => 'Project not found!']);
+        }
+        $iconPath = $project->icon_path;
+
+        if ($project->downloadables_count == 0 && $request->downloadable) {
+            $request->validate([
+                'downloadable_version' => 'required|string',
+                'downloadable_file' => 'required|file',
+            ]);
+
+            $download_path = $request->file('downloadable_file')->store('projects/downloadables', 'public');
+            Downloadable::create([
+                'project_id' => $project->id,
+                'version' => $request->downloadable_version,
+                'download_path' => $download_path,
+            ]);
+        }
+
+        if ($request->icon) {
+            $storage->delete($project->icon_path);
+            $iconPath = $request->file('icon')->store('projects/icons', 'public');
+        }
+
+        $currentPreviews = json_decode($project->previews);
+        $cleanedRequestPreviews = array_map(
+            fn($item) => Str::replace($storagePath, '', $item),
+            $request->previews
+        );
+
+        foreach ($currentPreviews as $preview) {
+            if (is_string($preview) && !in_array($preview, $cleanedRequestPreviews)) {
+                $storage->delete($preview);
+            }
+        }
+
+        foreach ($request->previews as $preview) {
+            if ($preview instanceof UploadedFile) {
+                $previews[] = $preview->store('projects/previews', 'public');
+            } else if (is_string($preview)) {
+                $previews[] = Str::replace($storagePath, '', $preview);
+            }
+        }
+
+        $project->update([
+            'name' => $request->title,
+            'icon_path' => $iconPath,
+            'previews' => $previews,
+            'about' => $request->about,
+            'summary' => $request->summary,
+            'description' => $request->description,
+            'downloadable' => $request->downloadable,
+        ]);
+
+        return back()->with('success', 'Updated the project successfully!');
     }
 
     public function view()

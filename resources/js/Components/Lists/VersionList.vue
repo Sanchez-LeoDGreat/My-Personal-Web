@@ -26,11 +26,11 @@
                     </tr>
                 </thead>
                 <tbody class="text-black bg-white">
-                    <tr v-for="(version, index) in versions" :key="version.id" class="text-sm border-2" :class="{'border-slate-950': index !== versions.length - 1}">
+                    <tr v-for="(version, index) in versions" :key="version.id" class="text-sm" :class="{'border-slate-950 border-b-2': index !== versions.length - 1}">
                         <td v-text="version.version" class="px-2 cursor-pointer hover:underline"></td>
                         <td v-text="formattedDate(version.created_at)" class="px-2"></td>
                         <td v-if="editable" class="flex justify-center">
-                            <DangerButton type="button" class="flex gap-1 place-items-center">
+                            <DangerButton type="button" class="flex gap-1 my-0.5 place-items-center">
                                 <font-awesome-icon :icon="['fas', 'trash']"/>
                                 <span>Delete</span>
                             </DangerButton>
