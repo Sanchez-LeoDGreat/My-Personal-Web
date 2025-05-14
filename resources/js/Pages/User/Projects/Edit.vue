@@ -66,38 +66,44 @@
             </div>
             <form @submit.prevent="updateProject">
                 <div class="flex gap-2">
-                    <IconInput v-model="form.icon" :defaultIcon="icon" :editable="true"/>
+                    <IconInput v-model="form.icon" :editable="true"/>
                     <div class="flex-grow">
                         <LabelText for="project-title">Project Title</LabelText>
                         <FieldMessage v-if="form.errors.title" status="error">{{ form.errors.title }}</FieldMessage>
-                        <TextInput id="project-title" v-model="form.title" placeholder="Please enter project's title here..."/>
-                        <CheckboxInput v-if="!downloadables.length" id="downloadable" class="float-end" v-model="form.downloadable">Downloadable</CheckboxInput>
+                        <TextInput id="project-title" v-model="form.title" placeholder="Please enter project's title here..." class="w-full"/>
+                        <div class="md:flex" :class="{'justify-between': form.downloadable, 'justify-end': !form.downloadable}">
+                            <div v-if="form.downloadable" class="text-sm">
+                                <div class="md:my-1">
+                                    <label for="version" class="mr-1">Version:</label>
+                                    <input type="text" v-model="form.downloadable_version" placeholder="v1.0.0" class="bg-transparent">
+                                </div>
+                                <PrimaryButton type="button" @click="openFileDialog" class="hidden gap-2 mt-2 mb-1 md:flex place-items-center">
+                                    <font-awesome-icon :icon="['fas', 'upload']"/>
+                                    <span>Upload File</span>
+                                </PrimaryButton>
+                            </div>
+                            <div>
+                                <CheckboxInput id="downloadable" v-model="form.downloadable">Downloadable</CheckboxInput>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <FieldMessage v-if="form.errors.icon" status="error">{{ form.errors.icon }}</FieldMessage>
                 <div class="flex flex-col gap-2 my-2">
-                    <div v-if="form.downloadable && !downloadables.length">
-                        <LabelText for="version">Version</LabelText>
-                        <FieldMessage v-if="form.errors.downloadable_version" status="error">{{ form.errors.downloadable_version }}</FieldMessage>
-                        <div class="flex gap-2 place-items-center">
-                            <div class="flex-grow">
-                                <TextInput id="version" v-model="form.downloadable_version" placeholder="v1.0.0"/>
-                            </div>
-                            <div>
-                                <PrimaryButton type="button" @click="openFileDialog" class="flex gap-2 mb-1 place-items-center">
-                                    <font-awesome-icon :icon="['fas', 'upload']"/>
-                                    <span>Upload File</span>
-                                </PrimaryButton>
-                                <input type="file" class="hidden" @change="downloadableFileUpload" ref="fileInputRef">
-                            </div>
-                        </div>
+                    <div v-if="form.downloadable">
+                        <input type="file" class="hidden" @change="downloadableFileUpload" ref="fileInputRef">
                         <div class="text-center" v-if="form.downloadable_file">
-                            <div>
+                            <div class="mb-3">
                                 <span class="font-medium">File Name: </span>
                                 <span v-text="uploadedFilenameRef"></span>
                             </div>
                         </div>
+                        <FieldMessage v-if="form.errors.downloadable_version" class="text-center" status="error">{{ form.errors.downloadable_version }}</FieldMessage>
                         <FieldMessage v-if="form.errors.downloadable_file" class="text-center" status="error">{{ form.errors.downloadable_file }}</FieldMessage>
+                        <PrimaryButton type="button" @click="openFileDialog" class="flex justify-center w-full gap-2 my-1 mb-1 md:hidden place-items-center">
+                            <font-awesome-icon :icon="['fas', 'upload']"/>
+                            <span>Upload File</span>
+                        </PrimaryButton>
                     </div>
                     <div>
                         <LabelText for="previews">Previews</LabelText>
