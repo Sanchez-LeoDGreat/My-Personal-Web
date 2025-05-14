@@ -114,7 +114,7 @@ class ProjectsController extends Controller
             ->withCount(['downloadables'])
             ->first();
         if (!$project) {
-            return back()->withErrors(['project' => 'Project not found!']);
+            return to_route('projects.manage')->withErrors(['project' => 'Project not found!']);
         }
         $iconPath = $project->icon_path;
 

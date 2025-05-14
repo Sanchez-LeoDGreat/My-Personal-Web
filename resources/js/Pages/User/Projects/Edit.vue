@@ -52,7 +52,7 @@
             onSuccess: () => showModalMessage(usePage().props.flash.success),
             onError: () => {
                 if (form.errors.project){
-                    showModalMessage(`Error: ${form.errors.project}`);
+                    showModalMessage(`Error: ${form.errors.project}`, { type: 'error' });
                 }
             },
         });
