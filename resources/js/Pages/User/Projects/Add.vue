@@ -64,7 +64,7 @@
                             <div v-if="form.downloadable" class="text-sm">
                                 <div class="md:my-1">
                                     <label for="version" class="mr-1">Version:</label>
-                                    <input type="text" v-model="form.downloadable_version" placeholder="v1.0.0" class="bg-transparent">
+                                    <input id="version" type="text" v-model="form.downloadable_version" placeholder="v1.0.0" class="bg-transparent">
                                 </div>
                                 <PrimaryButton type="button" @click="openFileDialog" class="hidden gap-2 mt-2 mb-1 md:flex place-items-center">
                                     <font-awesome-icon :icon="['fas', 'upload']"/>
