@@ -93,6 +93,19 @@ class ProjectsController extends Controller
         ]);
     }
 
+    public function update(Request $request)
+    {
+        $request->validate([
+            'icon' => 'nullable|image|max:2048',
+            'title' => "required|string|unique:projects,name,$request->id,id",
+            'about' => 'nullable|string',
+            'summary' => 'nullable|string',
+            'description' => 'nullable|string',
+            'downloadable' => 'boolean',
+            'previews' => 'nullable|array',
+        ]);
+    }
+
     public function view()
     {
         //

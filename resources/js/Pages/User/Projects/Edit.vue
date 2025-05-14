@@ -19,6 +19,7 @@
     const downloadables = props.project.downloadables;
 
     const form = useForm({
+        id: props.project.id,
         icon: null,
         title: props.project.name,
         previews: previews,
@@ -47,7 +48,7 @@
     }
 
     const updateProject = () => {
-
+        form.post(route('projects.update'));
     }
 </script>
 
@@ -66,12 +67,12 @@
             </div>
             <form @submit.prevent="updateProject">
                 <div class="flex gap-2">
-                    <IconInput v-model="form.icon" :editable="true"/>
+                    <IconInput v-model="form.icon" :defaultIcon="icon" :editable="true"/>
                     <div class="flex-grow">
                         <LabelText for="project-title">Project Title</LabelText>
                         <FieldMessage v-if="form.errors.title" status="error">{{ form.errors.title }}</FieldMessage>
                         <TextInput id="project-title" v-model="form.title" placeholder="Please enter project's title here..." class="w-full"/>
-                        <div class="md:flex" :class="{'justify-between': form.downloadable, 'justify-end': !form.downloadable}">
+                        <div v-if="!downloadables.length" class="md:flex" :class="{'justify-between': form.downloadable, 'justify-end': !form.downloadable}">
                             <div v-if="form.downloadable" class="text-sm">
                                 <div class="md:my-1">
                                     <label for="version" class="mr-1">Version:</label>
@@ -90,7 +91,7 @@
                 </div>
                 <FieldMessage v-if="form.errors.icon" status="error">{{ form.errors.icon }}</FieldMessage>
                 <div class="flex flex-col gap-2 my-2">
-                    <div v-if="form.downloadable">
+                    <div v-if="form.downloadable && !downloadables.length">
                         <input type="file" class="hidden" @change="downloadableFileUpload" ref="fileInputRef">
                         <div class="text-center" v-if="form.downloadable_file">
                             <div class="mb-3">
