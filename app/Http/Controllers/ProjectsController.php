@@ -219,10 +219,12 @@ class ProjectsController extends Controller
             'sort_by' => 'nullable|string',
         ]);
 
-        $query = Project::with(['reviews', 'downloadables'])
-            ->when($request->search, function ($q) use ($request) {
-                $q->where('name', 'like', '%' . $request->search . '%');
-            });
+        $query = Project::with([
+            'downloadables',
+            'reviews' => fn($q) => $q->select('id', 'project_id', 'rating'),
+        ])->when($request->search, function ($q) use ($request) {
+            $q->where('name', 'like', '%' . $request->search . '%');
+        });
 
         switch ($request->sort_by) {
             case 'alphabetical':

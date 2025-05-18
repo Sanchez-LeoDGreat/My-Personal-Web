@@ -2,6 +2,7 @@
     import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
     import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, VersionList, FieldMessage, CheckboxInput, ProjectPreviews, IconInput } from '@/Utils/MyComponents';
     import { ref } from 'vue';
+    import { STORAGE_PATH } from '@/Utils/AppUtils';
 
     const props = defineProps({
         project: {
@@ -10,8 +11,6 @@
         }
     });
 
-    const APP_URL = import.meta.env.VITE_APP_URL;
-    const STORAGE_PATH = `${APP_URL}/storage/`;
     const icon = STORAGE_PATH + props.project.icon_path;
     const previews = JSON.parse(props.project.previews).map((preview) => {
         return STORAGE_PATH + preview;
@@ -60,12 +59,12 @@
 </script>
 
 <template>
-    <Head title="Add Project"/>
+    <Head title="Edit Project"/>
     <DarkGlass class="min-h-screen p-2">
         <HeaderText class="mb-1">Edit <span class="text-green-500">Project</span></HeaderText>
         <div class="px-4">
             <div class="my-4">
-                <Link :href="route('projects.manage')">
+                <Link :href="route('projects.manage')" class="inline-block">
                     <PrimaryButton class="flex gap-2 place-items-center">
                         <font-awesome-icon :icon="['fas', 'angle-left']"/>
                         <span>Go Back</span>
@@ -119,7 +118,7 @@
                     </div>
                     <div v-if="form.downloadables.length">
                         <LabelText>Versions</LabelText>
-                        <VersionList v-model:versions="form.downloadables" :editable="true"/>
+                        <VersionList :projectId="project.id" :versions="form.downloadables" :editable="true"/>
                     </div>
                     <div>
                         <LabelText for="about">About this project</LabelText>

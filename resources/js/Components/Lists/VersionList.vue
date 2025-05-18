@@ -1,8 +1,10 @@
 <script setup>
     import { formattedDate } from '@/Utils/StringUtils';
-    import { PrimaryButton, DangerButton, WarningButton } from '@/Utils/MyComponents';
+    import { PrimaryButton, DangerButton } from '@/Utils/MyComponents';
+    import { router } from '@inertiajs/vue3';
 
     const props = defineProps({
+        projectId: Number,
         versions: {
             type: Array,
             required: true,
@@ -12,6 +14,10 @@
             default: false,
         }
     });
+
+    const goToAddProjectVersion = () => {
+        router.visit(route('projects.add-version', { project_id: props.projectId }));
+    }
 </script>
 
 <template>
@@ -20,8 +26,8 @@
             <table class="w-full table-auto">
                 <thead class="sticky top-0 text-sm bg-slate-950">
                     <tr>
-                        <th class="p-2">Version</th>
-                        <th class="p-2">Uploaded at</th>
+                        <th class="p-2 text-left">Version</th>
+                        <th class="p-2 text-left">Uploaded at</th>
                         <th v-if="editable" class="p-2 text-center">Action</th>
                     </tr>
                 </thead>
@@ -39,8 +45,8 @@
                 </tbody>
             </table>
         </div>
-        <div class="my-2">
-            <PrimaryButton type="button" class="flex gap-2 place-items-center">
+        <div v-if="editable" class="my-2">
+            <PrimaryButton @click="goToAddProjectVersion" type="button" class="flex gap-2 place-items-center">
                 <font-awesome-icon :icon="['fas', 'add']"/>
                 <span>Add New</span>
             </PrimaryButton>

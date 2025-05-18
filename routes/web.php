@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\DownloadablesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ReportController;
@@ -34,6 +35,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/projects/edit/{id}', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::post('/user/projects/update', [ProjectsController::class, 'update'])->name('projects.update');
     Route::delete('/user/projects/delete/{id}', [ProjectsController::class, 'delete'])->name('projects.delete');
+    Route::get('/user/projects/add-version', [DownloadablesController::class, 'add_version'])->name('projects.add-version');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 

@@ -4,6 +4,8 @@
     import { onMounted, ref } from 'vue';
     import StaticAsset from '@/Utils/StaticAsset';
     import { router } from '@inertiajs/vue3';
+    import { STORAGE_PATH } from '@/Utils/AppUtils';
+    import { calculateRatings } from '@/Utils/AppUtils';
 
     const props = defineProps({
         project: {
@@ -20,19 +22,12 @@
             default: false,
         }
     });
-    const APP_URL = import.meta.env.VITE_APP_URL;
-    const STORAGE_PATH = `${APP_URL}/storage/`
     const iconPath = STORAGE_PATH + props.project.icon_path;
     const previews = JSON.parse(props.project.previews);
     const firstPreview = previews.length ? STORAGE_PATH + previews[0] : StaticAsset.img.bg1;
     const latestVersion = props.project.downloadables[0]?.version;
-    const ratings = ref(0);
-
-    const calculateRatings = () => {
-        const reviews = props.project.reviews;
-        if (!reviews.length) ratings.value = 0;
-        ratings.value = reviews.reduce((acc, review) => acc + review.rating, 0);
-    }
+    const rate = ref(0);
+    const ratings = props.project.reviews.map((review) => review.rating);
 
     const goToProject = (id) => {
         if (props.editable){
@@ -55,7 +50,7 @@
     }
 
     onMounted(() => {
-        calculateRatings();
+        rate.value = calculateRatings(ratings);
     });
 </script>
 
@@ -76,7 +71,7 @@
                 <div class="flex flex-col min-w-0">
                     <div v-text="project.name" class="text-lg font-medium truncate"></div>
                     <div class="flex gap-1 text-xs place-items-center">
-                        <span v-text="ratings.toFixed(1)"></span>
+                        <span v-text="rate.toFixed(1)"></span>
                         <font-awesome-icon :icon="['fas', 'star']"/>
                     </div>
                 </div>

@@ -32,4 +32,13 @@ const formattedDate = (dateString) => {
     return formatted;
 }
 
-export { ucwords, ucfirst, getFileType, formattedDate }
+const formatToCompactNumber = (number) => {
+    const formatted = new Intl.NumberFormat('en-US', {
+        notation: 'compact',
+        compactDisplay: 'short',
+        maximumFractionDigits: 2,
+    }).format(number);
+    return formatted;
+}
+
+export { ucwords, ucfirst, getFileType, formattedDate, formatToCompactNumber };

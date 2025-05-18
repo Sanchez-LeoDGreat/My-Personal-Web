@@ -1,6 +1,7 @@
-const appUrl = import.meta.env.VITE_APP_URL || 'http://localhost';
-const svgPath = appUrl + '/static/assets/svg/';
-const imgPath = appUrl +'/static/assets/img/';
+import { APP_URL } from '@/Utils/AppUtils';
+
+const svgPath = APP_URL + '/static/assets/svg/';
+const imgPath = APP_URL +'/static/assets/img/';
 
 const getUrl = (url) => {
     return new URL(url, import.meta.url).href || '';
