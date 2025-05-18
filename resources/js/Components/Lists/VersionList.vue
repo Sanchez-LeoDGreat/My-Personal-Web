@@ -24,10 +24,10 @@
     }
 
     const deleteProjectVersion = (index) => {
-        showConfirmationModal("Are you sure you want to delete this project's version?", {
-            type: 'warning',
-            onYes: async () => {
-                if (props.versions.length > 1){
+        if (props.versions.length > 1){
+            showConfirmationModal("Are you sure you want to delete this project's version?", {
+                type: 'warning',
+                onYes: async () => {
                     const selectedVersion = props.versions[index];
                     try{
                         selectedVersion.isDeleting = true;
@@ -47,11 +47,11 @@
                         showModalMessage('Error: ' + err.message, { type: 'error' });
                         selectedVersion.isDeleting = false;
                     }
-                } else {
-                    showModalMessage('You cannot delete the last version of the project', { type: 'error' });
                 }
-            }
-        });
+            });
+        } else {
+            showModalMessage('You cannot delete the last version of the project', { type: 'error' });
+        }
     }
 </script>
 
