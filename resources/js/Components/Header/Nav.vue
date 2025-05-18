@@ -27,7 +27,7 @@
                     <NavOption :route="route('home')" :icon="['fas', 'house']" :class="{'active' : component === 'Home'}">Home</NavOption>
                     <NavOption :route="route('about')" :icon="['fas', 'circle-info']" :class="{'active' : component === 'About'}">About</NavOption>
                     <NavOption :route="route('contact')" :icon="['fas', 'phone']" :class="{'active' : component === 'Contact'}">Contact</NavOption>
-                    <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :class="{'active' : component === 'Projects'}">Projects</NavOption>
+                    <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :class="{'active' : component.startsWith('Projects')}">Projects</NavOption>
                     <NavOption :route="route('login')" :icon="['fas', 'right-to-bracket']" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
                 </ul>
             </div>
@@ -43,7 +43,7 @@
                 <NavOption :route="route('home')" :icon="['fas', 'house']" :mobileView="true" :class="{'active' : component === 'Home'}">Home</NavOption>
                 <NavOption :route="route('about')" :icon="['fas', 'circle-info']" :mobileView="true" :class="{'active' : component === 'About'}">About</NavOption>
                 <NavOption :route="route('contact')" :icon="['fas', 'phone']" :mobileView="true" :class="{'active' : component === 'Contact'}">Contact</NavOption>
-                <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :mobileView="true" :class="{'active' : component === 'Projects'}">Projects</NavOption>
+                <NavOption :route="route('projects')" :icon="['fas', 'folder-open']" :mobileView="true" :class="{'active' : component.startsWith('Projects')}">Projects</NavOption>
                 <NavOption :route="route('login')" :icon="['fas', 'right-to-bracket']" :mobileView="true" :class="{'active' : component === 'Auth/Login'}">Login</NavOption>
             </ul>
         </div>

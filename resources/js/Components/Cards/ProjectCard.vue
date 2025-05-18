@@ -6,6 +6,7 @@
     import { router } from '@inertiajs/vue3';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
     import { calculateRatings } from '@/Utils/AppUtils';
+    import { formatToCompactNumber } from '@/Utils/StringUtils';
 
     const props = defineProps({
         project: {
@@ -25,15 +26,16 @@
     const iconPath = STORAGE_PATH + props.project.icon_path;
     const previews = JSON.parse(props.project.previews);
     const firstPreview = previews.length ? STORAGE_PATH + previews[0] : StaticAsset.img.bg1;
-    const latestVersion = props.project.downloadables[0]?.version;
+    const latestDownloadable = props.project.first_downloadable;
     const rate = ref(0);
     const ratings = props.project.reviews.map((review) => review.rating);
+    const downloadCount = props.project.downloadables.reduce((sum, downlodable) => sum + downlodable.download_count, 0);
 
     const goToProject = (id) => {
         if (props.editable){
             router.visit(route('projects.edit', id));
         } else {
-            router.visit(route('projects.view', id));
+            router.visit(route('projects.view', { project_id: props.project.id, downloadable_id: latestDownloadable?.id }));
         }
     }
 
@@ -59,7 +61,7 @@
         <div class="relative">
             <img v-if="getFileType(firstPreview) == 'image'" @click="goToProject(project.id)" :src="firstPreview" alt="Project Preview" class="object-cover w-full h-48 cursor-pointer">
             <video v-else-if="getFileType(firstPreview) == 'video'" :src="firstPreview" controls class="w-full h-48 bg-slate-950/40 backdrop-blur-md"></video>
-            <button @click="handleDelete" class="absolute top-0 right-0 px-2 py-1 text-red-500 bg-slate-950/50 hover:text-red-800">
+            <button v-if="editable" @click="handleDelete" class="absolute top-0 right-0 px-2 py-1 text-red-500 bg-slate-950/50 hover:text-red-800">
                 <font-awesome-icon :icon="['fas', 'trash']"/>
             </button>
         </div>
@@ -70,9 +72,21 @@
             <div @click="goToProject(project.id)" class="flex w-full min-w-0 px-2 cursor-pointer">
                 <div class="flex flex-col min-w-0">
                     <div v-text="project.name" class="text-lg font-medium truncate"></div>
-                    <div class="flex gap-1 text-xs place-items-center">
-                        <span v-text="rate.toFixed(1)"></span>
-                        <font-awesome-icon :icon="['fas', 'star']"/>
+                    <div class="flex gap-1">
+                        <div class="flex gap-1 text-xs place-items-center">
+                            <span v-text="rate.toFixed(1)"></span>
+                            <font-awesome-icon :icon="['fas', 'star']"/>
+                        </div>
+                        <span>|</span>
+                        <div class="flex gap-1 text-xs place-items-center">
+                            <span v-text="formatToCompactNumber(project.view_count)"></span>
+                            <font-awesome-icon :icon="['fas', 'eye']"/>
+                        </div>
+                        <span>|</span>
+                        <div class="flex gap-1 text-xs place-items-center">
+                            <span v-text="formatToCompactNumber(downloadCount)"></span>
+                            <font-awesome-icon :icon="['fas', 'download']"/>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -81,7 +95,7 @@
                     <font-awesome-icon :icon="['fas', 'download']"/>
                     <span>Download</span>
                 </PrimaryButton>
-                <div class="my-1 text-xs text-center" v-text="latestVersion"></div>
+                <div class="my-1 text-xs text-center" v-text="latestDownloadable?.version"></div>
             </div>
         </div>
         <div v-if="isDeleting" class="absolute inset-0 flex justify-center bg-slate-950/50 place-items-center">

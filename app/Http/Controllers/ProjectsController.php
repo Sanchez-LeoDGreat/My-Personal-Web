@@ -8,6 +8,7 @@ use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -16,7 +17,29 @@ class ProjectsController extends Controller
 {
     public function index()
     {
-        return Inertia::render('Projects');
+        return Inertia::render('Projects/Index');
+    }
+
+    public function view($project_id, $downlodable_id)
+    {
+        $project = Project::with(['downloadables', 'reviews'])
+            ->where('id', $project_id)
+            ->first();
+        if (!$project) {
+            return Inertia::render('Projects/Index');
+        }
+
+        $key = "project_viewed_$project->id-" . request()->ip();
+
+        if (!Cache::has($key)) {
+            $project->increment('view_count');
+            Cache::put($key, true, now()->addMinutes(30));
+        }
+
+        return Inertia::render('Projects/View', [
+            'project' => $project,
+            'downloadable_id' => $downlodable_id
+        ]);
     }
 
     public function manage()
@@ -170,11 +193,6 @@ class ProjectsController extends Controller
         return back()->with('success', 'Updated the project successfully!');
     }
 
-    public function view()
-    {
-        //
-    }
-
     public function delete($id)
     {
         try {
@@ -220,6 +238,7 @@ class ProjectsController extends Controller
         ]);
 
         $query = Project::with([
+            'firstDownloadable',
             'downloadables',
             'reviews' => fn($q) => $q->select('id', 'project_id', 'rating'),
         ])->when($request->search, function ($q) use ($request) {

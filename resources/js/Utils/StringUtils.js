@@ -33,12 +33,19 @@ const formattedDate = (dateString) => {
 }
 
 const formatToCompactNumber = (number) => {
-    const formatted = new Intl.NumberFormat('en-US', {
-        notation: 'compact',
-        compactDisplay: 'short',
-        maximumFractionDigits: 2,
-    }).format(number);
-    return formatted;
-}
+    if (number < 1000) return number.toString();
+
+    const units = ["K", "M", "B", "T"];
+    let unitIndex = -1;
+
+    while (number >= 1000 && unitIndex < units.length - 1) {
+        number /= 1000;
+        unitIndex++;
+    }
+
+    const floored = Math.floor(number * 10) / 10;
+
+    return `${floored}${units[unitIndex]}+`;
+};
 
 export { ucwords, ucfirst, getFileType, formattedDate, formatToCompactNumber };

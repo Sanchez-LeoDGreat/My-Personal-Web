@@ -88,10 +88,10 @@
             <div v-if="previews.length">
                 <div class="flex gap-2 py-2 overflow-x-auto scrollbar-hide">
                     <div v-for="(preview, index) in previews" :key="index">
-                        <div class="relative cursor-grab" :draggable="editable" @dragstart="dragStart($event, index)" @drop="switchData($event, index)" @dragover="allowDrop">
+                        <div :class="{'cursor-grab relative': editable}" :draggable="editable" @dragstart="dragStart($event, index)" @drop="switchData($event, index)" @dragover="allowDrop">
                             <img v-if="getPreviewFileType(preview) === 'image'" :src="displayFile(preview)" alt="Preview Image" class="max-h-48 h-48 min-w-72 object-cover md:max-w-[30vw] rounded-md">
                             <video v-else-if="getPreviewFileType(preview) === 'video'" :src="displayFile(preview)" controls class="max-h-48 h-48 min-w-72 md:max-w-[30vw] bg-slate-950/50 rounded-md"></video>
-                            <button type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 cursor-pointer hover:text-red-800 bg-black/20">
+                            <button v-if="editable" type="button" @click="removePreview(index)" class="absolute top-0 right-0 px-2 py-1 text-red-500 cursor-pointer hover:text-red-800 bg-black/20">
                                 <font-awesome-icon :icon="['fas', 'trash']"/>
                             </button>
                         </div>
@@ -102,7 +102,7 @@
                 <p>No previews available.</p>
             </div>
         </div>
-        <div class="py-2">
+        <div v-if="editable" class="py-2">
             <PrimaryButton type="button" @click="addPreviews" class="flex gap-2 place-items-center">
                 <font-awesome-icon :icon="['fas', 'add']"/>
                 <span>Add Preview/s</span>

@@ -15,7 +15,7 @@ Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::post('/contact/send-email', [ContactController::class, 'send_email'])->name('contact.send-email');
 Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
-Route::get('/projects/view/{id}', [ProjectsController::class, 'view'])->name('projects.view');
+Route::get('/projects/view/{project_id}/{downloadable_id}', [ProjectsController::class, 'view'])->name('projects.view');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
