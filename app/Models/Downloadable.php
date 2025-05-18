@@ -13,4 +13,9 @@ class Downloadable extends Model
         'download_path',
         'download_count',
     ];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
 }

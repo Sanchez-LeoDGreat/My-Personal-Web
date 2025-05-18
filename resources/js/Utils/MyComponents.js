@@ -39,6 +39,7 @@ import RichTextEditorInput from '@/Components/Inputs/RichTextEditorInput.vue';
 import SkillInput from "@/Components/Inputs/SkillInput.vue";
 import IconInput from "@/Components/Inputs/IconInput.vue";
 import SearchInput from "@/Components/Inputs/SearchInput.vue";
+import FileInput from "@/Components/Inputs/FileInput.vue";
 
 //lists
 import VersionList from "@/Components/Lists/VersionList.vue";
@@ -119,6 +120,7 @@ export {
     SkillInput,
     IconInput,
     SearchInput,
+    FileInput,
 
     //lists
     VersionList,

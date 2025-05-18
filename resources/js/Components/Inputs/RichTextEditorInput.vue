@@ -92,6 +92,6 @@
     }
 
     button.is-active{
-        @apply bg-slate-950 text-white
+        @apply bg-white text-black
     }
 </style>

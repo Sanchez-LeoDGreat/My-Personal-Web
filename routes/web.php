@@ -35,7 +35,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('user/projects/edit/{id}', [ProjectsController::class, 'edit'])->name('projects.edit');
     Route::post('/user/projects/update', [ProjectsController::class, 'update'])->name('projects.update');
     Route::delete('/user/projects/delete/{id}', [ProjectsController::class, 'delete'])->name('projects.delete');
-    Route::get('/user/projects/add-version', [DownloadablesController::class, 'add_version'])->name('projects.add-version');
+    Route::get('/user/projects/add-version', [DownloadablesController::class, 'add'])->name('projects.add-version');
+    Route::post('/user/projects/store-version', [DownloadablesController::class, 'store'])->name('projects.store-version');
+    Route::get('/user/projects/edit-version', [DownloadablesController::class, 'edit'])->name('projects.edit-version');
+    Route::post('/user/projects/update-version', [DownloadablesController::class, 'update'])->name('projects.update-version');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 

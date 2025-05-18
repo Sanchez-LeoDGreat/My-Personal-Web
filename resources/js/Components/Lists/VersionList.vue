@@ -18,6 +18,10 @@
     const goToAddProjectVersion = () => {
         router.visit(route('projects.add-version', { project_id: props.projectId }));
     }
+
+    const goToEditProjectVersion = (versionId) => {
+        router.visit(route('projects.edit-version', { version_id: versionId }));
+    }
 </script>
 
 <template>
@@ -33,7 +37,9 @@
                 </thead>
                 <tbody class="text-black bg-white">
                     <tr v-for="(version, index) in versions" :key="version.id" class="text-sm" :class="{'border-slate-950 border-b-2': index !== versions.length - 1}">
-                        <td v-text="version.version" class="px-2 cursor-pointer hover:underline"></td>
+                        <td class="px-2 cursor-pointer">
+                            <button type="button" @click="goToEditProjectVersion(version.id)" class="hover:underline">{{ version.version }}</button>
+                        </td>
                         <td v-text="formattedDate(version.created_at)" class="px-2"></td>
                         <td v-if="editable" class="flex justify-center">
                             <DangerButton type="button" class="flex gap-1 my-0.5 place-items-center">
