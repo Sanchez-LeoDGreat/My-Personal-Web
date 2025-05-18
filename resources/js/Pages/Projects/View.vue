@@ -1,6 +1,6 @@
 <script setup>
     import { Head } from '@inertiajs/vue3';
-    import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList } from '@/Utils/MyComponents';
+    import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList, StarRating } from '@/Utils/MyComponents';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
     import { onMounted, ref } from 'vue';
     import { formatToCompactNumber } from '@/Utils/StringUtils';
@@ -21,9 +21,24 @@
     const previews = JSON.parse(props.project.previews).map((preview) => {
         return STORAGE_PATH + preview;
     });
+    const stars = [5, 4, 3, 2, 1];
+    const reviewStarCounts = ref([]);
+
+    const getReviewStarCount = (rating) => {
+        const reviews = props.project.reviews;
+        const matchingReviews = reviews.filter(review => Math.floor(review.rating) == rating);
+        return {
+            star: rating,
+            value: matchingReviews.length,
+            max: reviews.length,
+        };
+    };
 
     onMounted(() => {
         rate.value = calculateRatings(ratings);
+        stars.forEach((star) => {
+            reviewStarCounts.value.push(getReviewStarCount(star));
+        });
     })
 </script>
 
@@ -37,7 +52,6 @@
                     <div class="flex flex-col justify-between flex-grow">
                         <div>
                             <div v-text="project.name" class="text-2xl font-medium"></div>
-                            <div v-text="selectedVersion?.version" class="text-sm "></div>
                             <div class="flex flex-row gap-2">
                                 <div class="flex gap-1 text-sm place-items-center" title="Ratings">
                                     <span v-text="rate.toFixed(1)"></span>
@@ -54,6 +68,7 @@
                                     <font-awesome-icon :icon="['fas', 'download']"/>
                                 </div>
                             </div>
+                            <div v-text="selectedVersion?.version" class="text-sm"></div>
                         </div>
                         <div class="my-2">
                             <PrimaryButton class="flex gap-1 place-items-center">
@@ -87,6 +102,30 @@
                         <div v-if="project.downloadable && project.downloadables" class="mb-10 md:w-96">
                             <HeaderText>Other Versions</HeaderText>
                             <VersionList :projectId="project.id" :versions="project.downloadables"/>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <HeaderText>Reviews and Ratings</HeaderText>
+                    <div class="flex gap-4 my-1">
+                        <div class="flex flex-col justify-between">
+                            <div>
+                                <div class="mb-3 text-center">
+                                    <div v-text="rate.toFixed(1)" class="text-6xl"></div>
+                                </div>
+                                <div>
+                                    <StarRating :rating="rate" :max="5" size="text-xs"/>
+                                </div>
+                            </div>
+                            <div>
+                                <div v-text="project.reviews.length.toLocaleString()"></div>
+                            </div>
+                        </div>
+                        <div class="flex-grow">
+                            <div v-for="count in reviewStarCounts" :key="count" class="flex gap-2 place-items-center">
+                                <span>{{ count.star }}</span>
+                                <progress class="w-full overflow-hidden rounded [&::-webkit-progress-value]:bg-green-500 [&::-webkit-progress-bar]:bg-slate-950/75 outline-1 outline outline-white" :value="count.value" :max="count.max"></progress>
+                            </div>
                         </div>
                     </div>
                 </div>

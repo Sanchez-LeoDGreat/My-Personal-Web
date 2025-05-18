@@ -59,6 +59,9 @@ import PaginationControls from "@/Components/Pagination/PaginationControls.vue";
 //preview
 import ProjectPreviews from "@/Components/Preview/ProjectPreviews.vue";
 
+// progressbars
+import StarRating from '@/Components/ProgressBars/StarRating.vue';
+
 //sidebar
 import UserSidebar from "@/Components/Sidebar/User/UserSidebar.vue";
 import SidebarOption from "@/Components/Sidebar/User/Partials/SidebarOption.vue";
@@ -139,6 +142,9 @@ export {
 
     //preview
     ProjectPreviews,
+
+    // progressbars
+    StarRating,
 
     //sidebar
     UserSidebar,
