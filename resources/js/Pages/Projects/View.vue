@@ -26,7 +26,7 @@
 
     const getReviewStarCount = (rating) => {
         const reviews = props.project.reviews;
-        const matchingReviews = reviews.filter(review => Math.floor(review.rating) == rating);
+        const matchingReviews = reviews.filter(review => Math.round(review.rating) == rating);
         return {
             star: rating,
             value: matchingReviews.length,
@@ -43,7 +43,7 @@
 </script>
 
 <template>
-    <Head title="Add Project Version"/>
+    <Head title="View Project"/>
     <DarkGlass class="min-h-screen p-2">
         <div class="p-4">
             <div>
