@@ -112,4 +112,28 @@ class DownloadablesController extends Controller
 
         return back()->with('success', "Project's version has been updated.");
     }
+
+    public function delete(Request $request)
+    {
+        $request->validate([
+            'downloadable_id' => 'required|exists:downloadables,id',
+        ]);
+
+        $downloadable = Downloadable::findOrFail($request->downloadable_id);
+        if (!$downloadable) {
+            return response()->json([
+                'success' => false,
+                'message' => "Project's version not found.",
+            ]);
+        }
+
+        Storage::disk('public')->delete($downloadable->download_path);
+
+        $downloadable->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => "Project's version deleted successfully!"
+        ]);
+    }
 }

@@ -39,6 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/user/projects/store-version', [DownloadablesController::class, 'store'])->name('projects.store-version');
     Route::get('/user/projects/edit-version', [DownloadablesController::class, 'edit'])->name('projects.edit-version');
     Route::post('/user/projects/update-version', [DownloadablesController::class, 'update'])->name('projects.update-version');
+    Route::delete('/user/projects/delete-version', [DownloadablesController::class, 'delete'])->name('projects.delete-version');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 
