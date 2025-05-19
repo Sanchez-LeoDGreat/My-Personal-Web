@@ -1,12 +1,8 @@
 <script setup>
-    import Nav from '@/Components/Header/Nav.vue';
-    import UserNav from '@/Components/Header/UserNav.vue';
-    import UserSidebar from '@/Components/Sidebar/User/UserSidebar.vue';
-    import Footer from '@/Components/Footer/Footer.vue';
-    import LoadingScreen from '@/Components/Loading/LoadingScreen.vue';
     import StaticAsset from '@/Utils/StaticAsset';
     import MessageModal from '@/Layouts/Partials/MessageModal.vue';
     import ConfirmationModal from '@/Layouts/Partials/ConfirmationModal.vue';
+    import { Nav, UserNav, UserSidebar, Footer, LoadingScreen } from '@/Utils/MyComponents';
     import { usePage } from '@inertiajs/vue3';
     import { computed, onMounted, ref } from 'vue';
 

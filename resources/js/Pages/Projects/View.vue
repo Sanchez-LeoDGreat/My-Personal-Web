@@ -1,10 +1,11 @@
 <script setup>
     import { Head } from '@inertiajs/vue3';
-    import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList, StarRating } from '@/Utils/MyComponents';
+    import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList, StarRating, Reviews } from '@/Utils/MyComponents';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
     import { onMounted, ref } from 'vue';
     import { formatToCompactNumber } from '@/Utils/StringUtils';
     import { calculateRatings } from '@/Utils/AppUtils';
+    import WriteReview from '@/Pages/Projects/Partials/WriteReview.vue';
 
     const props = defineProps({
         project: {
@@ -12,10 +13,12 @@
             required: true,
         },
         downloadable_id: String,
+        randomReviews: Array,
     });
+    const reviews = props.project.reviews;
     const icon = STORAGE_PATH + props.project.icon_path;
     const rate = ref(0);
-    const ratings = props.project.reviews.map((review) => review.rating, 0);
+    const ratings = reviews.map((review) => review.rating, 0);
     const selectedVersion = props.project.downloadables?.find(downloadable => downloadable.id == props.downloadable_id) || null;
     const downloadCount = selectedVersion?.download_count;
     const previews = JSON.parse(props.project.previews).map((preview) => {
@@ -23,9 +26,11 @@
     });
     const stars = [5, 4, 3, 2, 1];
     const reviewStarCounts = ref([]);
+    const writeReview = ref({
+        show: false,
+    });
 
     const getReviewStarCount = (rating) => {
-        const reviews = props.project.reviews;
         const matchingReviews = reviews.filter(review => Math.round(review.rating) == rating);
         return {
             star: rating,
@@ -62,15 +67,15 @@
                                     <span v-text="formatToCompactNumber(project.view_count)"></span>
                                     <font-awesome-icon :icon="['fas', 'eye']"/>
                                 </div>
-                                <span>|</span>
-                                <div class="flex gap-1 text-sm place-items-center" title="Downloads">
+                                <span v-if="project.downloadable">|</span>
+                                <div v-if="project.downloadable" class="flex gap-1 text-sm place-items-center" title="Downloads">
                                     <span v-text="formatToCompactNumber(downloadCount)"></span>
                                     <font-awesome-icon :icon="['fas', 'download']"/>
                                 </div>
                             </div>
                             <div v-text="selectedVersion?.version" class="text-sm"></div>
                         </div>
-                        <div class="my-2">
+                        <div v-if="project.downloadable" class="my-2">
                             <PrimaryButton class="flex gap-1 place-items-center">
                                 <font-awesome-icon :icon="['fas', 'download']"/>
                                 <span>Download</span>
@@ -99,7 +104,7 @@
                             <HeaderText>Description</HeaderText>
                             <Prose v-html="project.description"/>
                         </div>
-                        <div v-if="project.downloadable && project.downloadables" class="mb-10 md:w-96">
+                        <div v-if="project.downloadable && project.downloadables.length > 1" class="mb-10 md:w-96">
                             <HeaderText>Other Versions</HeaderText>
                             <VersionList :projectId="project.id" :versions="project.downloadables"/>
                         </div>
@@ -128,8 +133,22 @@
                             </div>
                         </div>
                     </div>
+                    <div class="flex flex-col gap-4 my-2">
+                        <Reviews :reviews="randomReviews"/>
+                    </div>
+                </div>
+                <div>
+                    <HeaderText>Rate this project</HeaderText>
+                    <p class="text-sm">Tell others what you think</p>
+                    <div class="my-2 select-none">
+                        <StarRating :rating="0" :rateable="true" :projectId="project.id" :max="5" size="text-4xl"/>
+                    </div>
+                    <div class="my-4 select-none">
+                        <button @click="writeReview.show = true" class="py-1 font-medium text-green-500 hover:underline">Write a review</button>
+                    </div>
                 </div>
             </div>
         </div>
     </DarkGlass>
+    <WriteReview v-model:show="writeReview.show"/>
 </template>

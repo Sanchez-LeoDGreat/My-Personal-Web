@@ -12,6 +12,7 @@ import WarningButton from "@/Components/Buttons/WarningButton.vue";
 
 //cards
 import ProjectCard from "@/Components/Cards/ProjectCard.vue";
+import IconCard from "@/Components/Cards/IconCard.vue";
 
 //effects
 import Glass from "@/Components/Effects/GlassMorphism/Glass.vue";
@@ -77,9 +78,9 @@ import LabelText from "@/Components/Texts/LabelText.vue";
 
 //root
 import ClickableLogo from "@/Components/ClickableLogo.vue";
-import IconCard from "@/Components/IconCard.vue";
 import Timeline from "@/Components/Timeline.vue";
 import Prose from "@/Components/Prose.vue";
+import Reviews from "@/Components/Reviews.vue";
 
 export {
     //buttons
@@ -96,6 +97,7 @@ export {
 
     //cards
     ProjectCard,
+    IconCard,
 
     //effects
     Glass,
@@ -161,7 +163,7 @@ export {
 
     //root
     ClickableLogo,
-    IconCard,
     Timeline,
-    Prose
+    Prose,
+    Reviews
 }

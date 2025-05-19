@@ -1,4 +1,7 @@
 <script setup>
+    import { router } from '@inertiajs/vue3';
+    import { ref, watchEffect } from 'vue';
+
     const props = defineProps({
         rating: {
             type: Number,
@@ -16,19 +19,49 @@
             type: String,
             default: 'text-green-500',
         },
+        rateable: {
+            type: Boolean,
+            default: false,
+        },
+        projectId: Number,
+    });
+
+    const hoveredRating = ref(null);
+
+    const selectStarRating = (value) => {
+        if (props.rateable) {
+            hoveredRating.value = value;
+        }
+    };
+
+    const resetHover = () => {
+        if (props.rateable) {
+            hoveredRating.value = null;
+        }
+    };
+
+    const goToWriteReview = (value) => {
+        if (props.rateable) {
+
+        }
+    }
+
+    watchEffect(() => {
+        if (props.rateable && props.projectId == null) {
+            throw new Error("Component: StarRating.\n Error: projectId is required when rateable is true");
+        }
     });
 </script>
 
 <template>
-  <div class="flex items-center gap-1">
-    <template v-for="i in max" :key="i">
-      <!-- Full Star -->
-      <font-awesome-icon v-if="rating >= i" :icon="['fas', 'star']" :class="[color, size]"/>
-      <!-- Half Star -->
-      <font-awesome-icon
-        v-else-if="rating >= i - 0.5" :icon="['fas', 'star-half-alt']" :class="[color, size]"/>
-      <!-- Empty Star -->
-      <font-awesome-icon v-else :icon="['far', 'star']" :class="[color, size]"/>
-    </template>
-  </div>
+    <div class="flex items-center justify-between gap-1 md:justify-start" @mouseleave="resetHover">
+        <div v-for="(i, index) in max" :key="i" @click="goToWriteReview(index + 1)" @mouseenter="selectStarRating(index + 1)" class="flex place-items-center" :class="{'cursor-pointer': rateable}">
+            <!-- Full Star -->
+            <font-awesome-icon v-if="(hoveredRating !== null ? hoveredRating : rating) >= index + 1" :icon="['fas', 'star']" :class="[color, size]"/>
+            <!-- Half Star -->
+            <font-awesome-icon v-else-if="(hoveredRating !== null ? hoveredRating : rating) >= index + 0.5" :icon="['fas', 'star-half-alt']" :class="[color, size]"/>
+            <!-- Empty Star -->
+            <font-awesome-icon v-else :icon="['far', 'star']" :class="[color, size]"/>
+        </div>
+    </div>
 </template>

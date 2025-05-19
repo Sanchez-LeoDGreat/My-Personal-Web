@@ -20,7 +20,7 @@ class ProjectsController extends Controller
         return Inertia::render('Projects/Index');
     }
 
-    public function view($project_id, $downlodable_id)
+    public function view($project_id, $downlodable_id = null)
     {
         $project = Project::with(['downloadables', 'reviews'])
             ->where('id', $project_id)
@@ -36,9 +36,13 @@ class ProjectsController extends Controller
             Cache::put($key, true, now()->addMinutes(30));
         }
 
+        $randomReviews = Review::where('project_id', $project_id)
+            ->inRandomOrder()->take(3)->get();
+
         return Inertia::render('Projects/View', [
             'project' => $project,
-            'downloadable_id' => $downlodable_id
+            'downloadable_id' => $downlodable_id,
+            'randomReviews' => $randomReviews
         ]);
     }
 

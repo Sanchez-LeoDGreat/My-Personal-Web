@@ -35,7 +35,7 @@
         if (props.editable){
             router.visit(route('projects.edit', id));
         } else {
-            router.visit(route('projects.view', { project_id: props.project.id, downloadable_id: latestDownloadable?.id }));
+            router.visit(route('projects.view', { project_id: props.project.id, downloadable_id: latestDownloadable?.id || null }));
         }
     }
 
