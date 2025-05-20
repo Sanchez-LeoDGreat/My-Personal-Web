@@ -106,8 +106,8 @@
                             <span v-text="formatToCompactNumber(project.view_count)"></span>
                             <font-awesome-icon :icon="['fas', 'eye']"/>
                         </div>
-                        <span>|</span>
-                        <div class="flex gap-1 text-xs place-items-center">
+                        <span v-if="project.downloadable">|</span>
+                        <div v-if="project.downloadable"     class="flex gap-1 text-xs place-items-center">
                             <span v-text="formatToCompactNumber(downloadCount)"></span>
                             <font-awesome-icon :icon="['fas', 'download']"/>
                         </div>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
@@ -248,19 +249,30 @@ class ProjectsController extends Controller
             'firstDownloadable',
             'downloadables',
             'reviews' => fn($q) => $q->select('id', 'project_id', 'rating'),
-        ])->when($request->search, function ($q) use ($request) {
-            $q->where('name', 'like', '%' . $request->search . '%');
-        });
+        ])
+            ->withCount(['downloadables as total_downloads' => function ($q) {
+                $q->select(DB::raw("SUM(`download_count`)"));
+            }])
+            ->withAvg('reviews', 'rating')
+            ->when($request->search, function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->search . '%');
+            });
 
         switch ($request->sort_by) {
             case 'alphabetical':
                 $query->orderBy('name');
                 break;
             case 'views':
-                $query->orderBy('view_count', 'desc');
+                $query->orderByDesc('view_count');
                 break;
             case 'newest':
                 $query->latest();
+                break;
+            case 'downloads':
+                $query->orderByDesc('total_downloads');
+                break;
+            case 'ratings':
+                $query->orderByDesc('reviews_avg_rating');
                 break;
         }
 

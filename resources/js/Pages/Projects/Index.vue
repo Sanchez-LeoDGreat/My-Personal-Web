@@ -28,6 +28,7 @@
             if (data.success) {
                 projects.data = data.projects.data;
                 projects.links = data.projects.links;
+                console.log(data);
             } else {
                 throw new Error(data.message || 'Failed to fetch projects');
             }
@@ -84,6 +85,8 @@
                         <div class="flex gap-2 sort-buttons">
                             <button @click="options.sort_by = 'alphabetical'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('alphabetical')}">A-Z</button>
                             <button @click="options.sort_by = 'newest'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('newest')}">Newest</button>
+                            <button @click="options.sort_by = 'ratings'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('ratings')}">Ratings</button>
+                            <button @click="options.sort_by = 'downloads'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('downloads')}">Downloads</button>
                             <button @click="options.sort_by = 'views'" class="border-b-4 border-transparent" :class="{'border-white': isActiveSortBy('views')}">Views</button>
                         </div>
                     </div>
