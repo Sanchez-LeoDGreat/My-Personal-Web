@@ -28,7 +28,6 @@
             if (data.success) {
                 projects.data = data.projects.data;
                 projects.links = data.projects.links;
-                console.log(data);
             } else {
                 throw new Error(data.message || 'Failed to fetch projects');
             }
