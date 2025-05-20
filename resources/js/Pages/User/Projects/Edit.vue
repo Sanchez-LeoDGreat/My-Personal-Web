@@ -49,7 +49,7 @@
     const updateProject = () => {
         form.post(route('projects.update'), {
             forceFormData: true,
-            onSuccess: () => showModalMessage(usePage().props.flash.success),
+            onSuccess: () => showModalMessage(usePage().props.flash.success, { type: 'success' }),
             onError: () => {
                 if (form.errors.project){
                     showModalMessage(`Error: ${form.errors.project}`, { type: 'error' });

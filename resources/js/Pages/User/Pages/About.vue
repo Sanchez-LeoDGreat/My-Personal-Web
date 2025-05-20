@@ -55,7 +55,7 @@
     const updateAboutContent = () => {
         form.put(route('about.update'), {
             onSuccess: () => {
-                showModalMessage(usePage().props.flash.success);
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
             },
             onError: () => {
                 if (form.errors.page){

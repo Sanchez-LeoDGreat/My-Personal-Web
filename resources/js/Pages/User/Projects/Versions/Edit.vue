@@ -28,7 +28,7 @@
         form.post(route('projects.update-version'), {
             forceFormData: true,
             onSuccess: () => {
-                showModalMessage(usePage().props.flash.success);
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
             }
         });
     }

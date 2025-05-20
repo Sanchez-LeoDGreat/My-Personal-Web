@@ -13,7 +13,11 @@
             required: true,
         },
         downloadable_id: String,
-        randomReviews: Array,
+        latestReviews: Array,
+        isReviewed: {
+            type: Boolean,
+            required: true
+        }
     });
     const reviews = props.project.reviews;
     const icon = STORAGE_PATH + props.project.icon_path;
@@ -40,7 +44,7 @@
         };
     };
 
-    const showWriteReview = (rating = 0) => {
+    const showWriteReview = (rating) => {
         writeReview.rating = rating;
         writeReview.show = true;
     }
@@ -140,21 +144,21 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-4 my-2">
-                        <Reviews :reviews="randomReviews"/>
+                        <Reviews :reviews="latestReviews"/>
                     </div>
                 </div>
-                <div>
+                <div v-if="isReviewed == false">
                     <HeaderText>Rate this project</HeaderText>
                     <p class="text-sm">Tell others what you think</p>
                     <div class="my-2 select-none">
                         <StarRating @click="showWriteReview(writeReview.rating)" v-model:rating="writeReview.rating" :rateable="true" :max="5" size="text-4xl"/>
                     </div>
                     <div class="my-4 select-none">
-                        <button @click="showWriteReview" class="py-1 font-medium text-green-500 hover:underline">Write a review</button>
+                        <button @click="showWriteReview(0)" class="py-1 font-medium text-green-500 hover:underline">Write a review</button>
                     </div>
                 </div>
             </div>
         </div>
     </DarkGlass>
-    <WriteReview v-model:show="writeReview.show" v-model:rating="writeReview.rating" :project="project"/>
+    <WriteReview v-if="isReviewed == false" v-model:show="writeReview.show" v-model:rating="writeReview.rating" :project="project"/>
 </template>

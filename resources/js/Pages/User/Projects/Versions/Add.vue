@@ -27,7 +27,7 @@
         form.post(route('projects.store-version'), {
             forceFormData: true,
             onSuccess: () => {
-                showModalMessage(usePage().props.flash.success);
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
             }
         });
     }

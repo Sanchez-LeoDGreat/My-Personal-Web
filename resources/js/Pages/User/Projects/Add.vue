@@ -34,7 +34,7 @@
         form.post(route('projects.store'), {
             forceFormData: true,
             onSuccess: () => {
-                showModalMessage(usePage().props.flash.success);
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
             },
         });
     }

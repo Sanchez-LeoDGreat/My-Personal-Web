@@ -29,20 +29,23 @@ class ProjectsController extends Controller
             return Inertia::render('Projects/Index');
         }
 
-        $key = "project_viewed_$project->id-" . request()->ip();
+        $ip = request()->ip();
+        $viewKey = "project_viewed_$project->id-$ip";
+        $reviewKey = "project_reviewed_$project->id-$ip";
+        $isReviewed = Cache::has($reviewKey);
 
-        if (!Cache::has($key)) {
+        if (!Cache::has($viewKey)) {
             $project->increment('view_count');
-            Cache::put($key, true, now()->addMinutes(30));
+            Cache::put($viewKey, true, now()->addMinutes(30));
         }
 
-        $randomReviews = Review::where('project_id', $project_id)
-            ->inRandomOrder()->take(3)->get();
+        $latestReviews = Review::where('project_id', $project_id)->take(3)->latest()->get();
 
         return Inertia::render('Projects/View', [
             'project' => $project,
             'downloadable_id' => $downlodable_id,
-            'randomReviews' => $randomReviews
+            'latestReviews' => $latestReviews,
+            'isReviewed' => $isReviewed,
         ]);
     }
 

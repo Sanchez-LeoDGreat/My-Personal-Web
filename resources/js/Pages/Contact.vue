@@ -16,7 +16,7 @@
         form.post(route('contact.send-email'),  {
             onSuccess: async () => {
                 await nextTick();
-                showModalMessage("Email has been sent successfully");
+                showModalMessage("Email has been sent successfully", { type: 'success' });
                 form.reset();
             },
             onError: async () => {

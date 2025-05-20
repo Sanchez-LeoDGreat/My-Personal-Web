@@ -1,8 +1,8 @@
 <script setup>
     import StaticAsset from '@/Utils/StaticAsset';
-    import { DarkGlass, StarRating, TextAreaInput, LabelText, TextInput, PrimaryButton } from '@/Utils/MyComponents';
+    import { DarkGlass, StarRating, TextAreaInput, LabelText, TextInput, PrimaryButton, FieldMessage } from '@/Utils/MyComponents';
     import { onMounted, ref, Transition, watch } from 'vue';
-    import { useForm } from '@inertiajs/vue3';
+    import { useForm, usePage } from '@inertiajs/vue3';
     import { generateAvatar, STORAGE_PATH } from '@/Utils/AppUtils';
     import { debounce } from 'lodash';
     import { ucwords } from '@/Utils/StringUtils';
@@ -31,7 +31,7 @@
     }, 1000);
 
     const form = useForm({
-        projectId: props.project.id,
+        project_id: props.project.id,
         name: null,
         rating: props.rating,
         comment: null,
@@ -43,7 +43,19 @@
     }
 
     const submitReview = () => {
-        console.log(form);
+        form.post(route('projects.review.store'), {
+            preserveState: false,
+            onSuccess: () => {
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
+            },
+            onError: () => {
+                if (form.errors.project_id){
+                    showModalMessage(`Error: ${form.errors.project_id}`, { type: 'error'});
+                } else if (form.errors.review) {
+                    showModalMessage(`Error: ${form.errors.review}`, { type: 'error'});
+                }
+            },
+        });
     }
 
     watch(() => props.rating, (newVal) => {
@@ -96,7 +108,7 @@
                             <TextAreaInput id="comment" v-model="form.comment" placeholder="Describe your experience here (optional)"/>
                         </div>
                         <div>
-                            <PrimaryButton type="submit">Post</PrimaryButton>
+                            <PrimaryButton type="submit" :disabled="form.processing">Post</PrimaryButton>
                         </div>
                     </form>
                 </DarkGlass>

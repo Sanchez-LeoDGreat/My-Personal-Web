@@ -23,7 +23,7 @@
                     <StarRating :rating="review.rating" :max="5" size="text-xs"/>
                     <div v-text="formattedDate(review.created_at)" class="text-sm text-gray-500"></div>
                 </div>
-                <div v-text="review.comment"></div>
+                <div v-if="review.comment" v-text="review.comment"></div>
             </div>
         </div>
         <div class="my-4">
