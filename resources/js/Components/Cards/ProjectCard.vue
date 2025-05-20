@@ -5,7 +5,7 @@
     import StaticAsset from '@/Utils/StaticAsset';
     import { router } from '@inertiajs/vue3';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
-    import { calculateRatings } from '@/Utils/AppUtils';
+    import { calculateRatings, downloadFromBlob } from '@/Utils/AppUtils';
     import { formatToCompactNumber } from '@/Utils/StringUtils';
 
     const props = defineProps({
@@ -23,13 +23,17 @@
             default: false,
         }
     });
+
+    const downloadButton = ref({
+        disabled: false,
+    });
     const iconPath = STORAGE_PATH + props.project.icon_path;
     const previews = JSON.parse(props.project.previews);
     const firstPreview = previews.length ? STORAGE_PATH + previews[0] : StaticAsset.img.bg1;
     const latestDownloadable = props.project.first_downloadable;
     const rate = ref(0);
     const ratings = props.project.reviews.map((review) => review.rating);
-    const downloadCount = props.project.downloadables.reduce((sum, downlodable) => sum + downlodable.download_count, 0);
+    const downloadCount = ref(0);
 
     const goToProject = (id) => {
         if (props.editable){
@@ -47,12 +51,32 @@
         }
     }
 
-    const downloadProject = (id) => {
-        //TODO: Add download project logic here
+    const downloadProject = async () => {
+        try {
+            downloadButton.value.disabled = true;
+            const response = await axios.post(route('projects.prepare-download'), {
+                downloadable_id: latestDownloadable.id,
+            });
+            const data = response.data;
+            if (data.success) {
+                const fileResponse = await axios.get(data.download_url, {
+                    responseType: 'blob',
+                });
+                downloadFromBlob(fileResponse.data, data.filename);
+                downloadCount.value += 1;
+            } else {
+                throw new Error(data.message || 'Something went wrong.');
+            }
+        } catch (err) {
+            showModalMessage(`Error: ${err.message}`, { type: 'error' });
+        } finally {
+            downloadButton.value.disabled = false;
+        }
     }
 
     onMounted(() => {
         rate.value = calculateRatings(ratings);
+        downloadCount.value = props.project.downloadables.reduce((sum, downlodable) => sum + downlodable.download_count, 0);
     });
 </script>
 
@@ -91,7 +115,7 @@
                 </div>
             </div>
             <div v-if="project.downloadable" class="flex flex-col shrink-0">
-                <PrimaryButton @click="downloadProject(project.id)" class="flex items-center gap-2">
+                <PrimaryButton @click="downloadProject" :disabled="downloadButton.disabled" class="flex items-center gap-2">
                     <font-awesome-icon :icon="['fas', 'download']"/>
                     <span>Download</span>
                 </PrimaryButton>

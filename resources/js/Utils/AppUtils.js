@@ -18,4 +18,17 @@ const generateAvatar = (seed, collection = thumbs) => {
     return avatar.toDataUri();
 }
 
-export { APP_URL, STORAGE_PATH, calculateRatings, generateAvatar };
+const downloadFromBlob = (data, filename) => {
+    const blob = new Blob([data]);
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.className = "hidden";
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    window.URL.revokeObjectURL(url);
+}
+
+export { APP_URL, STORAGE_PATH, calculateRatings, generateAvatar, downloadFromBlob };

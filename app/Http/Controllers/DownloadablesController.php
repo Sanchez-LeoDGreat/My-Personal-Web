@@ -7,6 +7,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Inertia\Inertia;
 
@@ -134,6 +135,43 @@ class DownloadablesController extends Controller
         return response()->json([
             'success' => true,
             'message' => "Project's version deleted successfully!"
+        ]);
+    }
+
+    public function prepare_download(Request $request)
+    {
+        $request->validate([
+            'downloadable_id' => 'required|numeric|exists:downloadables,id',
+        ]);
+
+        $downloadable_id = $request->downloadable_id;
+        $downloadable = Downloadable::with(['project'])->find($downloadable_id);
+        if (!$downloadable) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Downloadable not found!',
+            ], 404);
+        }
+
+        $project = $downloadable->project;
+        $download_path = $downloadable->download_path;
+
+        if (!Storage::disk('public')->exists($download_path)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'File not found!',
+            ], 404);
+        }
+
+        $extension = pathinfo($download_path, PATHINFO_EXTENSION);
+        $filename = Str::replace(' ', '', "$project->name($downloadable->version).$extension");
+        $downloadable->increment('download_count');
+
+        return response()->json([
+            'success' => true,
+            'message' => 'File is ready to be downloaded.',
+            'filename' => $filename,
+            'download_url' => asset("storage/$download_path"),
         ]);
     }
 }

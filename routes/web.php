@@ -19,6 +19,7 @@ Route::get('/projects', [ProjectsController::class, 'index'])->name('projects');
 Route::get('/projects/view/{project_id}/{downloadable_id?}', [ProjectsController::class, 'view'])->name('projects.view');
 Route::get('/projects/reviews/{project_id}', [ReviewsController::class, 'index'])->name('projects.reviews');
 Route::post('/projects/reviews/store', [ReviewsController::class, 'store'])->name('projects.reviews.store');
+Route::post('/projects/prepare-download', [DownloadablesController::class, 'prepare_download'])->name('projects.prepare-download');
 
 Route::get('/login', [AuthController::class, 'index'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);

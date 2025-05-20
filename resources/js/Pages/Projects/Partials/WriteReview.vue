@@ -83,7 +83,7 @@
                     </div>
                     <div class="overflow-hidden w-full">
                         <div class="truncate whitespace-nowrap pr-4 w-full" v-text="project.name"></div>
-                        <div class="text-xs">Rate this app</div>
+                        <div class="text-xs">Rate this project</div>
                     </div>
                 </div>
             </div>
