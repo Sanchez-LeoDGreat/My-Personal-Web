@@ -1,6 +1,6 @@
 <script setup>
     import { Head } from '@inertiajs/vue3';
-    import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList, StarRating, Reviews } from '@/Utils/MyComponents';
+    import { DarkGlass, ProjectPreviews, PrimaryButton, ReviewsAndRatings, IconInput, HeaderText, Prose, VersionList, StarRating, Reviews } from '@/Utils/MyComponents';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
     import { onMounted, reactive, ref } from 'vue';
     import { formatToCompactNumber } from '@/Utils/StringUtils';
@@ -23,26 +23,16 @@
     const icon = STORAGE_PATH + props.project.icon_path;
     const rate = ref(0);
     const ratings = reviews.map((review) => review.rating, 0);
-    const selectedVersion = props.project.downloadables?.find(downloadable => downloadable.id == props.downloadable_id) || null;
+    const downloadables = props.project.downloadables;
+    const selectedVersion = downloadables?.find(downloadable => downloadable.id == props.downloadable_id || downloadables[0].id) || null;
     const downloadCount = selectedVersion?.download_count;
     const previews = JSON.parse(props.project.previews).map((preview) => {
         return STORAGE_PATH + preview;
     });
-    const stars = [5, 4, 3, 2, 1];
-    const reviewStarCounts = ref([]);
     const writeReview = reactive({
         show: false,
         rating: 0,
     });
-
-    const getReviewStarCount = (rating) => {
-        const matchingReviews = reviews.filter(review => Math.round(review.rating) == rating);
-        return {
-            star: rating,
-            value: matchingReviews.length,
-            max: reviews.length,
-        };
-    };
 
     const showWriteReview = (rating) => {
         writeReview.rating = rating;
@@ -51,9 +41,6 @@
 
     onMounted(() => {
         rate.value = calculateRatings(ratings);
-        stars.forEach((star) => {
-            reviewStarCounts.value.push(getReviewStarCount(star));
-        });
     })
 </script>
 
@@ -122,29 +109,9 @@
                 </div>
                 <div>
                     <HeaderText>Reviews and Ratings</HeaderText>
-                    <div class="flex gap-4 my-1">
-                        <div class="flex flex-col justify-between">
-                            <div>
-                                <div class="mb-3 text-center">
-                                    <div v-text="rate.toFixed(1)" class="text-6xl"></div>
-                                </div>
-                                <div>
-                                    <StarRating :rating="rate" :max="5" size="text-xs"/>
-                                </div>
-                            </div>
-                            <div>
-                                <div v-text="project.reviews.length.toLocaleString()"></div>
-                            </div>
-                        </div>
-                        <div class="flex-grow">
-                            <div v-for="count in reviewStarCounts" :key="count" class="flex gap-2 place-items-center">
-                                <span>{{ count.star }}</span>
-                                <progress class="w-full overflow-hidden rounded [&::-webkit-progress-value]:bg-green-500 [&::-webkit-progress-bar]:bg-slate-950/75 outline-1 outline outline-white" :value="count.value" :max="count.max"></progress>
-                            </div>
-                        </div>
-                    </div>
+                    <ReviewsAndRatings :reviews="project.reviews" class="my-1"/>
                     <div class="flex flex-col gap-4 my-2">
-                        <Reviews :reviews="latestReviews"/>
+                        <Reviews :projectId="project.id" :reviews="latestReviews"/>
                     </div>
                 </div>
                 <div v-if="isReviewed == false">

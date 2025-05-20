@@ -13,6 +13,7 @@ import WarningButton from "@/Components/Buttons/WarningButton.vue";
 //cards
 import ProjectCard from "@/Components/Cards/ProjectCard.vue";
 import IconCard from "@/Components/Cards/IconCard.vue";
+import ReviewCard from "@/Components/Cards/ReviewCard.vue";
 
 //effects
 import Glass from "@/Components/Effects/GlassMorphism/Glass.vue";
@@ -76,6 +77,9 @@ import FieldMessage from "@/Components/Texts/FieldMessage.vue";
 import HeaderText from "@/Components/Texts/HeaderText.vue";
 import LabelText from "@/Components/Texts/LabelText.vue";
 
+// visualizations
+import ReviewsAndRatings from "@/Components/Visualizations/ReviewsAndRatings.vue";
+
 //root
 import ClickableLogo from "@/Components/ClickableLogo.vue";
 import Timeline from "@/Components/Timeline.vue";
@@ -98,6 +102,7 @@ export {
     //cards
     ProjectCard,
     IconCard,
+    ReviewCard,
 
     //effects
     Glass,
@@ -160,6 +165,9 @@ export {
     FieldMessage,
     HeaderText,
     LabelText,
+
+    //visualizations
+    ReviewsAndRatings,
 
     //root
     ClickableLogo,

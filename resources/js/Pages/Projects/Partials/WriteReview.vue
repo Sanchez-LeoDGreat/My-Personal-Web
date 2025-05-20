@@ -1,6 +1,6 @@
 <script setup>
     import StaticAsset from '@/Utils/StaticAsset';
-    import { DarkGlass, StarRating, TextAreaInput, LabelText, TextInput, PrimaryButton, FieldMessage } from '@/Utils/MyComponents';
+    import { DarkGlass, StarRating, TextAreaInput, LabelText, TextInput, PrimaryButton } from '@/Utils/MyComponents';
     import { onMounted, ref, Transition, watch } from 'vue';
     import { useForm, usePage } from '@inertiajs/vue3';
     import { generateAvatar, STORAGE_PATH } from '@/Utils/AppUtils';
@@ -43,7 +43,7 @@
     }
 
     const submitReview = () => {
-        form.post(route('projects.review.store'), {
+        form.post(route('projects.reviews.store'), {
             preserveState: false,
             onSuccess: () => {
                 showModalMessage(usePage().props.flash.success, { type: 'success' });
@@ -73,16 +73,16 @@
         <div v-if="show" class="fixed flex-col z-10 flex w-full h-screen top-0 right-0 overflow-hidden">
             <div class="bg-slate-950 flex place-items-center">
                 <div>
-                    <button @click="hideWriteReview" class="text-white text-2xl m-3">
+                    <button @click="hideWriteReview" class="text-white text-2xl m-3 hover:text-green-500 active:text-blue-500">
                         <font-awesome-icon :icon="['fas', 'close']"/>
                     </button>
                 </div>
-                <div class="flex-grow flex gap-2">
-                    <div>
+                <div class="flex-grow flex gap-2 items-center min-w-0">
+                    <div class="w-10">
                         <img :src="icon" alt="Project Icon" class="w-10">
                     </div>
-                    <div>
-                        <div v-text="project.name"></div>
+                    <div class="overflow-hidden w-full">
+                        <div class="truncate whitespace-nowrap pr-4 w-full" v-text="project.name"></div>
                         <div class="text-xs">Rate this app</div>
                     </div>
                 </div>
@@ -108,7 +108,7 @@
                             <TextAreaInput id="comment" v-model="form.comment" placeholder="Describe your experience here (optional)"/>
                         </div>
                         <div>
-                            <PrimaryButton type="submit" :disabled="form.processing">Post</PrimaryButton>
+                            <PrimaryButton type="submit" :disabled="form.processing || !form.rating">Post</PrimaryButton>
                         </div>
                     </form>
                 </DarkGlass>
