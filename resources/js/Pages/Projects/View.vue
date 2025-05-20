@@ -2,7 +2,7 @@
     import { Head } from '@inertiajs/vue3';
     import { DarkGlass, ProjectPreviews, PrimaryButton, IconInput, HeaderText, Prose, VersionList, StarRating, Reviews } from '@/Utils/MyComponents';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
-    import { onMounted, ref } from 'vue';
+    import { onMounted, reactive, ref } from 'vue';
     import { formatToCompactNumber } from '@/Utils/StringUtils';
     import { calculateRatings } from '@/Utils/AppUtils';
     import WriteReview from '@/Pages/Projects/Partials/WriteReview.vue';
@@ -26,8 +26,9 @@
     });
     const stars = [5, 4, 3, 2, 1];
     const reviewStarCounts = ref([]);
-    const writeReview = ref({
+    const writeReview = reactive({
         show: false,
+        rating: 0,
     });
 
     const getReviewStarCount = (rating) => {
@@ -38,6 +39,11 @@
             max: reviews.length,
         };
     };
+
+    const showWriteReview = (rating = 0) => {
+        writeReview.rating = rating;
+        writeReview.show = true;
+    }
 
     onMounted(() => {
         rate.value = calculateRatings(ratings);
@@ -141,14 +147,14 @@
                     <HeaderText>Rate this project</HeaderText>
                     <p class="text-sm">Tell others what you think</p>
                     <div class="my-2 select-none">
-                        <StarRating :rating="0" :rateable="true" :projectId="project.id" :max="5" size="text-4xl"/>
+                        <StarRating @click="showWriteReview(writeReview.rating)" v-model:rating="writeReview.rating" :rateable="true" :max="5" size="text-4xl"/>
                     </div>
                     <div class="my-4 select-none">
-                        <button @click="writeReview.show = true" class="py-1 font-medium text-green-500 hover:underline">Write a review</button>
+                        <button @click="showWriteReview" class="py-1 font-medium text-green-500 hover:underline">Write a review</button>
                     </div>
                 </div>
             </div>
         </div>
     </DarkGlass>
-    <WriteReview v-model:show="writeReview.show"/>
+    <WriteReview v-model:show="writeReview.show" v-model:rating="writeReview.rating" :project="project"/>
 </template>

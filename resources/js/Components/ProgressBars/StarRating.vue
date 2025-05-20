@@ -1,6 +1,5 @@
 <script setup>
-    import { router } from '@inertiajs/vue3';
-    import { ref, watchEffect } from 'vue';
+    import { ref } from 'vue';
 
     const props = defineProps({
         rating: {
@@ -22,11 +21,11 @@
         rateable: {
             type: Boolean,
             default: false,
-        },
-        projectId: Number,
+        }
     });
 
     const hoveredRating = ref(null);
+    const emit = defineEmits(['update:rating']);
 
     const selectStarRating = (value) => {
         if (props.rateable) {
@@ -34,28 +33,23 @@
         }
     };
 
+    const confirmStarRating = (value) => {
+        if (props.rateable) {
+            emit('update:rating', value);
+            hoveredRating.value = null;
+        }
+    }
+
     const resetHover = () => {
         if (props.rateable) {
             hoveredRating.value = null;
         }
     };
-
-    const goToWriteReview = (value) => {
-        if (props.rateable) {
-
-        }
-    }
-
-    watchEffect(() => {
-        if (props.rateable && props.projectId == null) {
-            throw new Error("Component: StarRating.\n Error: projectId is required when rateable is true");
-        }
-    });
 </script>
 
 <template>
     <div class="flex items-center justify-between gap-1 md:justify-start" @mouseleave="resetHover">
-        <div v-for="(i, index) in max" :key="i" @click="goToWriteReview(index + 1)" @mouseenter="selectStarRating(index + 1)" class="flex place-items-center" :class="{'cursor-pointer': rateable}">
+        <div v-for="(i, index) in max" :key="i" @click="confirmStarRating(index + 1)" @mouseenter="selectStarRating(index + 1)" class="flex place-items-center" :class="{'cursor-pointer': rateable}">
             <!-- Full Star -->
             <font-awesome-icon v-if="(hoveredRating !== null ? hoveredRating : rating) >= index + 1" :icon="['fas', 'star']" :class="[color, size]"/>
             <!-- Half Star -->

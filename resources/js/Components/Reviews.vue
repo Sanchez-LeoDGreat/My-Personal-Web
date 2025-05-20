@@ -1,21 +1,12 @@
 <script setup>
-    import { createAvatar } from '@dicebear/core';
-    import { thumbs } from '@dicebear/collection';
     import { Link } from '@inertiajs/vue3';
     import { StarRating } from '@/Utils/MyComponents';
     import { formattedDate } from '@/Utils/StringUtils';
+    import { generateAvatar } from '@/Utils/AppUtils';
 
     const props = defineProps({
         reviews: Array
-    })
-
-    const generateAvatar = (seed) => {
-        const avatar = createAvatar(thumbs, {
-            seed: seed,
-        });
-
-        return avatar.toDataUri();
-    }
+    });
 </script>
 
 <template>
