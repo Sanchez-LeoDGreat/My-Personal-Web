@@ -1,7 +1,6 @@
 <script setup>
     import { Head, Link, useForm, usePage } from '@inertiajs/vue3';
-    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews, IconInput } from '@/Utils/MyComponents';
-    import { ref } from 'vue';
+    import { DarkGlass, HeaderText, PrimaryButton, LabelText, TextInput, RichTextEditorInput, FieldMessage, CheckboxInput, ProjectPreviews, IconInput, FileInput } from '@/Utils/MyComponents';
 
     const form = useForm({
         icon: null,
@@ -14,21 +13,6 @@
         downloadable_version: '',
         downloadable_file: null,
     });
-
-    const fileInputRef = ref(null);
-    const uploadedFilenameRef = ref(null);
-
-    const openFileDialog = () => {
-        fileInputRef.value.click();
-    }
-
-    const downloadableFileUpload = () => {
-        const file = fileInputRef.value.files[0];
-        if (file) {
-            form.downloadable_file = file;
-            uploadedFilenameRef.value = file.name;
-        }
-    }
 
     const addProject = () => {
         form.post(route('projects.store'), {
@@ -66,10 +50,6 @@
                                     <label for="version" class="mr-1">Version:</label>
                                     <input id="version" type="text" v-model="form.downloadable_version" placeholder="v1.0.0" class="bg-transparent">
                                 </div>
-                                <PrimaryButton type="button" @click="openFileDialog" class="hidden gap-2 mt-2 mb-1 md:flex place-items-center">
-                                    <font-awesome-icon :icon="['fas', 'upload']"/>
-                                    <span>Upload File</span>
-                                </PrimaryButton>
                             </div>
                             <div>
                                 <CheckboxInput id="downloadable" v-model="form.downloadable">Downloadable</CheckboxInput>
@@ -78,16 +58,13 @@
                     </div>
                 </div>
                 <FieldMessage v-if="form.errors.icon" status="error">{{ form.errors.icon }}</FieldMessage>
+                <FieldMessage v-if="form.errors.downloadable_version" class="text-center" status="error">{{ form.errors.downloadable_version }}</FieldMessage>
                 <div class="flex flex-col gap-2 my-2">
                     <div v-if="form.downloadable">
-                        <input type="file" class="hidden" @change="downloadableFileUpload" ref="fileInputRef">
-                        <div class="text-center" v-if="form.downloadable_file">
-                            <div class="mb-3">
-                                <span class="font-medium">File Name: </span>
-                                <span v-text="uploadedFilenameRef"></span>
-                            </div>
+                        <div>
+                            <LabelText id="downloadable_file">Downloadable File</LabelText>
+                            <FileInput id="downloadable_file" v-model="form.downloadable_file"/>
                         </div>
-                        <FieldMessage v-if="form.errors.downloadable_version" class="text-center" status="error">{{ form.errors.downloadable_version }}</FieldMessage>
                         <FieldMessage v-if="form.errors.downloadable_file" class="text-center" status="error">{{ form.errors.downloadable_file }}</FieldMessage>
                         <PrimaryButton type="button" @click="openFileDialog" class="flex justify-center w-full gap-2 my-1 mb-1 md:hidden place-items-center">
                             <font-awesome-icon :icon="['fas', 'upload']"/>
