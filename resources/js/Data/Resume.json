@@ -1,0 +1,30 @@
+{
+    "name": "Leonard Paulo Sanchez",
+    "image": "",
+    "contact": "+639919818970",
+    "email": "leonardpaulo.sanchez.3@gmail.com",
+    "address": "Malolos, Bulacan",
+    "about_me": "I strive to be successful together with whom I’m with. I know that is a common dream these days but I will prove to myself that I will. I’m willing to learn new things to achieve that goal.",
+    "category_list": {
+        "language": {
+            "bulleted": true,
+            "list": ["English", "Filipino"]
+        },
+        "expertise": {
+            "bulleted": true,
+            "list": ["Programming", "Web Development", "Windows App Development", "Game Development", "Digital Illustrations"]
+        },
+        "education": {
+            "bulleted": false,
+            "list": ["Biñang 1st Elementary School\n2007-2009", "Bangkal Elementary School\n2009-2013", "Cong. Teodulo C. Natividad High School\n2013-2017", "Lord’s Angels Montessori School\n2017-2020", "Bulacan Polytechnic College\n2021-2025"]
+        },
+        "skills_summary": {
+            "bulleted": false,
+            "list": ["Problem-solving", "Time Management"]
+        },
+        "objective": {
+            "bulleted": true,
+            "list": ["Improve communication skills", "Widen my skillsets", "Be a part of a team", "Learn new things"]
+        }
+    }
+}

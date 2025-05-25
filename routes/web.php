@@ -7,6 +7,7 @@ use App\Http\Controllers\DownloadablesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProjectsController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ResumeController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -44,6 +45,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/user/projects/edit-version', [DownloadablesController::class, 'edit'])->name('projects.edit-version');
     Route::post('/user/projects/update-version', [DownloadablesController::class, 'update'])->name('projects.update-version');
     Route::delete('/user/projects/delete-version', [DownloadablesController::class, 'delete'])->name('projects.delete-version');
+
+    Route::get('/user/resume', [ResumeController::class, 'index'])->name('user.resume');
+    Route::get('/user/resume/edit', [ResumeController::class, 'edit'])->name('user.resume.edit');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 
