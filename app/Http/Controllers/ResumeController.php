@@ -12,9 +12,42 @@ class ResumeController extends Controller
     public function index()
     {
         $user = Auth::user();
+        $config = Storage::disk('public')->get('data/Config.json');
         return Inertia::render('User/Resume/Index', [
-            'user' => $user
+            'user' => $user,
+            'config' => json_decode($config),
         ]);
+    }
+
+    public function set(Request $request)
+    {
+        $request->validate([
+            'downloadable_resume' => 'required|string'
+        ]);
+        $storage = Storage::disk('public');
+        $path = 'data/Config.json';
+        if (!$storage->exists($path)) {
+            return back()->withErrors(['config' => 'Config file not found!']);
+        }
+        $config = json_decode($storage->get($path));
+        $config->resume->downloadable = $request->downloadable_resume;
+        if ($request->downloadable_resume == 'uploaded') {
+            if ($config->resume->uploaded_path == "") {
+                $request->validate([
+                    'uploaded_resume' => 'required|mimes:pdf|max:2048',
+                ]);
+            }
+
+            if ($request->file('uploaded_resume')) {
+                if ($config->resume->uploaded_path != "") {
+                    $storage->delete($config->resume->uploaded_path);
+                }
+                $resume_path = $request->file('uploaded_resume')->store('resume', 'public');
+                $config->resume->uploaded_path = $resume_path;
+            }
+        }
+        $storage->put($path, json_encode($config, JSON_PRETTY_PRINT));
+        return back()->with('success', 'Downloadable resume set successfully!');
     }
 
     public function edit()

@@ -22,6 +22,7 @@ const img = {
     bg1: getUrl(imgPath + 'bg1.jpg'),
     hero: getUrl(imgPath + 'hero.png'),
     projectDefaultIcon: getUrl(imgPath + 'project-default-icon.png'),
+    resumeDefaultImg: getUrl(imgPath + 'resume-default-img.png'),
 };
 
 export default { svg, img }

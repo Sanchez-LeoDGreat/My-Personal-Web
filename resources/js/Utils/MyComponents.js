@@ -42,6 +42,7 @@ import SkillInput from "@/Components/Inputs/SkillInput.vue";
 import IconInput from "@/Components/Inputs/IconInput.vue";
 import SearchInput from "@/Components/Inputs/SearchInput.vue";
 import FileInput from "@/Components/Inputs/FileInput.vue";
+import SelectInput from "@/Components/Inputs/SelectInput.vue";
 
 //lists
 import VersionList from "@/Components/Lists/VersionList.vue";
@@ -79,6 +80,7 @@ import LabelText from "@/Components/Texts/LabelText.vue";
 
 // visualizations
 import ReviewsAndRatings from "@/Components/Visualizations/ReviewsAndRatings.vue";
+import Resume from "@/Components/Visualizations/Resume.vue";
 
 //root
 import ClickableLogo from "@/Components/ClickableLogo.vue";
@@ -131,6 +133,7 @@ export {
     IconInput,
     SearchInput,
     FileInput,
+    SelectInput,
 
     //lists
     VersionList,
@@ -168,6 +171,7 @@ export {
 
     //visualizations
     ReviewsAndRatings,
+    Resume,
 
     //root
     ClickableLogo,

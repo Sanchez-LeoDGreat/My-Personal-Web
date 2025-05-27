@@ -47,6 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/user/projects/delete-version', [DownloadablesController::class, 'delete'])->name('projects.delete-version');
 
     Route::get('/user/resume', [ResumeController::class, 'index'])->name('user.resume');
+    Route::post('/user/resume/set', [ResumeController::class, 'set'])->name('user.resume.set');
     Route::get('/user/resume/edit', [ResumeController::class, 'edit'])->name('user.resume.edit');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
