@@ -1,6 +1,7 @@
 <script setup>
-    import { Head } from '@inertiajs/vue3';
+    import { Head, Link } from '@inertiajs/vue3';
     import { nextTick, onMounted, ref } from 'vue';
+    import { Resume, DarkGlass, HeaderText, PrimaryButton } from '@/Utils/MyComponents';
 
     const resume = ref(null);
 
@@ -26,4 +27,16 @@
 
 <template>
     <Head title="Edit Resume"/>
+    <DarkGlass class="min-h-[90vh] p-2 flex flex-col">
+        <HeaderText class="mb-2">Edit <span class="text-green-500 ">Resume</span></HeaderText>
+        <div class="my-4">
+            <Link :href="route('user.resume')" class="inline-block">
+                <PrimaryButton class="flex gap-2 place-items-center">
+                    <font-awesome-icon :icon="['fas', 'angle-left']"/>
+                    <span>Go Back</span>
+                </PrimaryButton>
+            </Link>
+        </div>
+        <Resume v-model="resume" :editable="true"/>
+    </DarkGlass>
 </template>

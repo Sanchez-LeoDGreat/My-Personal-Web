@@ -99,9 +99,9 @@
                 <div>
                     <button type="button" @click="resume.show=!resume.show" class="flex justify-between w-full px-4 py-1 text-lg font-bold border-2 hover:text-green-500 hover:border-green-500 bg-slate-950">
                         <span>Resume (View Mode)</span>
-                        <span><font-awesome-icon :icon="['fas', 'angle-down']"/></span>
+                        <span><font-awesome-icon :icon="['fas', 'angle-down']" class="transition-all duration-700" :class="{'-rotate-180': !resume.show}"/></span>
                     </button>
-                    <div class="overflow-hidden transition-all duration-700 bg-slate-950/50" :class="{'max-h-0': !resume.show, 'max-h-[9999px]': resume.show}">
+                    <div class="overflow-hidden transition-all duration-500 bg-slate-950/50" :class="{'max-h-0': !resume.show, 'max-h-[9999px]': resume.show}">
                         <div v-if="form.downloadable_resume == 'dynamic'" class="h-[50vh] relative">
                             <div class="h-full overflow-y-auto">
                                 <Resume v-model="resume.data"/>

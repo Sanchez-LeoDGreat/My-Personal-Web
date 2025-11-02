@@ -1,11 +1,19 @@
 <script setup>
+import { onMounted, ref } from 'vue';
+
     const props = defineProps({
         status: {
             type: String,
             default: "normal",
         },
         modelValue: String,
+        autoresize: {
+            type: Boolean,
+            default: false
+        }
     });
+
+    const text_area = ref(null);
 
     const emit = defineEmits(["update:modelValue"]);
 
@@ -21,8 +29,22 @@
                 return "border-gray-500 text-gray-900 placeholder-gray-700 focus:ring-gray-500";
         }
     };
+
+    onMounted(() => {
+        if (props.autoresize){
+            const input = text_area.value;
+
+            const updateHeight = () => {
+                input.style.height = "auto";
+                input.style.height = input.scrollHeight + "px";
+            }
+
+            input.addEventListener("input", updateHeight);
+            updateHeight();
+        }
+    })
 </script>
 
 <template>
-    <textarea :value="modelValue" @input="emit('update:modelValue', $event.target.value)" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg min-h-24" :class="setStatusColor()"></textarea>
+    <textarea ref="text_area" :value="modelValue" @input="emit('update:modelValue', $event.target.value)" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg min-h-24" :class="setStatusColor()"></textarea>
 </template>

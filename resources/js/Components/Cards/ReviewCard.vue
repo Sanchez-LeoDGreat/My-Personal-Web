@@ -24,5 +24,6 @@
             <div v-text="formattedDate(review.created_at)" class="text-sm text-gray-500"></div>
         </div>
         <div v-if="review.comment" v-text="review.comment"></div>
+        <hr class="mt-2">
     </div>
 </template>

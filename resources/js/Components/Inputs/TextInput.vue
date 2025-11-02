@@ -5,6 +5,10 @@
             default: "normal",
         },
         modelValue: String,
+        type: {
+            type: String,
+            default: 'text'
+        }
     });
 
     const emit = defineEmits(["update:modelValue", "input"]);
@@ -29,5 +33,5 @@
 </script>
 
 <template>
-    <input type="text" :value="modelValue" @input="handleInput" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg" :class="setStatusColor()"/>
+    <input :type="type" :value="modelValue" @input="handleInput" class="block w-full p-2 mb-1 text-sm bg-white border rounded-lg" :class="setStatusColor()"/>
 </template>

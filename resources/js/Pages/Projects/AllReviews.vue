@@ -71,54 +71,54 @@
 <template>
     <Head title="Reviews"/>
     <DarkGlass class="min-h-[90vh] flex flex-col">
-        <div class="bg-slate-950 flex place-items-center">
+        <div class="flex bg-slate-950 place-items-center">
             <div>
-                <Link :href="route('projects.view', { project_id: project.id })" class="text-white text-2xl inline-block m-3 hover:text-green-500 active:text-blue-500">
+                <Link :href="route('projects.view', { project_id: project.id })" class="inline-block m-3 text-2xl text-white hover:text-green-500 active:text-blue-500">
                     <font-awesome-icon :icon="['fas', 'angle-left']"/>
                 </Link>
             </div>
-            <div class="flex-grow flex gap-2 items-center min-w-0">
+            <div class="flex items-center flex-grow min-w-0 gap-2">
                 <div class="w-10">
                     <img :src="icon" alt="Project Icon" class="w-10">
                 </div>
-                <div class="overflow-hidden w-full">
-                    <div class="truncate whitespace-nowrap pr-4 w-full" v-text="project.name"></div>
+                <div class="w-full overflow-hidden">
+                    <div class="w-full pr-4 truncate whitespace-nowrap" v-text="project.name"></div>
                     <div class="text-xs">Rating and Reviews</div>
                 </div>
             </div>
         </div>
-        <div class="px-2 py-2 flex gap-2 bg-slate-950 overflow-x-auto text-sm">
-            <button @click="options.filter = 'all'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == 'all'}">
+        <div class="flex gap-2 px-2 py-2 overflow-x-auto text-sm bg-slate-950">
+            <button @click="options.filter = 'all'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == 'all'}">
                 <font-awesome-icon v-if="options.filter == 'all'" :icon="['fas', 'check']"/>
                 <span>All</span>
             </button>
-            <button @click="options.filter = '5stars'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == '5stars'}">
+            <button @click="options.filter = '5stars'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == '5stars'}">
                 <font-awesome-icon v-if="options.filter == '5stars'" :icon="['fas', 'check']"/>
                 <span>5</span>
                 <font-awesome-icon :icon="['fas', 'star']" class="text-xs"/>
             </button>
-            <button @click="options.filter = '4stars'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == '4stars'}">
+            <button @click="options.filter = '4stars'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == '4stars'}">
                 <font-awesome-icon v-if="options.filter == '4stars'" :icon="['fas', 'check']"/>
                 <span>4</span>
                 <font-awesome-icon :icon="['fas', 'star']" class="text-xs"/>
             </button>
-            <button @click="options.filter = '3stars'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == '3stars'}">
+            <button @click="options.filter = '3stars'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == '3stars'}">
                 <font-awesome-icon v-if="options.filter == '3stars'" :icon="['fas', 'check']"/>
                 <span>3</span>
                 <font-awesome-icon :icon="['fas', 'star']" class="text-xs"/>
             </button>
-            <button @click="options.filter = '2stars'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == '2stars'}">
+            <button @click="options.filter = '2stars'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == '2stars'}">
                 <font-awesome-icon v-if="options.filter == '2stars'" :icon="['fas', 'check']"/>
                 <span>2</span>
                 <font-awesome-icon :icon="['fas', 'star']" class="text-xs"/>
             </button>
-            <button @click="options.filter = '1star'" class="border-2 rounded-md px-2 py-1 flex gap-2 place-items-center" :class="{'active': options.filter == '1star'}">
+            <button @click="options.filter = '1star'" class="flex gap-2 px-2 py-1 border-2 rounded-md place-items-center" :class="{'active': options.filter == '1star'}">
                 <font-awesome-icon v-if="options.filter == '1star'" :icon="['fas', 'check']"/>
                 <span>1</span>
                 <font-awesome-icon :icon="['fas', 'star']" class="text-xs"/>
             </button>
         </div>
-        <div class="p-4 flex-grow max-h-full flex flex-col overflow-y-auto">
+        <div class="flex flex-col flex-grow max-h-full p-4 overflow-y-auto">
             <Loading v-if="isLoading" :finished="reviews.loading.finished" :status="reviews.loading.status" class="flex justify-center flex-grow place-items-center"/>
             <div v-else class="flex flex-col flex-grow gap-4 mb-2">
                 <template v-if="reviews.data.length">
