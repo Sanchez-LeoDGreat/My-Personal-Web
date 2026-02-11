@@ -2,7 +2,7 @@
     import StaticAsset from '@/Utils/StaticAsset';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
     import { Prose, TextAreaInput, TextInput, PrimaryButton } from '@/Utils/MyComponents';
-    import { useForm } from '@inertiajs/vue3';
+    import { useForm, usePage } from '@inertiajs/vue3';
     import { watch } from 'vue';
 
     const props = defineProps({
@@ -14,6 +14,8 @@
     });
 
     const form = useForm({
+        name: '',
+        image: '',
         about_me: '',
         contact: '',
         email: '',
@@ -21,8 +23,22 @@
         categories: [],
     });
 
+    const saveResume = () => {
+        form.post(route('user.resume.edit.save'), {
+            onSuccess: () => {
+                showModalMessage(usePage().props.flash.success, { type: 'success' });
+            },
+            onError: (e) => {
+                showModalMessage(`Error: Something went wrong! Please try again.`, { type: 'error' });
+                console.log(e);
+            }
+        });
+    }
+
     watch(() => props.modelValue,
         (val) => {
+            form.name = val.name;
+            form.image = val.image;
             form.about_me = val.about_me;
             form.contact = val.contact;
             form.email = val.email;
@@ -35,67 +51,69 @@
 </script>
 
 <template>
-    <div class="a4-page text-slate-950">
-        <div class="absolute top-0 left-0 z-0 w-40 bg-slate-950 h-44"></div>
-        <div class="absolute flex gap-2">
-            <div class="p-3 bg-white border-[6px] rounded-full border-slate-950 outline outline-white outline-8">
-                <img :src="resumePic" alt="My Picture" class="rounded-full w-44 h-44 min-h-44 min-w-44">
+    <form @submit.prevent="saveResume">
+        <div class="a4-page text-slate-950">
+            <div class="absolute top-0 left-0 z-0 w-40 bg-slate-950 h-44"></div>
+            <div class="absolute flex gap-2">
+                <div class="p-3 bg-white border-[6px] rounded-full border-slate-950 outline outline-white outline-8">
+                    <img :src="resumePic" alt="My Picture" class="rounded-full w-44 h-44 min-h-44 min-w-44">
+                </div>
+                <div>
+                    <div v-text="!editable ? modelValue?.name : form?.name || 'Leonard Paulo Sanchez'" class="font-bold text-7xl"></div>
+                </div>
             </div>
-            <div>
-                <div v-text="modelValue?.name || 'Leonard Paulo Sanchez'" class="font-bold text-7xl"></div>
-            </div>
-        </div>
-        <div class="h-full pt-56">
-            <div class="h-full columns-2">
-                <div class="break-inside-avoid-column">
-                    <div class="text-xl text-center">About Me</div>
-                    <div v-if="editable">
-                        <TextAreaInput autoresize name="about_me" id="about_me" v-model="form.about_me"></TextAreaInput>
-                    </div>
-                    <div v-else class="text-justify">{{ modelValue?.about_me || 'About Me Content' }}</div>
+            <div class="h-full pt-56">
+                <div class="h-full columns-2">
+                    <div class="break-inside-avoid-column">
+                        <div class="text-xl text-center">About Me</div>
+                        <div v-if="editable">
+                            <TextAreaInput autoresize class="scrollbar-hide" name="about_me" id="about_me" v-model="form.about_me"></TextAreaInput>
+                        </div>
+                        <div v-else class="text-justify">{{ modelValue?.about_me || 'About Me Content' }}</div>
 
-                    <div class="flex flex-col gap-2 my-2">
-                        <div class="flex gap-1 place-items-center">
-                            <font-awesome-icon :icon="['fas', 'phone-volume']" class="p-2 text-white rounded-full bg-slate-950"/>
-                            <TextInput v-if="editable" v-model="form.contact"/>
-                            <span v-else v-text="modelValue?.contact || 'Contact No.'"></span>
-                        </div>
-                        <div class="flex gap-1 place-items-center">
-                            <font-awesome-icon :icon="['fas', 'envelope']" class="p-2 text-white rounded-full bg-slate-950"/>
-                            <TextInput v-if="editable" v-model="form.email"/>
-                            <span v-else v-text="modelValue?.email || 'Email'"></span>
-                        </div>
-                        <div class="flex gap-1 place-items-center">
-                            <font-awesome-icon :icon="['fas', 'home']" class="p-2 text-white rounded-full bg-slate-950"/>
-                            <TextInput v-if="editable" v-model="form.address"/>
-                            <span v-else v-text="modelValue?.address || 'Address'"></span>
-                        </div>
-
-                        <div v-if="editable" class="flex flex-col gap-4">
-                            <div v-for="(category, index) in modelValue?.categories" :key="index">
-                                <div class="py-1 text-center text-white bg-slate-950">
-                                    <input type="text" class="w-full text-center uppercase bg-transparent outline-none" v-model="form.categories[index].title">
-                                </div>
-                                <TextAreaInput v-model="form.categories[index].content" autoresize class="min-h-0 rounded-none"/>
+                        <div class="flex flex-col gap-2 my-2">
+                            <div class="flex gap-1 place-items-center">
+                                <font-awesome-icon :icon="['fas', 'phone-volume']" class="p-2 text-white rounded-full bg-slate-950"/>
+                                <TextInput v-if="editable" v-model="form.contact"/>
+                                <span v-else v-text="form?.contact || 'Contact No.'"></span>
                             </div>
-                        </div>
-                        <div v-else class="flex flex-col gap-4">
-                            <div v-for="(category, index) in modelValue?.categories" :key="index">
-                                <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
-                                <Prose v-html="category.content"></Prose>
+                            <div class="flex gap-1 place-items-center">
+                                <font-awesome-icon :icon="['fas', 'envelope']" class="p-2 text-white rounded-full bg-slate-950"/>
+                                <TextInput v-if="editable" v-model="form.email"/>
+                                <span v-else v-text="!editable ? modelValue?.email : form?.email || 'Email'"></span>
+                            </div>
+                            <div class="flex gap-1 place-items-center">
+                                <font-awesome-icon :icon="['fas', 'home']" class="p-2 text-white rounded-full bg-slate-950"/>
+                                <TextInput v-if="editable" v-model="form.address"/>
+                                <span v-else v-text="modelValue?.address || 'Address'"></span>
+                            </div>
+
+                            <div v-if="editable" class="flex flex-col gap-4">
+                                <div v-for="(category, index) in form?.categories" :key="index">
+                                    <div class="py-1 text-center text-white bg-slate-950">
+                                        <input type="text" class="w-full text-center uppercase bg-transparent outline-none" v-model="form.categories[index].title">
+                                    </div>
+                                    <TextAreaInput v-model="form.categories[index].content" autoresize class="min-h-0 rounded-none"/>
+                                </div>
+                            </div>
+                            <div v-else class="flex flex-col gap-4">
+                                <div v-for="(category, index) in modelValue?.categories" :key="index">
+                                    <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
+                                    <Prose v-html="category.content"></Prose>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="flex justify-center w-full py-4">
-        <PrimaryButton class="flex gap-2 place-items-center">
-            <font-awesome-icon :icon="['fas', 'save']"/>
-            <span>Save</span>
-        </PrimaryButton>
-    </div>
+        <div v-if="editable" class="flex justify-center w-full py-4">
+            <PrimaryButton type="submit" class="flex gap-2 place-items-center">
+                <font-awesome-icon :icon="['fas', 'save']"/>
+                <span>Save</span>
+            </PrimaryButton>
+        </div>
+    </form>
 </template>
 
 <style scoped>

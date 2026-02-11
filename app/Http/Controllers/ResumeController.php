@@ -75,4 +75,35 @@ class ResumeController extends Controller
             'resume' => json_decode($resume)
         ]);
     }
+
+    public function save(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|min:3',
+            'image' => 'nullable',
+            'about_me' => 'required|min:3',
+            'contact' => 'required',
+            'email' => 'required|email',
+            'address' => 'required|min:3',
+            'categories' => 'required|array'
+        ]);
+
+        $path = 'data/Resume.json';
+        $storage = Storage::disk('public');
+
+        $storage->put(
+            $path,
+            json_encode([
+                'name' => $request->name,
+                'image' => $request->image,
+                'about_me' => $request->about_me,
+                'contact' => $request->contact,
+                'email' => $request->email,
+                'address' => $request->address,
+                'categories' => $request->categories
+            ], JSON_PRETTY_PRINT)
+        );
+
+        return to_route('user.resume.edit')->with('success', 'Resume edited successfully!');
+    }
 }
