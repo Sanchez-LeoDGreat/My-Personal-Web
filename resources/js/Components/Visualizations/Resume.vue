@@ -35,6 +35,15 @@
         });
     }
 
+    const removeCategory = (index) => {
+        form.categories.splice(index, 1);
+    }
+
+    const addCategory = () => {
+        const emptyCategory = { title: "", content: ""};
+        form.categories.push(emptyCategory);
+    }
+
     watch(() => props.modelValue,
         (val) => {
             form.name = val.name;
@@ -90,10 +99,13 @@
 
                             <div v-if="editable" class="flex flex-col gap-4">
                                 <div v-for="(category, index) in form?.categories" :key="index">
-                                    <div class="py-1 text-center text-white bg-slate-950">
-                                        <input type="text" class="w-full text-center uppercase bg-transparent outline-none" v-model="form.categories[index].title">
+                                    <div class="flex py-1 text-center text-white bg-slate-950">
+                                        <input type="text" placeholder="Enter title here..." class="w-full text-center uppercase bg-transparent outline-none" v-model="form.categories[index].title">
+                                        <button type="button" @click="removeCategory(index)" class="px-2 text-red-600 hover:text-red-800">
+                                            <font-awesome-icon :icon="['fas', 'trash']"/>
+                                        </button>
                                     </div>
-                                    <TextAreaInput v-model="form.categories[index].content" autoresize class="min-h-0 rounded-none"/>
+                                    <TextAreaInput v-model="form.categories[index].content" autoresize placeholder="Enter details here..." class="min-h-0 rounded-none"/>
                                 </div>
                             </div>
                             <div v-else class="flex flex-col gap-4">
@@ -101,6 +113,13 @@
                                     <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
                                     <Prose v-html="category.content"></Prose>
                                 </div>
+                            </div>
+
+                            <div>
+                                <PrimaryButton type="button" @click="addCategory" class="flex items-center justify-center w-full gap-2">
+                                    <font-awesome-icon :icon="['fas', 'add']"/>
+                                    <span>Add</span>
+                                </PrimaryButton>
                             </div>
                         </div>
                     </div>
