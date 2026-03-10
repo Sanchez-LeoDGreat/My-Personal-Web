@@ -106,6 +106,6 @@ class ResumeController extends Controller
             ], JSON_PRETTY_PRINT)
         );
 
-        return to_route('user.resume.edit')->with('success', 'Resume edited successfully!');
+        return to_route('user.resume')->with('success', 'Resume edited successfully!');
     }
 }

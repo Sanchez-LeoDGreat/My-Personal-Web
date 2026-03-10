@@ -110,12 +110,12 @@
                             <div v-else class="flex flex-col gap-4">
                                 <div v-for="(category, index) in modelValue?.categories" :key="index">
                                     <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
-                                    <Prose v-html="category.content"></Prose>
+                                    <Prose v-html="category.content" class="min-h-24"></Prose>
                                 </div>
                             </div>
 
                             <div>
-                                <PrimaryButton type="button" @click="addCategory" class="flex items-center justify-center w-full gap-2">
+                                <PrimaryButton v-if="editable" type="button" @click="addCategory" class="flex items-center justify-center w-full gap-2">
                                     <font-awesome-icon :icon="['fas', 'add']"/>
                                     <span>Add</span>
                                 </PrimaryButton>
