@@ -85,7 +85,9 @@ class ResumeController extends Controller
             'contact' => 'required',
             'email' => 'required|email',
             'address' => 'required|min:3',
-            'categories' => 'required|array'
+            'categories' => 'required|array',
+            'categories.*.title' => 'required|string',
+            'categories.*.content' => 'required|string'
         ]);
 
         $path = 'data/Resume.json';
@@ -100,7 +102,7 @@ class ResumeController extends Controller
                 'contact' => $request->contact,
                 'email' => $request->email,
                 'address' => $request->address,
-                'categories' => $request->categories
+                'categories' => $request->categories,
             ], JSON_PRETTY_PRINT)
         );
 

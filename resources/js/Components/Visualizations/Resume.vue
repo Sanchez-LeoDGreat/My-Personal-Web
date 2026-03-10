@@ -30,7 +30,6 @@
             },
             onError: (e) => {
                 showModalMessage(`Error: Something went wrong! Please try again.`, { type: 'error' });
-                console.log(e);
             }
         });
     }
@@ -99,13 +98,13 @@
 
                             <div v-if="editable" class="flex flex-col gap-4">
                                 <div v-for="(category, index) in form?.categories" :key="index">
-                                    <div class="flex py-1 text-center text-white bg-slate-950">
+                                    <div class="flex py-1 text-center text-white bg-slate-950" :class="{'bg-red-800' : form.errors[`categories.${index}.title`]}">
                                         <input type="text" placeholder="Enter title here..." class="w-full text-center uppercase bg-transparent outline-none" v-model="form.categories[index].title">
                                         <button type="button" @click="removeCategory(index)" class="px-2 text-red-600 hover:text-red-800">
                                             <font-awesome-icon :icon="['fas', 'trash']"/>
                                         </button>
                                     </div>
-                                    <TextAreaInput v-model="form.categories[index].content" autoresize placeholder="Enter details here..." class="min-h-0 rounded-none"/>
+                                    <TextAreaInput v-model="form.categories[index].content" autoresize placeholder="Enter details here..." class="min-h-0 rounded-none" :class="{'border-red-600 placeholder-red-600': form.errors[`categories.${index}.content`]}"/>
                                 </div>
                             </div>
                             <div v-else class="flex flex-col gap-4">
