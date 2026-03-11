@@ -69,6 +69,13 @@
         }
     }
 
+    const getResume = async () => {
+        resume.value.data = null;
+        if (downloadable_resume.value == 'dynamic'){
+            await fetchResume();
+        }
+    }
+
     onMounted(async () => {
         await nextTick();
         await fetchResume();
@@ -88,7 +95,7 @@
             <form @submit.prevent="setDownloadableResume">
                 <div class="mb-4">
                     <LabelText for="downloadable_resume">Resume</LabelText>
-                    <SelectInput id="downloadable_resume" :options="options" v-model="form.downloadable_resume"/>
+                    <SelectInput id="downloadable_resume" @change="getResume" :options="options" v-model="form.downloadable_resume"/>
                     <FieldMessage v-if="form.errors.downloadable_resume" status="error">{{ form.errors.downloadable_resume }}</FieldMessage>
                 </div>
                 <div v-if="form.downloadable_resume == 'uploaded'" class="mb-4">
