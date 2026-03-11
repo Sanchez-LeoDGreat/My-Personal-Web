@@ -1,9 +1,9 @@
 <script setup>
     import StaticAsset from '@/Utils/StaticAsset';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
-    import { Prose, TextAreaInput, TextInput, PrimaryButton } from '@/Utils/MyComponents';
+    import { Prose, TextAreaInput, TextInput, PrimaryButton, ImageInput } from '@/Utils/MyComponents';
     import { useForm, usePage } from '@inertiajs/vue3';
-    import { watch } from 'vue';
+    import { watch, ref } from 'vue';
 
     const props = defineProps({
         modelValue: Object,
@@ -43,6 +43,8 @@
         form.categories.push(emptyCategory);
     }
 
+    let resumePic = ref("");
+
     watch(() => props.modelValue,
         (val) => {
             form.name = val.name;
@@ -52,10 +54,11 @@
             form.email = val.email;
             form.address = val.address;
             form.categories = val.categories;
+            if (!resumePic.value){
+                resumePic.value = STORAGE_PATH + val.image;
+            }
         },
     );
-
-    const resumePic = props.modelValue?.image ? STORAGE_PATH + props.modelValue.image : StaticAsset.img.resumeDefaultImg;
 </script>
 
 <template>
@@ -64,7 +67,7 @@
             <div class="absolute top-0 left-0 z-0 w-40 bg-slate-950 h-44"></div>
             <div class="absolute flex gap-2">
                 <div class="p-3 bg-white border-[6px] rounded-full border-slate-950 outline outline-white outline-8">
-                    <img :src="resumePic" alt="My Picture" class="rounded-full w-44 h-44 min-h-44 min-w-44">
+                    <ImageInput :default-img="resumePic" :editable="editable" v-model="form.image" class="overflow-hidden rounded-full w-44 h-44 min-h-44 min-w-44 max-w-44 max-h-44"/>
                 </div>
                 <div>
                     <div v-text="!editable ? modelValue?.name : form?.name || 'Leonard Paulo Sanchez'" class="font-bold text-7xl"></div>
@@ -110,7 +113,7 @@
                             <div v-else class="flex flex-col gap-4">
                                 <div v-for="(category, index) in modelValue?.categories" :key="index">
                                     <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
-                                    <Prose v-html="category.content" class="min-h-24"></Prose>
+                                    <Prose v-html="category.content" class="px-2 min-h-24"></Prose>
                                 </div>
                             </div>
 

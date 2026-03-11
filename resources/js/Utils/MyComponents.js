@@ -43,6 +43,7 @@ import IconInput from "@/Components/Inputs/IconInput.vue";
 import SearchInput from "@/Components/Inputs/SearchInput.vue";
 import FileInput from "@/Components/Inputs/FileInput.vue";
 import SelectInput from "@/Components/Inputs/SelectInput.vue";
+import ImageInput from "@/Components/Inputs/ImageInput.vue";
 
 //lists
 import VersionList from "@/Components/Lists/VersionList.vue";
@@ -134,6 +135,7 @@ export {
     SearchInput,
     FileInput,
     SelectInput,
+    ImageInput,
 
     //lists
     VersionList,

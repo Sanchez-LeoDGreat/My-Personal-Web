@@ -82,7 +82,7 @@
                 <font-awesome-icon :icon="['fas', 'rotate-right']"/>
             </button>
         </section>
-        <EditorContent :editor="editor" />
+        <EditorContent :editor="editor"/>
     </Prose>
 </template>
 
