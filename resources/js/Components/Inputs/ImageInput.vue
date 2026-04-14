@@ -33,10 +33,10 @@
                 return;
             }
             icon.value = URL.createObjectURL(file);
+            emit('update:modelValue', file);
         } else {
             icon.value = props.defaultImg;
         }
-        emit('update:modelValue', file);
     }
 
     watch(() => props.defaultImg, (val) => {

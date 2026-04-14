@@ -80,7 +80,7 @@ class ResumeController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:3',
-            'image' => 'nullable|image|max:2048',
+            'image' => 'nullable|max:2048',
             'about_me' => 'required|min:3',
             'contact' => 'required',
             'email' => 'required|email',

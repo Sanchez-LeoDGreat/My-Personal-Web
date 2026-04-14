@@ -1,7 +1,6 @@
 <script setup>
-    import StaticAsset from '@/Utils/StaticAsset';
     import { STORAGE_PATH } from '@/Utils/AppUtils';
-    import { Prose, TextAreaInput, TextInput, PrimaryButton, ImageInput } from '@/Utils/MyComponents';
+    import { Prose, TextAreaInput, RichTextEditorInput, TextInput, PrimaryButton, ImageInput } from '@/Utils/MyComponents';
     import { useForm, usePage } from '@inertiajs/vue3';
     import { watch, ref } from 'vue';
 
@@ -15,7 +14,7 @@
 
     const form = useForm({
         name: '',
-        image: '',
+        image: null,
         about_me: '',
         contact: '',
         email: '',
@@ -78,9 +77,9 @@
                     <div class="break-inside-avoid-column">
                         <div class="text-xl text-center">About Me</div>
                         <div v-if="editable">
-                            <TextAreaInput autoresize class="scrollbar-hide" name="about_me" id="about_me" v-model="form.about_me"></TextAreaInput>
+                            <RichTextEditorInput v-model="form.about_me" class="prose-p:my-0 prose-p:text-justify" hide-menu min-h="min-h-auto" max-h="max-h-auto" border="border-slate-300 rounded-md border-sm border-1 focus-within:border-black"/>
                         </div>
-                        <div v-else class="text-justify">{{ modelValue?.about_me || 'About Me Content' }}</div>
+                        <div v-else class="text-justify prose">{{ modelValue?.about_me || 'About Me Content' }}</div>
 
                         <div class="flex flex-col gap-2 my-2">
                             <div class="flex gap-1 place-items-center">
@@ -107,13 +106,13 @@
                                             <font-awesome-icon :icon="['fas', 'trash']"/>
                                         </button>
                                     </div>
-                                    <TextAreaInput v-model="form.categories[index].content" autoresize placeholder="Enter details here..." class="min-h-0 rounded-none" :class="{'border-red-600 placeholder-red-600': form.errors[`categories.${index}.content`]}"/>
+                                    <RichTextEditorInput hide-menu v-model="form.categories[index].content" class="prose-p:my-0 prose-ul:my-1" min-h="min-h-auto" max-h="max-h-auto" border="border-slate-300 rounded-b-md border-sm border-1 focus-within:border-black"/>
                                 </div>
                             </div>
                             <div v-else class="flex flex-col gap-4">
                                 <div v-for="(category, index) in modelValue?.categories" :key="index">
                                     <div class="py-1 text-center text-white uppercase bg-slate-950">{{ category.title }}</div>
-                                    <Prose v-html="category.content" class="px-2 min-h-24"></Prose>
+                                    <Prose v-html="category.content" class="px-2"></Prose>
                                 </div>
                             </div>
 

@@ -9,6 +9,22 @@
 
     const props = defineProps({
         modelValue: String,
+        hideMenu: {
+            type: Boolean,
+            default: false
+        },
+        minH: {
+            type: String,
+            default: 'min-h-[10rem]'
+        },
+        maxH: {
+            type: String,
+            default: 'max-h-[14rem]'
+        },
+        border: {
+            type: String,
+            default: 'border-slate-950'
+        }
     });
 
     const emit = defineEmits(['update:modelValue']);
@@ -19,7 +35,7 @@
         },
         editorProps: {
             attributes: {
-                class: 'border-slate-950 w-full focus:outline-none bg-white border-2 px-4 min-h-[10rem] max-h-[14rem] overflow-auto'
+                class: 'w-full focus:outline-none bg-white border-2 px-2 overflow-auto ' + [props.minH, props.maxH, props.border].join(" "),
             },
         },
         content: props.modelValue,
@@ -29,7 +45,7 @@
             Color,
             TextStyle,
         ],
-    })
+    });
 
     watch(() => props.modelValue, (newValue) => {
         if (editor.value && editor.value.getHTML() !== newValue) {
@@ -40,7 +56,7 @@
 
 <template>
     <Prose class="text-black">
-        <section v-if="editor" class="flex flex-wrap gap-2 p-2 text-white border-t-2 border-l-2 border-r-2 bg-slate-950 border-slate-950">
+        <section v-if="editor && !hideMenu" class="flex flex-wrap gap-2 p-2 text-white border-t-2 border-l-2 border-r-2 bg-slate-950 border-slate-950">
             <button type="button" @click="editor.chain().focus().toggleBold().run()" title="Bold" :class="{ 'is-active': editor.isActive('bold') }">
                 <font-awesome-icon :icon="['fas', 'bold']"/>
             </button>
