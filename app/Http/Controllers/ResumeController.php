@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Barryvdh\Snappy\Facades\SnappyPdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -112,5 +113,17 @@ class ResumeController extends Controller
         $storage->put($path, json_encode($resume, JSON_PRETTY_PRINT));
 
         return to_route('user.resume')->with('success', 'Resume edited successfully!');
+    }
+
+    public function downloadPDF()
+    {
+        $path = 'data/Resume.json';
+        $storage = Storage::disk('public');
+        $resume = json_decode($storage->get($path));
+
+        $pdf = SnappyPdf::loadView('pdf.resume', [
+            'resume' => $resume
+        ]);
+        return $pdf->download('resume.pdf');
     }
 }

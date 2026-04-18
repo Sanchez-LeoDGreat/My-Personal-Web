@@ -40,6 +40,34 @@
         }
     };
 
+    const downloadResume = async () => {
+        const response = await axios.post(route('api.fetch-config'));
+        const resume = response.data?.config?.resume;
+
+        if (resume.downloadable == 'dynamic'){
+            await downloadDynamicResume();
+        } else if (resume.downloadable == 'uploaded') {
+            // download uploaded resume
+        }
+    }
+
+    const downloadDynamicResume = async () => {
+        try{
+            const response = await axios.get(route('resume.download'));
+            const url = window.URL.createObjectURL(new Blob([response.data]));
+            const link = document.createElement("a");
+            link.href = url;
+            link.setAttribute("download", "resume.pdf");
+            document.body.appendChild(link);
+            link.click();
+
+            link.remove();
+            window.URL.revokeObjectURL(url);
+        } catch (err) {
+            showModalMessage("<b>Error: </b>" + err?.message, { type: 'error' });
+        }
+    }
+
     const isLoading = computed(() => {
         const loadingVal = pageContent.value.loading;
         if (loadingVal.finished){
@@ -71,7 +99,7 @@
                         </HeaderText>
                         <Prose v-html="pageContent.introduction"></Prose>
                     </div>
-                    <button class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
+                    <button @click="downloadResume" class="px-4 py-2 my-2 font-medium text-black transition-all bg-white rounded-full hover:shadow-green-500 hover:shadow-md active:shadow-blue-500 active:text-blue-500">Download CV</button>
                 </div>
                 <div class="md:w-[45%]">
                     <img :src="StaticAsset.img.hero" alt="hero.png">

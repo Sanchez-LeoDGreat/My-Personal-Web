@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/user/resume/set', [ResumeController::class, 'set'])->name('user.resume.set');
     Route::get('/user/resume/edit', [ResumeController::class, 'edit'])->name('user.resume.edit');
     Route::post('/user/resume/edit/save', [ResumeController::class, 'save'])->name('user.resume.edit.save');
+    Route::get('/resume/download', [ResumeController::class, 'downloadPDF'])->name('resume.download');
 
     Route::get('/user/reports', [ReportController::class, 'index'])->name('user.reports');
 
